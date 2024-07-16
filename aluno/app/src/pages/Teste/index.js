@@ -1,28 +1,25 @@
 import React, { Component } from "react";
-import { Text, View, FlatList, DeviceEventEmitter, PermissionsAndroid, Alert, Platform } from 'react-native';
-import Beacons from '@hkpuits/react-native-beacons-manager';
+import { Text, View, Alert, Platform, PermissionsAndroid } from 'react-native';
+import BeaconBroadcast from '@lovemh9395/react-native-ibeacon-simulator';
 import styles from "./styles";
 
+// Valores válidos para UUID, identifier, major, minor
+const uuid = 'fda50693-a4e2-4fb1-afcf-c6eb07647825';
+const identifier = 'MyBeacon';
+const major = 1;
+const minor = 1;
+
 class BeaconBackgroundScanScreen extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      data: []
-    };
-
-    this.beaconsDidRangeListener = null; // Inicialize a referência ao ouvinte
-    this.beaconIdentificado = false;
+  async componentDidMount() {
+    await this.checkAndRequestPermissions();
   }
 
-  async componentDidMount() {
+  checkAndRequestPermissions = async () => {
     try {
-      console.log(Platform.Version)
       if (Platform.Version >= 31) {
         // Para Android 12 (API nível 31) e superior
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.BLUETOOTH_SCAN,
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        const granted = await PermissionsAndroid.requestMultiple([      
+          PermissionsAndroid.PERMISSIONS.BLUETOOTH_ADVERTISE,
         ]);
 
         const allPermissionsGranted = Object.values(granted).every(
@@ -36,7 +33,6 @@ class BeaconBackgroundScanScreen extends Component {
       } else if (Platform.Version >= 23) {
         // Para Android 6 (API nível 23) até Android 11 (API nível 30)
         const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
           PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
         ]);
 
@@ -53,59 +49,56 @@ class BeaconBackgroundScanScreen extends Component {
         Alert.alert('O aplicativo não suporta versões do Android anteriores à 6.0 (Marshmallow).');
         return false;
       }
-    
-      // Inicializa a detecção de iBeacons
-      Beacons.init(); // to set the NotificationChannel, and enable background scanning
-      Beacons.detectIBeacons();
 
-      try {
-        await Beacons.startRangingBeaconsInRegion('Sala1');
-        console.log('Varredura de beacons iniciada com sucesso!');
-      } catch (error) {
-        console.log('Varredura de beacons não iniciada, erro:', error);
-      }
-
-      // Configura o ouvinte para a varredura de beacons
-      this.beaconsDidRangeListener = DeviceEventEmitter.addListener('beaconsDidRange', (data) => {
-        if (data.beacons.length > 0) {
-          // Dados do beacon foram coletados, você pode acessá-los aqui
-          console.log('Dados do beacon coletados:', data.beacons);
-          this.setState({ data: data.beacons });
-          
-          this.beaconIdentificado = true;
-        } else {
-          console.log('Nenhum dado de beacon coletado.');
-        }
-      });
+      this.startBeaconBroadcasting();
     } catch (error) {
-      console.log('Erro ao solicitar permissão de localização:', error);
+      console.error('Erro ao solicitar permissões:', error);
     }
-  }
+  };
 
-  componentWillUnmount() {
-    // Remova o ouvinte usando a referência guardada
-    if (this.beaconsDidRangeListener) {
-      this.beaconsDidRangeListener.remove();
-    }
-    Beacons.stopRangingBeaconsInRegion('REGION1').catch((error) => {
-      console.log('Erro ao parar a varredura de beacons:', error);
-    });
-  }
+  startBeaconBroadcasting = () => {
+    BeaconBroadcast.checkTransmissionSupported()
+      .then(() => {
+        BeaconBroadcast.stopAdvertisingBeacon();
+        BeaconBroadcast.startAdvertisingBeaconWithString(uuid, identifier, major, minor);
+        console.log('Beacon broadcasting started successfully.');
+        Alert.alert('Beacon broadcasting started successfully.');
+      })
+      .catch((error) => {
+        switch (error) {
+          case BeaconBroadcast.NOT_SUPPORTED_MIN_SDK:
+            Alert.alert('Not supported: Minimum SDK version not met.');
+            console.error('Not supported: Minimum SDK version not met.');
+            break;
+          case BeaconBroadcast.NOT_SUPPORTED_BLE:
+        Alert.alert('Not supported: Bluetooth LE not supported.');
+            console.error('Not supported: Bluetooth LE not supported.');
+            break;
+          case BeaconBroadcast.DEPRECATED_NOT_SUPPORTED_MULTIPLE_ADVERTISEMENTS:
+        Alert.alert('Deprecated: Multiple advertisement not supported.');
+            console.error('Deprecated: Multiple advertisement not supported.');
+            break;
+          case BeaconBroadcast.NOT_SUPPORTED_CANNOT_GET_ADVERTISER:
+        Alert.alert('Not supported: Cannot get advertiser.');
+            console.error('Not supported: Cannot get advertiser.');
+            break;
+          case BeaconBroadcast.NOT_SUPPORTED_CANNOT_GET_ADVERTISER_MULTIPLE_ADVERTISEMENTS:
+        Alert.alert('Not supported: Cannot get advertiser for multiple advertisements.');
+            console.error('Not supported: Cannot get advertiser for multiple advertisements.');
+            break;
+          default:
+            console.error('Unknown error:', error);
+        Alert.alert('Unknown error:'+ error);
+            break;
+        }
+        console.log('Beacon broadcasting failed.');
+      });
+  };
 
   render() {
     return (
       <View style={[styles.fundoTela]}>
         <Text style={{ color: 'black' }}>Detecção de Beacons</Text>
-        {this.beaconIdentificado ? 
-            <FlatList
-            data={this.state.data}
-            keyExtractor={(item) => item.uuid} // Use uma chave única para cada item
-            renderItem={({ item }) => (
-              <Text style={{ color: 'black' }}>{JSON.stringify(item)}</Text>
-            )}
-          /> : 
-          <Text style={{ color: 'black' }}>Nenhum beacon foi identificado, verifique se o bluetooth e a localização estão ativados</Text>
-        }
       </View>
     );
   }

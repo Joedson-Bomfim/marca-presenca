@@ -1524,6 +1524,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@lovemh9395/react-native-ibeacon-simulator@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.npmjs.org/@lovemh9395/react-native-ibeacon-simulator/-/react-native-ibeacon-simulator-3.0.10.tgz"
+  integrity sha512-HsIVbYrCfclgAFekXbQIBTgGEZD9bJdrwOVTEuznRQ+a2MzWolTaaoCidj9oCitM4bRvEqvXE32EAaXW5ktZgg==
+
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.npmjs.org/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz"

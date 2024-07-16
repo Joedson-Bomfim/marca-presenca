@@ -1,4 +1,8 @@
 rootProject.name = 'app'
 apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+
+include ':@lovemh9395_react-native-ibeacon-simulator'
+project(':@lovemh9395_react-native-ibeacon-simulator').projectDir = new File(rootProject.projectDir, '../node_modules/@lovemh9395/react-native-ibeacon-simulator/android')
+
 include ':app'
 includeBuild('../node_modules/react-native-gradle-plugin')
