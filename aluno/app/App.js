@@ -11,9 +11,9 @@ const App = () => {
         ... DefaultTheme,
         colors: {
             ... DefaultTheme.colors,
-            primary: '#2F8E33',
-            secundary: '#27A42B',
-            background: '#5FCE55',
+            primary: '#2E2E9C',
+            secundary: '#3838FF',
+            background: '#6868FC',
             text: '#fff',
             icone: '#fff'
         }
@@ -21,7 +21,7 @@ const App = () => {
 
     return(
         <PaperProvider theme={theme}>
-            <StatusBar backgroundColor={"#2F8E33"}></StatusBar>
+            <StatusBar backgroundColor={"#2E2E9C"}></StatusBar>
             <AuthProvider>
                 <Routes></Routes>
             </AuthProvider>
