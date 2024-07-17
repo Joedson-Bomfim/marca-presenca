@@ -6268,6 +6268,11 @@ react-native-screens@^3.20.0, "react-native-screens@>= 3.0.0":
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-uuid@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.npmjs.org/react-native-uuid/-/react-native-uuid-2.0.2.tgz"
+  integrity sha512-5ypj/hV58P+6VREdjkW0EudSibsH3WdqDERoHKnD9syFWjF+NfRWWrJb2sa3LIwI5zpzMvUiabs+DX40WHpEMw==
+
 react-native-vector-icons@*, react-native-vector-icons@^9.2.0:
   version "9.2.0"
   resolved "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-9.2.0.tgz"
