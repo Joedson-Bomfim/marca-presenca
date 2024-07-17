@@ -4,7 +4,7 @@ import {DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'react-native';
 
 import Routes from './src/routes/routes';
-import AuthProvider from './src/contexts/Auth';
+import AuthProvider from './src/contexts/Context';
 
 const App = () => {
     const theme = {

@@ -4,7 +4,7 @@ import { TextInput, Button, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import styles from "./styles";
-import TemaPrincipal from "../../style/styles";
+import TemaPrincipal from "../../assets/styles";
 
 const Disciplina = ( {navigation} ) => {
     const { colors } = useTheme();

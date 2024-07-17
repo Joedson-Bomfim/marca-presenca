@@ -3,10 +3,10 @@ import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { AuthContext } from "../../contexts/Auth";
+import { AuthContext } from "../../contexts/Context";
 
 import styles from "./styles";
-import TemaPrincipal from "../../style/styles";
+import TemaPrincipal from "../../assets/styles";
 import Loading from "../../components/loading";
 
 const Perfil = ({ navigation }) => {

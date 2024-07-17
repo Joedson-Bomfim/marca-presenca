@@ -1,7 +1,7 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeProfessor from '../pages/HomeProfessor';
+import Home from '../pages/Home';
 
 import ProfessorEdita from "../pages/Professor/ProfessorEdita";
 
@@ -17,6 +17,8 @@ import BeaconDetalhes from '../pages/Beacon/BeaconDetalhe';
 import BeaconCadastra from '../pages/Beacon/BeaconCadastra';
 import BeaconEdita from '../pages/Beacon/BeaconEdita';
 
+import Teste from '../pages/Teste';
+
 import { useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -27,7 +29,8 @@ const Drawer = createDrawerNavigator();
 function HomeStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeProfessor} />
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+        <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
       </Stack.Navigator>
     );
 }

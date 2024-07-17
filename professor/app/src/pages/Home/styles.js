@@ -6,17 +6,8 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center'
     },
-    fotoPerfil: {
-        position: 'absolute',
-        top: 0,
-        alignSelf: 'flex-end',
-        padding: 10
-    },
     marginBottomPrimario: {
         marginBottom: 60
-    },
-    marginBottomSecundario: {
-        marginBottom: 40
     }
 })
 
