@@ -12,12 +12,16 @@ const styles = StyleSheet.create({
     },
     tituloCadastro: {
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 20,
         marginBottom: 30,
         fontWeight: "bold"
     },
     marginBottom: {
         marginBottom: 30
+    },
+    subTitulo: {
+        fontSize: 20,
+        fontWeight: 'bold',
     }
 })
 

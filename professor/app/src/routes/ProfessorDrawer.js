@@ -77,7 +77,7 @@ export default function DrawerRoutes() {
                 width: 250
             },
             drawerActiveTintColor: '#fff',
-            headerStyle:{ backgroundColor: colors.secundary },
+            headerStyle:{ backgroundColor: colors.primary },
             drawerLabelStyle: { color: colors.icone },
             headerTintColor: colors.icone,
             }}>

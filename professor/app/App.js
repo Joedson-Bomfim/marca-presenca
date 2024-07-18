@@ -11,9 +11,9 @@ const App = () => {
         ... DefaultTheme,
         colors: {
             ... DefaultTheme.colors,
-            primary: '#2E2E9C',
-            secundary: '#3838FF',
-            background: '#6868FC',
+            primary: '#3838FF',
+            secundary: '#2E2E9C',
+            background: '#557CE1',
             text: '#fff',
             icone: '#fff'
         }

@@ -31,7 +31,7 @@ class BeaconBackgroundScanScreen extends Component {
 
         if (!allPermissionsGranted) {
           Alert.alert('Permissões necessárias não foram concedidas');
-          return false;
+          return;
         }
       } else if (Platform.Version >= 23) {
         // Para Android 6 (API nível 23) até Android 11 (API nível 30)
@@ -46,12 +46,12 @@ class BeaconBackgroundScanScreen extends Component {
 
         if (!allPermissionsGranted) {
           Alert.alert('Permissões necessárias não foram concedidas');
-          return false;
+          return;
         }
       } else {
         // Para versões anteriores ao Android 6
         Alert.alert('O aplicativo não suporta versões do Android anteriores à 6.0 (Marshmallow).');
-        return false;
+        return;
       }
     
       // Inicializa a detecção de iBeacons
@@ -87,7 +87,7 @@ class BeaconBackgroundScanScreen extends Component {
     if (this.beaconsDidRangeListener) {
       this.beaconsDidRangeListener.remove();
     }
-    Beacons.stopRangingBeaconsInRegion('REGION1').catch((error) => {
+    Beacons.stopRangingBeaconsInRegion('Sala1').catch((error) => {
       console.log('Erro ao parar a varredura de beacons:', error);
     });
   }
@@ -101,7 +101,12 @@ class BeaconBackgroundScanScreen extends Component {
             data={this.state.data}
             keyExtractor={(item) => item.uuid} // Use uma chave única para cada item
             renderItem={({ item }) => (
-              <Text style={{ color: 'black' }}>{JSON.stringify(item)}</Text>
+              <View>
+                <Text style={{ color: 'black' }}>{`UUID: ${item.uuid}`}</Text>
+                <Text style={{ color: 'black' }}>{`Major: ${item.major}`}</Text>
+                <Text style={{ color: 'black' }}>{`Minor: ${item.minor}`}</Text>
+                <Text style={{ color: 'black' }}>{`distância: ${parseFloat(item.distance.toFixed(2))} m`}</Text>
+              </View>
             )}
           /> : 
           <Text style={{ color: 'black' }}>Nenhum beacon foi identificado, verifique se o bluetooth e a localização estão ativados</Text>
