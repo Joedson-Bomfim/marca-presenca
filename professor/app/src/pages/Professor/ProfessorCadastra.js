@@ -3,7 +3,7 @@ import { Text, ScrollView } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 
 import styles from "./styles";
-import TemaPrincipal from "../../style/styles";
+import TemaPrincipal from "../../assets/styles";
 
 const ProfessorCadastra = ( {navigation} ) => {
     const { colors } = useTheme();

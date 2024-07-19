@@ -19,6 +19,9 @@ import BeaconEdita from '../pages/Beacon/BeaconEdita';
 
 import Teste from '../pages/Teste';
 
+import TesteBanco from '../pages/Test';
+import ProfessorTeste from '../pages/Test/professorTeste';
+
 import { useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -61,6 +64,15 @@ function BeaconStack() {
         <Stack.Screen options={{ headerShown: false }} name="BeaconCadastra" component={BeaconCadastra} />
         <Stack.Screen options={{ headerShown: false }} name="BeaconEdita" component={BeaconEdita} />
         <Stack.Screen options={{ headerShown: false }} name="BeaconDetalhes" component={BeaconDetalhes} />
+      </Stack.Navigator>
+    );
+}
+
+function TesteBancoStack() {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen options={{ headerShown: false }} name="Teste" component={TesteBanco} />
+        <Stack.Screen options={{ headerShown: false }} name="ProfessorTeste" component={ProfessorTeste} />
       </Stack.Navigator>
     );
 }
@@ -110,6 +122,14 @@ export default function DrawerRoutes() {
           component={BeaconStack}
           options={{
             drawerIcon: () => <Icon name="lighthouse-on" color={colors.icone} size={40} />,
+            drawerLabel: "Beacons",
+          }}
+        />
+        <Drawer.Screen
+          name="TesteBancoStack"
+          component={TesteBancoStack}
+          options={{
+            drawerIcon: () => <Icon name="database-search" color={colors.icone} size={40} />,
             drawerLabel: "Beacons",
           }}
         />

@@ -1,6 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
+import { initializeDatabase, fetchProfessor, fetchProfessorById } from '../../Controller/ProfessorController';
+//import formataDataHora from '../../services/formatacao';
+
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { AuthContext } from "../../contexts/Context";
@@ -11,10 +14,28 @@ import Loading from "../../components/loading";
 
 const Perfil = ({ navigation }) => {
     const { colors } = useTheme();
-    const { setIsAuthenticated, tipo, usuario, nome, matricula, numero_registro } = useContext(AuthContext);
+    //const { setIsAuthenticated, tipo, usuario, matricula, numero_registro } = useContext(AuthContext);
     const [visible, setVisible] = useState(false);
-    const registro_tipo = tipo == 'aluno' ? 'Matrícula' : 'Número de Registro';
-    const registro = tipo == 'aluno' ? matricula : numero_registro;
+    const[nome, setNome] = useState('');
+    const[numero_registro, setNumeroRegistro] = useState('');
+
+    useEffect(() => {
+        const init = async () => {
+            await initializeDatabase();
+            carregarDadosProfessor();
+        };
+        init();
+    }, []);
+
+    const carregarDadosProfessor = async () => {
+        try {
+            const professor = await fetchProfessorById(1);
+            setNome(professor.nome);
+            setNumeroRegistro(professor.numero_registro);
+        } catch (error) {
+            console.log('Falha ao carregar professor');
+        }
+    };
 
     const confirmarSaida = () => {
         Alert.alert(
@@ -39,39 +60,24 @@ const Perfil = ({ navigation }) => {
         setVisible(false);
     }
 
-    let rotaEdita = tipo == 'aluno' ? 'AlunoEdita' : 'ProfessorEdita';
-
     return (
         <ScrollView style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Loading visible={visible}/>
             <View style={styles.cabecalho}>
-                <Text style={[styles.tituloDadosPessoais, { color: colors.text }]}>Dados Pessoais</Text>
+                <Text style={[styles.tituloDadosPessoais, { color: colors.text }]}>Perfil</Text>
 
                 <TouchableOpacity onPress={() => { navigation.navigate(rotaEdita) }}>
                     <Icon name="square-edit-outline" color="#fff" size={40} />
                 </TouchableOpacity>
             </View>
-            <View style={{alignSelf: 'center'}}>
-                <Icon name="account-circle" color={colors.icone} size={100}/>
-            </View>
 
-            <View style={styles.linhaConteudo}>
-                <Text style={[styles.conteudo, { color: colors.text }]}>Nome: </Text>
+            <View>
                 <Text style={[styles.conteudo, { color: colors.text, flexWrap: 'wrap', width: '80%'  }]} >{nome}</Text>
             </View>
-            <View style={styles.linhaConteudo}>
-                <Text style={[styles.conteudo, { color: colors.text }]}>{registro_tipo}: </Text>
-                <Text style={[styles.conteudo, { color: colors.text }]}>{registro}</Text>
+            <View>
+                <Text style={[styles.conteudo, { color: colors.text }]}>Número de Registro: </Text>
+                <Text style={[styles.conteudo, { color: colors.text }]}>{numero_registro}</Text>
             </View>
-            <View style={styles.linhaConteudo}>
-                <Text style={[styles.conteudo, { color: colors.text }]}>Usuário: </Text>
-                <Text style={[styles.conteudo, { color: colors.text }]}>{usuario}</Text>
-            </View>
-
-            <Text style={[styles.tituloDisciplinas, { color: colors.text }]}>Disciplinas</Text>
-
-            <Text style={[styles.conteudo, { color: colors.text }]}>Física</Text>
-            <Text style={[styles.conteudo, { color: colors.text }]}>Química</Text>
 
             <Button mode="contained" onPress={confirmarSaida} style={[styles.botaoSair, TemaPrincipal.buttonCadastraEdita]}>
                 SAIR
