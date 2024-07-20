@@ -1,27 +1,4 @@
-import openDatabase from '../database/database';
-import { createTable, insertProfessor, getProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
-
-const initializeDatabase = async () => {
-    try {
-        await createTable();
-        console.log('Database initialized');
-    } catch (error) {
-        console.error('Error initializing database:', error);
-    }
-};
-
-const enableForeignKeys = () => {
-    return openDatabase().then((db) => {
-        return db.transaction((tx) => {
-            return tx.executeSql('PRAGMA foreign_keys = ON;')
-                .then(() => Promise.resolve())
-                .catch((error) => {
-                    console.error('Error setting foreign keys:', error);
-                    return Promise.reject(error);
-                });
-        });
-    });
-};
+import { insertProfessor, getProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
 
 const addProfessor = async (nome, numero_registro, criado_em) => {
     try {
@@ -85,4 +62,4 @@ const removeProfessorById = async (id) => {
     }
 };
 
-export { initializeDatabase, enableForeignKeys, addProfessor, fetchProfessor, UserStatusController, fetchProfessorById, cleanUpProfessor, removeProfessorById };
+export { addProfessor, fetchProfessor, UserStatusController, fetchProfessorById, cleanUpProfessor, removeProfessorById };

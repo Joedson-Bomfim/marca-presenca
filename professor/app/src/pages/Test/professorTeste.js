@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, Button, useTheme } from "react-native-paper";
-import { initializeDatabase, enableForeignKeys, addProfessor, fetchProfessor, cleanUpProfessor, removeProfessorById } from '../../Controller/ProfessorController';
+import { addProfessor, fetchProfessor, cleanUpProfessor, removeProfessorById } from '../../Controller/ProfessorController';
 import { dataHora, formataDataHoraPadraoAmericano } from '../../services/formatacao';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -23,8 +23,6 @@ const BookScreen = () => {
 
     useEffect(() => {
         const init = async () => {
-            await initializeDatabase();
-            await enableForeignKeys();
             listaProfessores();
             setCriadoEm(formattedDate);
         };
@@ -37,7 +35,7 @@ const BookScreen = () => {
             const listaProfessor = await fetchProfessor();
             setProfessor(listaProfessor);
         } catch (error) {
-            setError('Não foi possível carregar os professores. Verifique se a tabela existe.');
+            console.log('Não foi possível carregar os professores. Verifique se a tabela existe.');
         } finally {
             setLoading(false);
         }
@@ -92,7 +90,7 @@ const BookScreen = () => {
         );
     }
 
-    function teste(id) {
+    function apagaProfessor(id) {
         Alert.alert(
             "Confirmação",
             "Tem certeza que deseja excluir esse professor?",
@@ -161,7 +159,7 @@ const BookScreen = () => {
                                 <Text style={styles.complemento}>{item.numero_registro}</Text>
                                 <Text style={styles.complemento}>{item.criado_em}</Text>
                             </View>
-                            <TouchableOpacity onPress={() => teste(item.id.toString())}>
+                            <TouchableOpacity onPress={() => apagaProfessor(item.id.toString())}>
                                 <Icon name="trash-can" color="#fff" size={40} />
                             </TouchableOpacity>
                         </View>

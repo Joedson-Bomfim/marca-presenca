@@ -1,15 +1,16 @@
 import React, { createContext, useState } from 'react';
 
-export const AuthContext = createContext({})
+export const Context = createContext({})
 
-function AuthProvider({children}) {
+function ContextProvider({children}) {
     const [isCadastroConcluido, setIsCadastro] = useState(false);
+    const [professorId, setProfessorId] = useState('1'); //Usário provisório...dps irei adicionar uma lógica para setar o id do professor
 
     return (
-        <AuthContext.Provider value={{isCadastroConcluido, setIsCadastro }}>
+        <Context.Provider value={{isCadastroConcluido, setIsCadastro, professorId, setProfessorId }}>
             {children}
-        </AuthContext.Provider>
+        </Context.Provider>
     );
 }
 
-export default AuthProvider;
+export default ContextProvider;

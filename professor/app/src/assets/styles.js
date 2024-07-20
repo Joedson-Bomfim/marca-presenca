@@ -9,6 +9,11 @@ const styles = StyleSheet.create({
     },
     buttonCadastraEdita: {
         marginBottom: 40
+    },
+    botaoCadastro:{
+       width: 200, 
+       marginTop: 10,
+       alignSelf: 'center',
     }
 })
 

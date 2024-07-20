@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { StatusBar } from 'react-native';
 
 import Routes from './src/routes/routes';
 import AuthProvider from './src/contexts/Context';
+
+import { initializeDatabase } from './src/Controller/DatabaseController';
 
 const App = () => {
     const theme = {
@@ -18,6 +20,17 @@ const App = () => {
             icone: '#fff'
         }
     }
+
+    useEffect(() => {
+        const init = async () => {
+            try {
+                await initializeDatabase();
+            } catch (error) {
+                console.error('Erro ao inicializar banco de dados:', error);
+            }
+        };
+        init();
+    }, []);
 
     return(
         <PaperProvider theme={theme}>

@@ -11,4 +11,15 @@ const openDatabase = () => {
     return SQLite.openDatabase({ name: database_name, location: 'default' });
 };
 
+openDatabase().then((db) => {
+    return db.transaction((tx) => {
+        return tx.executeSql('PRAGMA foreign_keys = ON;')
+            .then(() => Promise.resolve())
+            .catch((error) => {
+                console.error('Error setting foreign keys:', error);
+                return Promise.reject(error);
+            });
+    });
+});
+
 export default openDatabase;

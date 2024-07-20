@@ -1,6 +1,6 @@
 import openDatabase from '../database/database';
 
-const createTable = () => {
+const createProfessor = () => {
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(
@@ -92,6 +92,16 @@ const truncateProfessor = () => {
             return tx.executeSql(
                 'DELETE FROM Professores',
                 [],
+                () => {
+                    console.log('Tabela Professores truncada com sucesso');
+                    // Após truncar, resetar o autoincrement
+                    tx.executeSql(
+                        'UPDATE SQLITE_SEQUENCE SET seq = 0 WHERE name = "Professores"',
+                        [],
+                        () => console.log('Sequência de autoincrement reiniciada com sucesso'),
+                        (error) => console.error('Erro ao reiniciar sequência de autoincrement:', error)
+                    );
+                },
                 () => console.log('Tabela Professores truncada com sucesso'),
                 (error) => console.error('Erro ao truncar tabela Professores:', error)
             );
@@ -112,4 +122,4 @@ const deleteProfessorById = (id) => {
     });
 };
 
-export { createTable, insertProfessor, getProfessor, getUserStatus, getProfessorById, truncateProfessor, deleteProfessorById };
+export { createProfessor, insertProfessor, getProfessor, getUserStatus, getProfessorById, truncateProfessor, deleteProfessorById };

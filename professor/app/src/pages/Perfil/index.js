@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
-import { initializeDatabase, fetchProfessor, fetchProfessorById } from '../../Controller/ProfessorController';
+import { fetchProfessorById } from '../../Controller/ProfessorController';
 //import formataDataHora from '../../services/formatacao';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { AuthContext } from "../../contexts/Context";
+import { Context } from '../../contexts/Context'
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -14,14 +14,15 @@ import Loading from "../../components/loading";
 
 const Perfil = ({ navigation }) => {
     const { colors } = useTheme();
-    //const { setIsAuthenticated, tipo, usuario, matricula, numero_registro } = useContext(AuthContext);
+    //const { setIsAuthenticated, tipo, usuario, matricula, numero_registro } = useContext(Context);
     const [visible, setVisible] = useState(false);
     const[nome, setNome] = useState('');
     const[numero_registro, setNumeroRegistro] = useState('');
 
+    const { professorId, setProfessorId } = useContext(Context);
+
     useEffect(() => {
         const init = async () => {
-            await initializeDatabase();
             carregarDadosProfessor();
         };
         init();
@@ -78,6 +79,7 @@ const Perfil = ({ navigation }) => {
                 <Text style={[styles.conteudo, { color: colors.text }]}>Número de Registro: </Text>
                 <Text style={[styles.conteudo, { color: colors.text }]}>{numero_registro}</Text>
             </View>
+            <Text>{professorId}</Text>
 
             <Button mode="contained" onPress={confirmarSaida} style={[styles.botaoSair, TemaPrincipal.buttonCadastraEdita]}>
                 SAIR
