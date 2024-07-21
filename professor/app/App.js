@@ -24,7 +24,6 @@ const App = () => {
 
     useEffect(() => {
         const estadoDoAplicativo = (nextAppState) => {
-            console.log(nextAppState);
             if (nextAppState === 'background' || nextAppState === 'inactive') {
                 closeDatabase();
             } 
@@ -40,7 +39,7 @@ const App = () => {
             }
         };
         //Lembrar de ativar esse daqui quando eu criar novas tabelas
-        //criarTabelas();
+        criarTabelas();
     }, []);
 
     return(

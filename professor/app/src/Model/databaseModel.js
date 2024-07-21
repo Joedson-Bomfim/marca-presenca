@@ -1,11 +1,11 @@
 import { openDatabase } from '../database/database';
 
-const getTableNames = () => { 
+const getTables = () => { 
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ('sqlite_sequence', 'android_metadata');",
+                    "SELECT name FROM sqlite_master WHERE type='table' AND name NOT IN ('android_metadata', 'sqlite_sequence');",
                     [],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
@@ -35,4 +35,4 @@ const dropTable = (tableName) => {
     });
 };
 
-export { getTableNames, dropTable };
+export { getTables, dropTable };

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { Button, useTheme } from "react-native-paper";
-import { removeProfessorById } from '../../Controller/ProfessorController';
 import { fetchTabela, deleteTabela } from '../../Controller/DatabaseController';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 

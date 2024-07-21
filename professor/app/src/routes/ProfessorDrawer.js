@@ -22,6 +22,7 @@ import Teste from '../pages/Teste';
 import TesteBanco from '../pages/Test';
 import ProfessorTeste from '../pages/Test/professorTeste';
 import DisciplinaTeste from '../pages/Test/disciplinaTeste';
+import AlunoTeste from '../pages/Test/alunoTeste';
 import Tabela from '../pages/Test/tabelas';
 
 import { useTheme } from "react-native-paper";
@@ -76,6 +77,7 @@ function TesteBancoStack() {
         <Stack.Screen options={{ headerShown: false }} name="Teste" component={TesteBanco} />
         <Stack.Screen options={{ headerShown: false }} name="ProfessorTeste" component={ProfessorTeste} />
         <Stack.Screen options={{ headerShown: false }} name="DisciplinaTeste" component={DisciplinaTeste} />
+        <Stack.Screen options={{ headerShown: false }} name="AlunoTeste" component={AlunoTeste} />
         <Stack.Screen options={{ headerShown: false }} name="Tabela" component={Tabela} />
       </Stack.Navigator>
     );

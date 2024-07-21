@@ -1,13 +1,13 @@
-import { getTableNames, dropTable } from '../Model/databaseModel';
+import { getTables, dropTable } from '../Model/databaseModel';
 import { createProfessor } from '../Model/ProfessorModel';
 import { createDisciplina } from '../Model/DisciplinaModel';
-//import { createAlunoTable } from '../models/AlunoModel';
+import { createAluno } from '../Model/AlunoModel';
 
 const initializeDatabase = async () => {
     try {
         await createProfessor();
         await createDisciplina();
-        // Adicione aqui chamadas para criar outras tabelas conforme necessário
+        await createAluno();
         console.log('Banco de dados inicializado');
     } catch (error) {
         console.error('Erro ao inicializar banco de dados:', error);
@@ -16,10 +16,10 @@ const initializeDatabase = async () => {
 
 const fetchTabela = async () => {
     try {
-        const tabelas = await getTableNames();
+        const tabelas = await getTables();
         return tabelas;
     } catch (error) {
-        console.error('Erro ao listar professor:', error);
+        console.error('Erro ao listar tabelas:', error);
         return [];
     }
 };
@@ -29,7 +29,7 @@ const deleteTabela = async (nome) => {
         const books = await dropTable(nome);
         return books;
     } catch (error) {
-        console.error('Erro ao listar professor:', error);
+        console.error('Erro ao apagar tabela:', error);
         return [];
     }
 };
