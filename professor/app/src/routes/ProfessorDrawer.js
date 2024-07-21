@@ -3,6 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Home from '../pages/Home';
 
+import MarcaPresencaP1 from '../pages/MarcaPresenca/selecionaDisciplinaAula';
+import MarcaPresencaP2 from '../pages/MarcaPresenca/procuraAluno';
+
 import ProfessorEdita from "../pages/Professor/ProfessorEdita";
 
 import Perfil from '../pages/Perfil';
@@ -11,11 +14,6 @@ import Disciplina from '../pages/Disciplina';
 import DisciplinaDetalhe from '../pages/Disciplina/DisciplinaDetalhe';
 import DisciplinaCadastra from "../pages/Disciplina/DisciplinaCadastra";
 import DisciplinaEdita from "../pages/Disciplina/DisciplinaEdita";
-
-import Beacon from '../pages/Beacon';
-import BeaconDetalhes from '../pages/Beacon/BeaconDetalhe';
-import BeaconCadastra from '../pages/Beacon/BeaconCadastra';
-import BeaconEdita from '../pages/Beacon/BeaconEdita';
 
 import Teste from '../pages/Teste';
 
@@ -39,6 +37,8 @@ function HomeStack() {
     return (
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+        <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP1" component={MarcaPresencaP1} />
+        <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP2" component={MarcaPresencaP2} />
         <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
       </Stack.Navigator>
     );
@@ -66,10 +66,8 @@ function DisciplinaStack() {
 function BeaconStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Beacon" component={Beacon} />
-        <Stack.Screen options={{ headerShown: false }} name="BeaconCadastra" component={BeaconCadastra} />
-        <Stack.Screen options={{ headerShown: false }} name="BeaconEdita" component={BeaconEdita} />
-        <Stack.Screen options={{ headerShown: false }} name="BeaconDetalhes" component={BeaconDetalhes} />
+        <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
+        <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
       </Stack.Navigator>
     );
 }

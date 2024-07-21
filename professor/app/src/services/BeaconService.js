@@ -1,5 +1,3 @@
-// services/BeaconService.js
-
 import { useEffect, useState } from 'react';
 import { PermissionsAndroid, Alert, Platform } from 'react-native';
 import Beacons from '@hkpuits/react-native-beacons-manager';
@@ -7,6 +5,7 @@ import Beacons from '@hkpuits/react-native-beacons-manager';
 const useBeaconService = () => {
   const [data, setData] = useState([]);
   const [beaconIdentificado, setBeaconIdentificado] = useState(false);
+  const [estadoBeacon, setEstadoBeacon] = useState(false);
   const [beaconsDidRangeListener, setBeaconsDidRangeListener] = useState(null);
 
   useEffect(() => {
@@ -45,47 +44,14 @@ const useBeaconService = () => {
           return;
         }
 
-        // Inicializa a detecção de iBeacons
-        Beacons.init(); // para definir o NotificationChannel e habilitar a varredura em segundo plano
-        Beacons.detectIBeacons();
-
-        try {
-          await Beacons.startRangingBeaconsInRegion('Sala1');
-          console.log('Varredura de beacons iniciada com sucesso!');
-        } catch (error) {
-          console.log('Varredura de beacons não iniciada, erro:', error);
-        }
-
-        // Configura o ouvinte para a varredura de beacons
-        const listener = Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
-          if (data.beacons.length > 0) {
-            // Dados do beacon foram coletados, você pode acessá-los aqui
-            console.log('Dados do beacon coletados:', data.beacons);
-            setData(data.beacons);
-            setBeaconIdentificado(true);
-          } else {
-            console.log('Nenhum dado de beacon coletado.');
-            setBeaconIdentificado(false);
-          }
-        });
-
-        setBeaconsDidRangeListener(listener);
+        await startBeaconRanging();
 
       } catch (error) {
         console.log('Erro ao solicitar permissão de localização:', error);
       }
 
       return () => {
-        // Limpeza ao desmontar o componente
-        if (beaconsDidRangeListener) {
-          beaconsDidRangeListener.remove();
-          console.log('Listener de beacons removido.');
-        }
-        Beacons.stopRangingBeaconsInRegion('Sala1').then(() => {
-          console.log('Varredura de beacons parada com sucesso.');
-        }).catch((error) => {
-          console.log('Erro ao parar a varredura de beacons:', error);
-        });
+        stopBeaconRanging();
       };
     };
 
@@ -93,19 +59,53 @@ const useBeaconService = () => {
 
     // Certifique-se de parar a varredura e limpar o listener ao desmontar o componente
     return () => {
-      if (beaconsDidRangeListener) {
-        beaconsDidRangeListener.remove();
-        console.log('Listener de beacons removido.');
-      }
-      Beacons.stopRangingBeaconsInRegion('Sala1').then(() => {
-        console.log('Varredura de beacons parada com sucesso.');
-      }).catch((error) => {
-        console.log('Erro ao parar a varredura de beacons:', error);
-      });
+      stopBeaconRanging();
     };
   }, []); // O segundo argumento vazio garante que o useEffect seja executado apenas uma vez (equivalente ao componentDidMount)
 
-  return { data, beaconIdentificado };
+  const startBeaconRanging = async () => {
+    Beacons.init(); // para definir o NotificationChannel e habilitar a varredura em segundo plano
+    Beacons.detectIBeacons();
+    setEstadoBeacon(true);
+
+    try {
+      await Beacons.startRangingBeaconsInRegion('Sala1');
+      console.log('Varredura de beacons iniciada com sucesso!');
+    } catch (error) {
+      console.log('Varredura de beacons não iniciada, erro:', error);
+    }
+
+    // Configura o ouvinte para a varredura de beacons
+    const listener = Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
+      if (data.beacons.length > 0) {
+        // Dados do beacon foram coletados, você pode acessá-los aqui
+        console.log('Dados do beacon coletados:', data.beacons);
+        setData(data.beacons);
+        setBeaconIdentificado(true);
+      } else {
+        console.log('Nenhum dado de beacon coletado.');
+        setBeaconIdentificado(false);
+      }
+    });
+
+    setBeaconsDidRangeListener(listener);
+  };
+
+  const stopBeaconRanging = async () => {
+    if (beaconsDidRangeListener) {
+      beaconsDidRangeListener.remove();
+      console.log('Listener de beacons removido.');
+    }
+    try {
+      await Beacons.stopRangingBeaconsInRegion('Sala1');
+      setEstadoBeacon(false);
+      console.log('Varredura de beacons parada com sucesso.');
+    } catch (error) {
+      console.log('Erro ao parar a varredura de beacons:', error);
+    }
+  };
+
+  return { data, beaconIdentificado, estadoBeacon, startBeaconRanging, stopBeaconRanging };
 };
 
 export default useBeaconService;

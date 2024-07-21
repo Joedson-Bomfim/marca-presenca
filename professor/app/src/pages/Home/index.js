@@ -11,12 +11,16 @@ const Home = ( {navigation} ) => {
 
     return(
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('Teste');}} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('MarcaPresencaP1');}} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
                 Marca Presença
             </Button>
 
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaStack');}} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
                 Aulas Ministradas
+            </Button>
+
+            <Button onPress={() => { navigation.navigate('Teste'); }} theme={{ colors: { primary: "#fff" } }}>
+                Teste Beacon
             </Button>
         </View>
     )
