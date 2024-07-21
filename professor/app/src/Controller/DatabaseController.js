@@ -2,12 +2,14 @@ import { getTables, dropTable } from '../Model/databaseModel';
 import { createProfessor } from '../Model/ProfessorModel';
 import { createDisciplina } from '../Model/DisciplinaModel';
 import { createAluno } from '../Model/AlunoModel';
+import { createAlunoDisciplina } from '../Model/AlunoDisciplinaModel';
 
 const initializeDatabase = async () => {
     try {
         await createProfessor();
         await createDisciplina();
         await createAluno();
+        await createAlunoDisciplina();
         console.log('Banco de dados inicializado');
     } catch (error) {
         console.error('Erro ao inicializar banco de dados:', error);

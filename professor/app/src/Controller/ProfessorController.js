@@ -58,7 +58,7 @@ const removeProfessorById = async (id) => {
         await deleteProfessorById(id);
         console.log('Professor apagado');
     } catch (error) {
-        console.error('Erro ao adicionar professor:', error);
+        console.error('Erro ao Remover professor:', error);
     }
 };
 
