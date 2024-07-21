@@ -29,7 +29,11 @@ const Teste = ( {navigation} ) => {
             </Button> 
             
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('AulaTeste');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
-                Aula
+                Aulas
+            </Button> 
+            
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('PresencaTeste');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
+                Presenças
             </Button> 
             
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('Tabela');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>

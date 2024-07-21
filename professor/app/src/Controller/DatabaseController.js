@@ -4,6 +4,7 @@ import { createDisciplina } from '../Model/DisciplinaModel';
 import { createAluno } from '../Model/AlunoModel';
 import { createAlunoDisciplina } from '../Model/AlunoDisciplinaModel';
 import { createAula } from '../Model/AulaModel';
+import { createPresenca } from '../Model/PresencaModel';
 
 const initializeDatabase = async () => {
     try {
@@ -12,7 +13,16 @@ const initializeDatabase = async () => {
         await createAluno();
         await createAlunoDisciplina();
         await createAula();
+        await createPresenca();
         console.log('Banco de dados inicializado');
+    } catch (error) {
+        console.error('Erro ao inicializar banco de dados:', error);
+    }
+};
+
+const criarTabelas = async () => {
+    try {
+        await initializeDatabase();
     } catch (error) {
         console.error('Erro ao inicializar banco de dados:', error);
     }
@@ -44,4 +54,4 @@ const UserStatusController = async () => {
 };
 */
 
-export { initializeDatabase, fetchTabela, deleteTabela };
+export { criarTabelas, fetchTabela, deleteTabela };

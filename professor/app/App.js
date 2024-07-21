@@ -7,7 +7,7 @@ import Routes from './src/routes/routes';
 import AuthProvider from './src/contexts/Context';
 
 import { closeDatabase } from './src/database/database';
-import { initializeDatabase } from './src/Controller/DatabaseController';
+import { criarTabelas } from './src/Controller/DatabaseController';
 
 const App = () => {
     const theme = {
@@ -31,15 +31,8 @@ const App = () => {
         
         AppState.addEventListener('change', estadoDoAplicativo);
         
-        const criarTabelas = async () => {
-            try {
-                await initializeDatabase();
-            } catch (error) {
-                console.error('Erro ao inicializar banco de dados:', error);
-            }
-        };
         //Lembrar de ativar esse daqui quando eu criar novas tabelas
-        criarTabelas();
+        //criarTabelas();
     }, []);
 
     return(
