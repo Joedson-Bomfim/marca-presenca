@@ -1,4 +1,4 @@
-import { openDatabase,  closeDatabase} from '../database/database';
+import { openDatabase } from '../database/database';
 
 const getTableNames = () => { 
     return new Promise((resolve, reject) => {

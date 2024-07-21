@@ -6,7 +6,7 @@ import {DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import Routes from './src/routes/routes';
 import AuthProvider from './src/contexts/Context';
 
-import { closeDatabase} from './src/database/database';
+import { closeDatabase } from './src/database/database';
 import { initializeDatabase } from './src/Controller/DatabaseController';
 
 const App = () => {
