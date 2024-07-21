@@ -11,10 +11,10 @@ const addProfessor = async (nome, numero_registro, criado_em) => {
 
 const fetchProfessor = async () => {
     try {
-        const books = await getProfessor();
-        return books;
+        const professores = await getProfessor();
+        return professores;
     } catch (error) {
-        console.error('Erro ao listar professor:', error);
+        console.error('Erro ao listar professor:', error.message || error);
         return [];
     }
 };

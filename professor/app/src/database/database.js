@@ -3,23 +3,45 @@ SQLite.DEBUG(true);
 SQLite.enablePromise(true);
 
 const database_name = "marca-presenca.db";
-const database_version = "1.0";
-const database_displayname = "Marca presenca";
-const database_size = 200000;
+
+// Instância global do banco de dados
+let dbInstance = null;
 
 const openDatabase = () => {
-    return SQLite.openDatabase({ name: database_name, location: 'default' });
+    if (dbInstance) {
+        return Promise.resolve(dbInstance);
+    }
+    
+    return SQLite.openDatabase({ name: database_name, location: 'default' })
+        .then((db) => {
+            dbInstance = db; // Armazena a instância globalmente
+            return db.executeSql('PRAGMA foreign_keys = ON;')
+                .then(() => db)
+                .catch((error) => {
+                    console.error('Erro ao configurar chaves estrangeiras:', error);
+                    return Promise.reject(error);
+                });
+        })
+        .catch((error) => {
+            console.error('Erro ao abrir o banco de dados:', error);
+            return Promise.reject(error);
+        });
 };
 
-openDatabase().then((db) => {
-    return db.transaction((tx) => {
-        return tx.executeSql('PRAGMA foreign_keys = ON;')
-            .then(() => Promise.resolve())
-            .catch((error) => {
-                console.error('Error setting foreign keys:', error);
-                return Promise.reject(error);
-            });
-    });
-});
+const closeDatabase = () => {
+    if (dbInstance) {
+        dbInstance.close(
+            () => {
+                console.log('Database fechado com sucesso');
+                dbInstance = null; 
+            },
+            (error) => {
+                console.error('Erro ao fechar o banco de dados:', error);
+            }
+        );
+    } else {
+        console.log('Nenhuma instância do banco de dados aberta.');
+    }
+};
 
-export default openDatabase;
+export { openDatabase,  closeDatabase};

@@ -14,7 +14,12 @@ const Teste = ( {navigation} ) => {
             <Text style={[styles.titulo, {color: colors.text }]}>Testes</Text>
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('ProfessorTeste');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
                 Professores
+            </Button>
+            
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaTeste');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
+                Disciplinas
             </Button> 
+            
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('Tabela');}} style={[styles.marginBottom, styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
                 Tabelas
             </Button>   

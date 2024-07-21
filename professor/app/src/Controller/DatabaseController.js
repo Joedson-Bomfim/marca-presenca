@@ -1,11 +1,12 @@
-import { createProfessor } from '../Model/ProfessorModel';
 import { getTableNames, dropTable } from '../Model/databaseModel';
+import { createProfessor } from '../Model/ProfessorModel';
+import { createDisciplina } from '../Model/DisciplinaModel';
 //import { createAlunoTable } from '../models/AlunoModel';
 
 const initializeDatabase = async () => {
     try {
         await createProfessor();
-        //await createAlunoTable();
+        await createDisciplina();
         // Adicione aqui chamadas para criar outras tabelas conforme necessário
         console.log('Banco de dados inicializado');
     } catch (error) {

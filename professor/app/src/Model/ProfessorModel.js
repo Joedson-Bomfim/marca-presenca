@@ -1,10 +1,16 @@
-import openDatabase from '../database/database';
+import { openDatabase,  closeDatabase} from '../database/database';
 
 const createProfessor = () => {
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
-            return tx.executeSql(
-                'CREATE TABLE IF NOT EXISTS Professores (id INTEGER PRIMARY KEY AUTOINCREMENT, nome TEXT, numero_registro TEXT, criado_em TEXT, atualizado_em)',
+            return tx.executeSql(`
+                CREATE TABLE IF NOT EXISTS Professores (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT,
+                numero_registro TEXT, 
+                criado_em TEXT, 
+                atualizado_em TEXT
+                )`,
                 [],
                 () => console.log('Table criada com sucesso'),
                 (error) => console.error('Error creating table:', error)

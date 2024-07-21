@@ -1,11 +1,12 @@
 import 'react-native-gesture-handler';
 import React, { useEffect } from 'react';
+import { StatusBar, AppState } from 'react-native';
 import {DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
-import { StatusBar } from 'react-native';
 
 import Routes from './src/routes/routes';
 import AuthProvider from './src/contexts/Context';
 
+import { closeDatabase} from './src/database/database';
 import { initializeDatabase } from './src/Controller/DatabaseController';
 
 const App = () => {
@@ -22,14 +23,24 @@ const App = () => {
     }
 
     useEffect(() => {
-        const init = async () => {
+        const estadoDoAplicativo = (nextAppState) => {
+            console.log(nextAppState);
+            if (nextAppState === 'background' || nextAppState === 'inactive') {
+                closeDatabase();
+            } 
+        };
+        
+        AppState.addEventListener('change', estadoDoAplicativo);
+        
+        const criarTabelas = async () => {
             try {
                 await initializeDatabase();
             } catch (error) {
                 console.error('Erro ao inicializar banco de dados:', error);
             }
         };
-        init();
+        //Lembrar de ativar esse daqui quando eu criar novas tabelas
+        //criarTabelas();
     }, []);
 
     return(

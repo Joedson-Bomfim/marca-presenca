@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 
-const BookScreen = () => {  
+const ProfessorTeste = () => {  
     const { colors } = useTheme();
 
     const now = dataHora();
@@ -24,7 +24,6 @@ const BookScreen = () => {
     useEffect(() => {
         const init = async () => {
             listaProfessores();
-            setCriadoEm(formattedDate);
         };
         init();
     }, []);
@@ -34,6 +33,7 @@ const BookScreen = () => {
         try {
             const listaProfessor = await fetchProfessor();
             setProfessor(listaProfessor);
+            console.log(listaProfessor);
         } catch (error) {
             console.log('Não foi possível carregar os professores. Verifique se a tabela existe.');
         } finally {
@@ -68,9 +68,7 @@ const BookScreen = () => {
             await addProfessor(nome, numero_registro, criado_em);
             setNome('');
             setNumeroRegistro('');
-            setCriadoEm('');
             listaProfessores();
-            setCriadoEm(formattedDate);
         }
     };
 
@@ -173,4 +171,4 @@ const BookScreen = () => {
     );
 };
 
-export default BookScreen;
+export default ProfessorTeste;
