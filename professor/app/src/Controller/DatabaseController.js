@@ -3,6 +3,7 @@ import { createProfessor } from '../Model/ProfessorModel';
 import { createDisciplina } from '../Model/DisciplinaModel';
 import { createAluno } from '../Model/AlunoModel';
 import { createAlunoDisciplina } from '../Model/AlunoDisciplinaModel';
+import { createAula } from '../Model/AulaModel';
 
 const initializeDatabase = async () => {
     try {
@@ -10,6 +11,7 @@ const initializeDatabase = async () => {
         await createDisciplina();
         await createAluno();
         await createAlunoDisciplina();
+        await createAula();
         console.log('Banco de dados inicializado');
     } catch (error) {
         console.error('Erro ao inicializar banco de dados:', error);
