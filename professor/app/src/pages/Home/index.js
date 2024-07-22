@@ -22,6 +22,10 @@ const Home = ( {navigation} ) => {
             <Button onPress={() => { navigation.navigate('Teste'); }} theme={{ colors: { primary: "#fff" } }}>
                 Teste Beacon
             </Button>
+            
+            <Button onPress={() => { navigation.navigate('TesteMelhorado'); }} theme={{ colors: { primary: "#fff" } }}>
+                Teste Beacon 2
+            </Button>
         </View>
     )
 }

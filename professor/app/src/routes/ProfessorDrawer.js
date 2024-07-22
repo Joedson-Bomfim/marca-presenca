@@ -16,6 +16,7 @@ import DisciplinaCadastra from "../pages/Disciplina/DisciplinaCadastra";
 import DisciplinaEdita from "../pages/Disciplina/DisciplinaEdita";
 
 import Teste from '../pages/Teste';
+import TesteMelhorado from '../pages/Teste/testeMelhorado';
 
 import TesteBanco from '../pages/Test';
 import ProfessorTeste from '../pages/Test/professorTeste';
@@ -40,6 +41,7 @@ function HomeStack() {
         <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP1" component={MarcaPresencaP1} />
         <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP2" component={MarcaPresencaP2} />
         <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
+        <Stack.Screen options={{ headerShown: false }} name="TesteMelhorado" component={TesteMelhorado} />
       </Stack.Navigator>
     );
 }

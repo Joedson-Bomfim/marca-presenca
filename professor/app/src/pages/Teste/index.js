@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, FlatList } from 'react-native';
 import { TextInput, Button, useTheme } from "react-native-paper";
-import useBeaconService from "../../services/BeaconService";
+import useBeaconService from "../../services/BeaconTeste";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../../assets/styles";
@@ -17,8 +17,7 @@ const Teste = ( {navigation} ) => {
             <Text style={[styles.titulo, {color: colors.text }]}>Disciplinas</Text>
 
             <Text style={{ color: colors.text }}>Detecção de Beacons</Text>
-            {beaconIdentificado ?
-              <FlatList
+            <FlatList
                 data={data}
                 keyExtractor={(item) => item.uuid} // Use uma chave única para cada item
                 renderItem={({ item }) => (
@@ -29,9 +28,7 @@ const Teste = ( {navigation} ) => {
                     <Text style={{ color: colors.text }}>{`Distância: ${parseFloat(item.distance.toFixed(4))} m`}</Text>
                   </View>
                 )}
-              /> :
-              <Text style={{ color: colors.text }}>Nenhum beacon foi identificado, verifique se o bluetooth e a localização estão ativados</Text>
-            }  
+            /> 
         </View>
     )
 }

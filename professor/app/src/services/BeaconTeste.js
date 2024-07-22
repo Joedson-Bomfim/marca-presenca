@@ -3,7 +3,8 @@ import { PermissionsAndroid, Alert, Platform } from 'react-native';
 import Beacons from '@hkpuits/react-native-beacons-manager';
 
 const useBeaconService = () => {
-  const [uuidList, setUuidList] = useState(new Set()); // Usar um Set para armazenar UUIDs únicos
+  const [data, setData] = useState([]);
+  const [beaconIdentificado, setBeaconIdentificado] = useState(false);
   const [estadoBeacon, setEstadoBeacon] = useState(false);
   const [beaconsDidRangeListener, setBeaconsDidRangeListener] = useState(null);
 
@@ -77,23 +78,13 @@ const useBeaconService = () => {
     // Configura o ouvinte para a varredura de beacons
     const listener = Beacons.BeaconsEventEmitter.addListener('beaconsDidRange', (data) => {
       if (data.beacons.length > 0) {
-        // Filtra e armazena apenas UUIDs novos
-        setUuidList(prevSet => {
-          const newUuids = data.beacons
-            .map(beacon => beacon.uuid) // Extrai UUIDs dos beacons
-            .filter(uuid => !prevSet.has(uuid)); // Filtra UUIDs novos
-
-          if (newUuids.length > 0) {
-            console.log('Novos UUIDs coletados:', newUuids);
-            // Cria um novo Set que inclui os UUIDs antigos e novos
-            return new Set([...prevSet, ...newUuids]);
-          } else {
-            console.log('Nenhum novo UUID coletado.');
-            return prevSet; // Retorna o Set atual se não houver novos UUIDs
-          }
-        });
+        // Dados do beacon foram coletados, você pode acessá-los aqui
+        console.log('Dados do beacon coletados:', data.beacons);
+        setData(data.beacons);
+        setBeaconIdentificado(true);
       } else {
         console.log('Nenhum dado de beacon coletado.');
+        setBeaconIdentificado(false);
       }
     });
 
@@ -114,7 +105,7 @@ const useBeaconService = () => {
     }
   };
 
-  return { uuidList: Array.from(uuidList), estadoBeacon, startBeaconRanging, stopBeaconRanging };
+  return { data, beaconIdentificado, estadoBeacon, startBeaconRanging, stopBeaconRanging };
 };
 
 export default useBeaconService;
