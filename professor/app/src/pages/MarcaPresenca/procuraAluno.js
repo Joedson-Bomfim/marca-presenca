@@ -50,16 +50,18 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         return JSON.stringify(data, null, 2); // Formata com indentação de 2 espaços
     };
 
+    
     /*
     <Text style={{ color: colors.text, fontFamily: 'monospace' }}>
-        {formatData(uuidList)}
+    {formatData(uuidList)}
     </Text>
-
+    
     <TouchableOpacity onPress={pararProcura}>
-        <Icon name="trash-can" color="#fff" size={40} />
+    <Icon name="trash-can" color="#fff" size={40} />
     </TouchableOpacity>
-
+    
     () => <Icon name="close-thick" size={30} color="#ffffff" />
+    let teste = ['1', '5', '7'];
     */
 
     return (
@@ -67,11 +69,12 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
 
             <Text style={{ color: colors.text }}>{situacaoBeacon}</Text>
-
             <ScrollView style={{ marginTop: 20 }}>
             {disciplinas.map((item) => (
                 <View key={item.id} style={styles.bookItem}>
-                    <Button mode="contained" icon={() => <Icon name="check-bold" size={30} color="#ffffff" />} contentStyle={{flexDirection: 'row-reverse'}} labelStyle={{ fontSize: 20 }} onPress={pararProcura} style={[styles.conteudo, {backgroundColor: colors.secundary}]}>
+                    <Button mode="contained" icon={uuidList.includes(item.beacon_id) ? 
+                        () => <Icon name="check-bold" size={30} color="#ffffff" /> : 
+                        () => <Icon name="close-thick" size={30} color="#ffffff" />} contentStyle={{flexDirection: 'row-reverse'}} labelStyle={{ fontSize: 20 }} onPress={pararProcura} style={[styles.conteudo, {backgroundColor: colors.secundary}]}>
                         {item.nome}
                     </Button>
                 </View>
