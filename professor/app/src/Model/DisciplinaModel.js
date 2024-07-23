@@ -54,6 +54,24 @@ const getDisciplina = () => {
     });
 };
 
+const getDisciplinaProfessor = (id) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql(
+                    'SELECT id, nome FROM Disciplinas WHERE professor_fk = ? ORDER BY nome ASC',
+                    [id],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
 
 const getProfessorById = (id) => {
     return new Promise((resolve, reject) => {
@@ -110,4 +128,4 @@ const deleteDisciplinaById = (id) => {
     });
 };
 
-export { createDisciplina, insertDisciplina, getDisciplina, getProfessorById, truncateDisciplina, deleteDisciplinaById };
+export { createDisciplina, insertDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById, truncateDisciplina, deleteDisciplinaById };

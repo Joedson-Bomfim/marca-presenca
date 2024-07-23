@@ -1,4 +1,4 @@
-import { insertDisciplina, getDisciplina, getProfessorById , truncateDisciplina, deleteDisciplinaById } from '../Model/DisciplinaModel';
+import { insertDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById , truncateDisciplina, deleteDisciplinaById } from '../Model/DisciplinaModel';
 
 
 const addDisciplina = async (professor_fk, nome, codigo, curso, complemento, criado_em) => {
@@ -14,6 +14,16 @@ const fetchDisciplina = async () => {
     try {
         const disciplinas = await getDisciplina();
         return disciplinas;
+    } catch (error) {
+        console.error('Erro ao listar disciplina:', error.message || error);
+        return [];
+    }
+};
+
+const fetchDisciplinaProfessor = async (id) => {
+    try {
+        const disciplinasProfessor = await getDisciplinaProfessor(id);
+        return disciplinasProfessor;
     } catch (error) {
         console.error('Erro ao listar disciplina:', error.message || error);
         return [];
@@ -53,4 +63,4 @@ const removeDisciplinaById = async (id) => {
     }
 };
 
-export { addDisciplina, fetchDisciplina, fetchProfessorById, cleanUpDisciplina, removeDisciplinaById };
+export { addDisciplina, fetchDisciplina, fetchDisciplinaProfessor, fetchProfessorById, cleanUpDisciplina, removeDisciplinaById };

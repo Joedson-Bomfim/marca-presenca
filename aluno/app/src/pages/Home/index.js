@@ -50,10 +50,6 @@ const Home = ({ navigation }) => {
       >
         Gerar UUID
       </Button>
-
-      <Button onPress={() => { navigation.navigate('Teste'); }} theme={{ colors: { primary: "#fff" } }}>
-        Página de testes
-      </Button>
     </View>
   );
 };

@@ -7,6 +7,11 @@ const styles = StyleSheet.create({
     },
     marginBottom: {
         marginBottom: 30
+    },
+    conteudo: {
+        marginBottom: 30,
+        padding: 10,
+        alignItems: 'flex-start',
     }
 })
 

@@ -52,6 +52,28 @@ const getAlunoDisciplin = () => {
     });
 };
 
+const getAlunoDisciplinaMarcaPresenca = (id) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql(`
+                    SELECT AlunosDisciplinas.id, A.nome FROM AlunosDisciplinas
+                    JOIN Alunos as A ON A.id = aluno_fk
+                    JOIN Disciplinas as D ON D.id = disciplina_fk
+                    WHERE D.id = ?
+                    ORDER BY A.nome ASC`,
+                    [id],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
 const getProfessorById = (id) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
@@ -107,4 +129,4 @@ const deleteAlunoDisciplinaById = (id) => {
     });
 };
 
-export { createAlunoDisciplina, insertAlunoDisciplina, getAlunoDisciplin, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById };
+export { createAlunoDisciplina, insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById };

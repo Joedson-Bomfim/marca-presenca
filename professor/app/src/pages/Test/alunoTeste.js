@@ -16,7 +16,7 @@ const DisciplinaTeste = () => {
     const [visible, setVisible] = useState(false);
     const [nome, setNome] = useState('');
     const [matricula, setMatricula] = useState('');
-    const [beacon_id, setBeacon_id] = useState('');
+    const [beacon_id, setBeacon_id] = useState('1eb599de-2775-4fd7-9059-1f3019dfab0e');
 
     useEffect(() => {
         listaAlunos();

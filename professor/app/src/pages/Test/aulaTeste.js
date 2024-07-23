@@ -15,7 +15,8 @@ const DisciplinaTeste = () => {
     const [disciplinas, setDisciplina] = useState([]);
     const [visible, setVisible] = useState(false);
     const [disciplina_fk, setDisciplina_fk] = useState('1');
-    const [local, setLocal] = useState('Pavilhao 2 - Salata 4');
+    const [dia_semana, setDiaSemana] = useState('Terça');
+    const [local, setLocal] = useState('Pavilhao 2 - Sala 4');
     const [quantidade_aulas, setQuantidade_aulas] = useState('1');
     const [horario_inicio_aula, setHorario_inicio_aula] = useState('08:00:00');
     const [horario_fim_aula, setHorario_fim_aula] = useState('9:00:00');
@@ -62,9 +63,9 @@ const DisciplinaTeste = () => {
     };
 
     const handleAddBook = async () => {
-        if (disciplina_fk && local && local && quantidade_aulas && horario_inicio_aula && horario_fim_aula) {
+        if (disciplina_fk && dia_semana && local && quantidade_aulas && horario_inicio_aula && horario_fim_aula) {
             setVisible(true);
-            await addAula(disciplina_fk, local, local, quantidade_aulas, horario_inicio_aula, horario_fim_aula);
+            await addAula(disciplina_fk, dia_semana, local, quantidade_aulas, horario_inicio_aula, horario_fim_aula);
             listaAlunos();
         }else{
             Alert.alert('Atenção','Por favor preencha todos os campos');
@@ -113,6 +114,11 @@ const DisciplinaTeste = () => {
                        onChangeText={setDisciplina_fk}
                        style={[styles.marginBottom, TemaPrincipal.inputPadrao]}/>
 
+            <TextInput label="Dia da semana da Aula" mode="flat" 
+                       value={dia_semana}
+                       onChangeText={setDiaSemana}
+                       style={[styles.marginBottom, TemaPrincipal.inputPadrao]}/>
+
             <TextInput label="Local" mode="flat" 
                        value={local}
                        onChangeText={setLocal}
@@ -143,6 +149,7 @@ const DisciplinaTeste = () => {
                         <View>
                             <Text style={styles.id}>{item.id}</Text>
                             <Text style={styles.primeiro}>{item.disciplina_fk}</Text>
+                            <Text style={styles.complemento}>{item.dia_semana}</Text>
                             <Text style={styles.complemento}>{item.local}</Text>
                             <Text style={styles.complemento}>{item.quantidade_aulas}</Text>
                             <Text style={styles.complemento}>{item.criado_em}</Text>

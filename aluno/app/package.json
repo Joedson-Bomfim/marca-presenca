@@ -7,6 +7,9 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start --reset-cache",
+    "clear": "cd android && gradlew clean && cd ../",
+    "build": "cd android && gradlew assembleDebug && cd ../",
+    "prebuild": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
     "test": "jest"
   },
   "dependencies": {

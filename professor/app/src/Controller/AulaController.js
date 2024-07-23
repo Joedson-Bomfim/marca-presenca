@@ -1,4 +1,4 @@
-import { insertAula, getAula, getProfessorById, truncateAula, deleteAulaById } from '../Model/AulaModel';
+import { insertAula, getAula, getAulaDisciplina, getProfessorById, truncateAula, deleteAulaById } from '../Model/AulaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 
@@ -18,6 +18,16 @@ const addAula = async (disciplina_fk, dia_semana, local, numero_aulas, horario_i
 const fetchAula = async () => {
     try {
         const disciplinas = await getAula();
+        return disciplinas;
+    } catch (error) {
+        console.error('Erro ao listar aulas:', error.message || error);
+        return [];
+    }
+};
+
+const fetchAulaDisciplina = async (id) => {
+    try {
+        const disciplinas = await getAulaDisciplina(id);
         return disciplinas;
     } catch (error) {
         console.error('Erro ao listar aulas:', error.message || error);
@@ -58,4 +68,4 @@ const removeDisciplinaById = async (id) => {
     }
 };
 
-export { addAula, fetchAula, fetchProfessorById, cleanUpAula, removeDisciplinaById };
+export { addAula, fetchAula, fetchAulaDisciplina, fetchProfessorById, cleanUpAula, removeDisciplinaById };

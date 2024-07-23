@@ -20,6 +20,18 @@ const styles = StyleSheet.create({
         fontSize: 30,
         marginBottom: 30,
         fontWeight: "bold"
+    },
+    modalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Cor de fundo do modal, com transparência
+    },
+        modalContent: {
+        width: '80%',
+        backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 20,
     }
 })
 

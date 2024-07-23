@@ -6,7 +6,7 @@ import { fetchProfessorById } from '../../Controller/ProfessorController';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { Context } from '../../contexts/Context'
+import { Context } from '../../contexts/Context';
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";

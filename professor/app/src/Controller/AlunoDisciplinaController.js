@@ -1,4 +1,4 @@
-import { insertAlunoDisciplina, getAlunoDisciplin, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById } from '../Model/AlunoDisciplinaModel';
+import { insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById } from '../Model/AlunoDisciplinaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addAlunoDisciplina = async (aluno_fk, disciplina_fk) => {
@@ -17,6 +17,16 @@ const addAlunoDisciplina = async (aluno_fk, disciplina_fk) => {
 const fetchAlunoDisciplina = async () => {
     try {
         const professores = await getAlunoDisciplin();
+        return professores;
+    } catch (error) {
+        console.error('Erro ao listar alunos:', error.message || error);
+        return [];
+    }
+};
+
+const fetchAlunoDisciplinaMarcaPresenca = async (id) => {
+    try {
+        const professores = await getAlunoDisciplinaMarcaPresenca(id);
         return professores;
     } catch (error) {
         console.error('Erro ao listar alunos:', error.message || error);
@@ -57,4 +67,4 @@ const removeAlunoDisciplinaById = async (id) => {
     }
 };
 
-export { addAlunoDisciplina, fetchAlunoDisciplina, fetchProfessorById, cleanUpAlunoDisciplina, removeAlunoDisciplinaById };
+export { addAlunoDisciplina, fetchAlunoDisciplina, fetchAlunoDisciplinaMarcaPresenca, fetchProfessorById, cleanUpAlunoDisciplina, removeAlunoDisciplinaById };

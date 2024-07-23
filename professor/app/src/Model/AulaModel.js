@@ -55,6 +55,24 @@ const getAula = () => {
     });
 };
 
+const getAulaDisciplina = (id) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql(
+                    'SELECT id, dia_semana FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana ASC',
+                    [id],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
 const getProfessorById = (id) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
@@ -110,4 +128,4 @@ const deleteAulaById = (id) => {
     });
 };
 
-export { createAula, insertAula, getAula, getProfessorById, truncateAula, deleteAulaById };
+export { createAula, insertAula, getAula, getAulaDisciplina, getProfessorById, truncateAula, deleteAulaById };
