@@ -50,7 +50,7 @@ const AlunoForm = ( {navigation} ) => {
 
     const atualizarAluno = async () => {
         if (nomeForm && matriculaForm) {
-            await editAluno('3', nomeForm, matriculaForm, beaconIdForm);
+            await editAluno(id, nomeForm, matriculaForm, beaconIdForm);
             Alert.alert(
                 "Sucesso", "Lista de chamada atualizada com sucesso",
                 [{ text: "OK", onPress: () => {

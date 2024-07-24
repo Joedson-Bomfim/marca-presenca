@@ -16,10 +16,10 @@ const AlunoDetalhe = ( {navigation} ) => {
         //<Icon name="account-group" color={ colors.icone } size={40}/>  
         //<Icon name="square-edit-outline" color={ colors.icone } size={40}/>      
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.titulo, {color: colors.text }]}>Detalhes AlunoDetalhe</Text>
+            <Text style={[styles.titulo, {color: colors.text }]}>Detalhes Aluno</Text>
                 
         </View>
     )
 }
 
-export default Disciplina;
+export default AlunoDetalhe;
