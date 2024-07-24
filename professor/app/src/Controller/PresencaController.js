@@ -1,4 +1,4 @@
-import { insertPresenca, getPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
+import { insertPresenca, insertMultiplePresencas, getPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao) => {
@@ -8,6 +8,19 @@ const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas,
 
     try {
         await insertPresenca(aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em);
+        console.log('Presença adicionado');
+    } catch (error) {
+        console.error('Erro ao adicionar presença:', error);
+    }
+};
+
+const addMultiplePresenca = async (aula_fk, data, presencas) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let criado_em = formattedDate;
+
+    try {
+        await insertMultiplePresencas(aula_fk, data, criado_em, presencas);
         console.log('Presença adicionado');
     } catch (error) {
         console.error('Erro ao adicionar presença:', error);
@@ -57,4 +70,4 @@ const removePresencaById = async (id) => {
     }
 };
 
-export { addPresenca, fetchPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };
+export { addPresenca, addMultiplePresenca, fetchPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };

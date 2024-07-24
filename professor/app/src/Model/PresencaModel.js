@@ -38,6 +38,49 @@ const insertPresenca = (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, ob
     });
 };
 
+const insertPresencaLote = (tx, aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) => {
+    console.log('Inserindo presença:', aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em);
+    tx.executeSql(
+        'INSERT INTO Presencas (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em],
+        () => console.log('Presença cadastrada com sucesso'),
+        (error) => console.error('Erro ao cadastrar Presença:', error)
+    );
+};
+
+const insertMultiplePresencas = async (aula_fk, data, criado_em, presencas) => {
+    try {
+        const db = await openDatabase();
+
+        db.transaction(tx => {
+            presencas.forEach(presenca => {
+                if (typeof presenca.aluno_fk === 'number' && typeof aula_fk === 'number') {
+                    insertPresencaLote(
+                        tx,
+                        presenca.aluno_fk,
+                        aula_fk,
+                        data,
+                        presenca.quantidade_aulas_assistidas,
+                        presenca.observacao,
+                        presenca.situacao,
+                        criado_em
+                    );
+                } else {
+                    console.error('Valores de chave estrangeira inválidos:', presenca.aluno_fk, aula_fk);
+                }
+            });
+        }, 
+        error => {
+            console.error('Erro ao cadastrar múltiplas Presenças:', error);
+        }, 
+        () => {
+            console.log('Todas as presenças foram cadastradas com sucesso');
+        });
+    } catch (error) {
+        console.error('Erro ao abrir o banco de dados:', error);
+    }
+};
+
 const getPresenca = () => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
@@ -111,4 +154,4 @@ const deletePresencaById = (id) => {
     });
 };
 
-export { createPresenca, insertPresenca, getPresenca, getProfessorById, truncatePresenca, deletePresencaById };
+export { createPresenca, insertPresenca, insertMultiplePresencas, getPresenca, getProfessorById, truncatePresenca, deletePresencaById };

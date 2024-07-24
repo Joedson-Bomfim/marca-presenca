@@ -16,6 +16,16 @@ export function formataDataHoraPadraoAmericano(dataHora) {
            `${dataHora.getSeconds().toString().padStart(2, '0')}`;
 }
 
+export function converteDataBrasileiraParaAmericana(dataBrasileira) {
+    const [dia, mes, ano] = dataBrasileira.split('/');
+    return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
+}
+
 export function dataHora() {
     return new Date();
+}
+
+export function obterDataAtualBrasileira() {
+    const dataAtual = new Date();
+    return formataDataHora(dataAtual).split(' ')[0]; // Retorna apenas a data no formato brasileiro
 }

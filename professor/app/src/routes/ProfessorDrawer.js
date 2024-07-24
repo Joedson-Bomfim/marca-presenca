@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from '../pages/Home';
 
 import MarcaPresencaP1 from '../pages/MarcaPresenca/selecionaDisciplinaAula';
-import MarcaPresencaP2 from '../pages/MarcaPresenca/procuraAluno';
+import MarcaPresencaP2 from '../pages/MarcaPresenca/marcarPresenca';
 
 import ProfessorEdita from "../pages/Professor/ProfessorEdita";
 
@@ -14,6 +14,10 @@ import Disciplina from '../pages/Disciplina';
 import DisciplinaDetalhe from '../pages/Disciplina/DisciplinaDetalhe';
 import DisciplinaCadastra from "../pages/Disciplina/DisciplinaCadastra";
 import DisciplinaEdita from "../pages/Disciplina/DisciplinaEdita";
+
+import Presenca from '../pages/Presenca';
+import PresencaDetalhe from '../pages/Presenca/PresencaDetalhe';
+//import DisciplinaEdita from "../pages/Presenca/DisciplinaEdita";
 
 import Teste from '../pages/Teste';
 import TesteMelhorado from '../pages/Teste/testeMelhorado';
@@ -65,11 +69,10 @@ function DisciplinaStack() {
     );
 }
 
-function BeaconStack() {
+function PresencaStack() {
     return (
       <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
-        <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
+        <Stack.Screen options={{ headerShown: false }} name="Presenca" component={Presenca} />
       </Stack.Navigator>
     );
 }
@@ -130,11 +133,11 @@ export default function DrawerRoutes() {
           }}
         />
         <Drawer.Screen
-          name="BeaconStack"
-          component={BeaconStack}
+          name="PresencaStack"
+          component={PresencaStack}
           options={{
-            drawerIcon: () => <Icon name="lighthouse-on" color={colors.icone} size={40} />,
-            drawerLabel: "Beacons",
+            drawerIcon: () => <Icon name="clipboard-multiple" color={colors.icone} size={40} />,
+            drawerLabel: "Presença",
           }}
         />
         <Drawer.Screen

@@ -4,8 +4,20 @@ const styles = StyleSheet.create({
     botaoPrincipal: {
         padding: 4,
     },
+    botaoProcuraAluno: {
+        marginBottom: 30
+    },
+    botaoParaProcura: {
+        marginBottom: 30
+    },
     inputPadrao: {
         padding: 4,
+    },
+    inputModal: {
+        marginBottom: 30
+    },
+    marginBottomPadrao: {
+        marginBottom: 30
     },
     buttonCadastraEdita: {
         marginBottom: 40
@@ -21,6 +33,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         fontWeight: "bold"
     },
+    tituloModal: {
+        textAlign: 'center',
+        fontSize: 20,
+        marginBottom: 30,
+        fontWeight: "bold"
+    },
     modalOverlay: {
         flex: 1,
         justifyContent: 'center',
@@ -30,6 +48,12 @@ const styles = StyleSheet.create({
         modalContent: {
         width: '80%',
         backgroundColor: 'white',
+        borderRadius: 8,
+        padding: 20,
+    },
+        modalSelecinaAluno: {
+        width: '80%',
+        backgroundColor: '#557CE1',
         borderRadius: 8,
         padding: 20,
     }

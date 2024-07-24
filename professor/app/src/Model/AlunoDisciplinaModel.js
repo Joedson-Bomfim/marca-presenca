@@ -57,7 +57,7 @@ const getAlunoDisciplinaMarcaPresenca = (id) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(`
-                    SELECT AlunosDisciplinas.id, A.nome, A.beacon_id FROM AlunosDisciplinas
+                    SELECT AlunosDisciplinas.id, A.id as alunoId, A.nome, A.beacon_id FROM AlunosDisciplinas
                     JOIN Alunos as A ON A.id = aluno_fk
                     JOIN Disciplinas as D ON D.id = disciplina_fk
                     WHERE D.id = ?

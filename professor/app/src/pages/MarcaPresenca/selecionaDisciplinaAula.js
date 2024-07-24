@@ -4,6 +4,8 @@ import { useTheme, Button, TextInput } from "react-native-paper";
 import { fetchDisciplinaProfessor } from "../../Controller/DisciplinaController";
 import { fetchAulaDisciplina } from "../../Controller/AulaController";
 import { Context } from '../../contexts/Context';
+import { obterDataAtualBrasileira } from '../../services/formatacao';
+
 import Loading from "../../components/loading";
 import DropdownSelect from '../../components/dropdown';
 import TemaPrincipal from "../../assets/styles";
@@ -15,7 +17,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
   const [visible, setVisible] = useState(false);
   const [disciplinas, setDisciplina] = useState([]);
   const [aulas, setAula] = useState([]);
-  const [data, setData] = useState('22/07/2024');
+  const [data, setData] = useState(obterDataAtualBrasileira);
   const [disciplinaId, setDisciplinaId] = useState('');
   const [aulaId, setAulaId] = useState('');
   const [selectedDisciplina, setSelectedDisciplina] = useState(null); // Estado para disciplina selecionada
@@ -28,7 +30,8 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
 
   const opcoesAulas = aulas.map(option => ({
     id: option.id,
-    name: option.dia_semana
+    name: option.dia_semana+' - '+option.quantidade_aulas+' Aula(s)',
+    quantidade_aulas: option.quantidade_aulas
   }));
 
   useEffect(() => {
@@ -68,14 +71,15 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
   };
 
   const selecionaAula = (item) => {
-    setAulaId(item);
     const selected = opcoesAulas.find(aula => aula.id === item);
-    setSelectedAula(selected); // Define o valor selecionado no estado
+    setAulaId(item);
+    setSelectedAula(selected); // Define o valor selecionado no estado, incluindo quantidade de aulas
   };
 
   const abrirChamada = () => {
     if (disciplinaId && aulaId && data) {
-      navigation.navigate('MarcaPresencaP2', { disciplinaId: disciplinaId, aulaId: aulaId, data: data });
+      let quantidade_aulas = selectedAula.quantidade_aulas.toString();
+      navigation.navigate('MarcaPresencaP2', { disciplinaId: disciplinaId, aulaId: aulaId, quantidade_aulas: quantidade_aulas, data: data });
     } else {
       Alert.alert('Atenção', 'Por favor preencha todos os campos');
     }
@@ -90,20 +94,9 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         onChangeText={setData} style={[styles.marginBottom, TemaPrincipal.inputPadrao]}
       ></TextInput>
 
-      <DropdownSelect
-        options={opcoesDisciplinas}
-        onSelect={selecionaDisciplina}
-        placeholder="Selecione uma Disciplina"
-        selected={selectedDisciplina} // Passa o valor selecionado
-      />
+      <DropdownSelect options={opcoesDisciplinas} onSelect={selecionaDisciplina} placeholder="Selecione uma Disciplina" selected={selectedDisciplina}/>
 
-      <DropdownSelect
-        options={opcoesAulas}
-        onSelect={selecionaAula}
-        placeholder="Selecione uma Aula"
-        disabled={!disciplinaId}
-        selected={selectedAula} // Passa o valor selecionado
-      />
+      <DropdownSelect options={opcoesAulas} onSelect={selecionaAula} placeholder="Selecione uma Aula" disabled={!disciplinaId} selected={selectedAula}/>
 
       <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={abrirChamada} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
         Abrir Chamada

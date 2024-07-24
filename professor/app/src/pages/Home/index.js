@@ -15,7 +15,7 @@ const Home = ( {navigation} ) => {
                 Marca Presença
             </Button>
 
-            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaStack');}} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('PresencaStack');}} style={[styles.marginBottomPrimario, TemaPrincipal.botaoPrincipal]}>
                 Aulas Ministradas
             </Button>
 

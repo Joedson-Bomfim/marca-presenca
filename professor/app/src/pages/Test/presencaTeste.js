@@ -152,6 +152,7 @@ const DisciplinaTeste = () => {
                             <Text style={styles.complemento}>{item.aula_fk}</Text>
                             <Text style={styles.complemento}>{item.data}</Text>
                             <Text style={styles.complemento}>{item.quantidade_aulas_assistidas}</Text>
+                            <Text style={styles.complemento}>{item.situacao}</Text>
                             <Text style={styles.complemento}>{item.observacao}</Text>
                             <Text style={styles.complemento}>{item.criado_em}</Text>
                         </View>
