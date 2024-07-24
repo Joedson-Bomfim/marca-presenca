@@ -16,8 +16,7 @@ import AlunoForm from "../pages/Aluno/AlunoForm";
 
 import Disciplina from '../pages/Disciplina';
 import DisciplinaDetalhe from '../pages/Disciplina/DisciplinaDetalhe';
-import DisciplinaCadastra from "../pages/Disciplina/DisciplinaCadastra";
-import DisciplinaEdita from "../pages/Disciplina/DisciplinaEdita";
+import DisciplinaForm from "../pages/Disciplina/DisciplinaForm";
 
 import Presenca from '../pages/Presenca';
 import PresencaDetalhe from '../pages/Presenca/PresencaDetalhe';
@@ -76,8 +75,7 @@ function DisciplinaStack() {
     return (
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Disciplina" component={Disciplina} />
-        <Stack.Screen options={{ headerShown: false }} name="DisciplinaCadastra" component={DisciplinaCadastra} />
-        <Stack.Screen options={{ headerShown: false }} name="DisciplinaEdita" component={DisciplinaEdita} />
+        <Stack.Screen options={{ headerShown: false }} name="DisciplinaForm" component={DisciplinaForm} />
         <Stack.Screen options={{ headerShown: false }} name="DisciplinaDetalhe" component={DisciplinaDetalhe} />
       </Stack.Navigator>
     );

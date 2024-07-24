@@ -1,12 +1,33 @@
-import { insertDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById , truncateDisciplina, deleteDisciplinaById } from '../Model/DisciplinaModel';
+import { insertDisciplina, updateDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById , truncateDisciplina, deleteDisciplinaById } from '../Model/DisciplinaModel';
+import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
+const addDisciplina = async (professor_fk, nome, codigo, curso, complemento) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let criado_em = formattedDate;
 
-const addDisciplina = async (professor_fk, nome, codigo, curso, complemento, criado_em) => {
     try {
         await insertDisciplina(professor_fk, nome, codigo, curso, complemento, criado_em);
-        console.log('Disciplina adicionada');
+        return { success: true };
     } catch (error) {
-        console.error('Erro ao adicionar disciplina:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
+    }
+};
+
+const editDisciplina = async (id, professor_fk, nome, codigo, curso, complemento) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let atualizado_em = formattedDate;
+
+    try {
+        await updateDisciplina(id, professor_fk, nome, codigo, curso, complemento, atualizado_em);
+        return { success: true };
+    } catch (error) {
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 
@@ -63,4 +84,4 @@ const removeDisciplinaById = async (id) => {
     }
 };
 
-export { addDisciplina, fetchDisciplina, fetchDisciplinaProfessor, fetchProfessorById, cleanUpDisciplina, removeDisciplinaById };
+export { addDisciplina, editDisciplina, fetchDisciplina, fetchDisciplinaProfessor, fetchProfessorById, cleanUpDisciplina, removeDisciplinaById };

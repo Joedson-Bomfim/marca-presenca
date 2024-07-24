@@ -16,7 +16,7 @@ const DisciplinaTeste = () => {
     const [visible, setVisible] = useState(false);
     const [nome, setNome] = useState('');
     const [matricula, setMatricula] = useState('');
-    const [beacon_id, setBeacon_id] = useState('325c4ae8-b519-44e8-ba2b-a9ed295059f1');
+    const [beacon_id, setBeacon_id] = useState('38709793-01a6-4020-8a7a-30c880605f7d');
     //38709793-01a6-4020-8a7a-30c880605f7d
     //325c4ae8-b519-44e8-ba2b-a9ed295059f1
 

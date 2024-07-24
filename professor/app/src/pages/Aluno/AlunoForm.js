@@ -24,46 +24,54 @@ const AlunoForm = ( {navigation} ) => {
             setNomeForm(nome);
             setMatriculaForm(matricula);
             setBeaconIdForm(beacon_id);
-            console.log('editar')
         }else {
-            setTipoForm('Cadastrar')
-            console.log('cadastrar');
+            setTipoForm('Cadastrar');
         }
     }, []);
 
     const cadastrarAluno = async () => {
         if (nomeForm && matriculaForm) {
-            await addAluno(nomeForm, matriculaForm, beaconIdForm);
-            Alert.alert(
-                "Sucesso", "Lista de chamada registrada com sucesso",
-                [{ text: "OK", onPress: () => {
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'AlunoStack' }], 
-                    });
-                }}]
-            );
+            const result = await addAluno(nomeForm, matriculaForm, beaconIdForm);
+            
+            if(result.success) {
+                Alert.alert(
+                    "Sucesso", "Lista de chamada registrada com sucesso",
+                    [{ text: "OK", onPress: () => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'AlunoStack' }], 
+                        });
+                    }}]
+                );
+            }else {         
+                Alert.alert('Atenção',result.message);  
+            }
         }else{
             Alert.alert('Atenção','Por favor preencha todos os campos');
         }
-    };
-
+    }; 
+    
     const atualizarAluno = async () => {
         if (nomeForm && matriculaForm) {
-            await editAluno(id, nomeForm, matriculaForm, beaconIdForm);
-            Alert.alert(
-                "Sucesso", "Lista de chamada atualizada com sucesso",
-                [{ text: "OK", onPress: () => {
-                    navigation.reset({
-                        index: 0,
-                        routes: [{ name: 'AlunoStack' }], 
-                    });
-                }}]
-            );
-        }else{
-            Alert.alert('Atenção','Por favor preencha todos os campos');
+            console.log('Campos preenchidos. Chamando editAluno...');
+            const result = await editAluno(id, nomeForm, matriculaForm, beaconIdForm);
+            if (result.success) {
+                Alert.alert(
+                    "Sucesso", "Lista de chamada atualizada com sucesso",
+                    [{ text: "OK", onPress: () => {
+                        navigation.reset({
+                            index: 0,
+                            routes: [{ name: 'AlunoStack' }], 
+                        });
+                    }}]
+                );
+            } else {
+                Alert.alert('Atenção', result.message);
+            }
+        } else {
+            Alert.alert('Atenção', 'Por favor preencha todos os campos');
         }
-    };
+    };               
 
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>

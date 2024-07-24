@@ -8,9 +8,20 @@ const addAluno = async (nome, matricula, beacon_id) => {
 
     try {
         await insertAluno(nome, matricula, beacon_id, criado_em);
-        console.log('Aluno adicionado');
+        return { success: true };
+
     } catch (error) {
-        console.error('Erro ao adicionar aluno:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        if (errorMessage.includes('UNIQUE constraint failed')) {
+            if (errorMessage.includes('matricula')) {
+                return { success: false, message: 'Matrícula já existente.' };
+            } else if (errorMessage.includes('beacon_id')) {
+                return { success: false, message: 'Beacon ID já existente.' };
+            } else {
+                return { success: false, message: 'Matrícula ou Beacon ID já existem.' };
+            }
+        }
+        return { success: false, message: errorMessage };
     }
 };
 
@@ -21,9 +32,19 @@ const editAluno = async (id, nome, matricula, beacon_id) => {
 
     try {
         await updateAluno(id, nome, matricula, beacon_id, atualizado_em);
-        console.log('Aluno atualizado');
+        return { success: true };
     } catch (error) {
-        console.error('Erro ao atualizar aluno:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        if (errorMessage.includes('UNIQUE constraint failed')) {
+            if (errorMessage.includes('matricula')) {
+                return { success: false, message: 'Matrícula já existente.' };
+            } else if (errorMessage.includes('beacon_id')) {
+                return { success: false, message: 'Beacon ID já existente.' };
+            } else {
+                return { success: false, message: 'Matrícula ou Beacon ID já existem.' };
+            }
+        }
+        return { success: false, message: errorMessage };
     }
 };
 

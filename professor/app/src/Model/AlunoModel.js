@@ -21,6 +21,7 @@ const createAluno = () => {
 };
 
 const insertAluno = (nome, matricula, beacon_id, criado_em) => {
+    beacon_id = beacon_id ? beacon_id : null;
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(
@@ -34,6 +35,7 @@ const insertAluno = (nome, matricula, beacon_id, criado_em) => {
 };
 
 const updateAluno = (id, nome, matricula, beacon_id, atualizado_em) => {
+    beacon_id = beacon_id ? beacon_id : null;
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(

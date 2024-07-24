@@ -60,7 +60,7 @@ const getAulaDisciplina = (id) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT id, dia_semana, quantidade_aulas FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana ASC',
+                    'SELECT id, dia_semana, quantidade_aulas FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana DESC',
                     [id],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array

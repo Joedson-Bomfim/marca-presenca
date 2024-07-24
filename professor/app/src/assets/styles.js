@@ -16,6 +16,10 @@ const styles = StyleSheet.create({
     inputModal: {
         marginBottom: 30
     },
+    listaTabela: {
+        marginBottom: 30,
+        padding: 10,
+    },
     marginBottomPadrao: {
         marginBottom: 30
     },

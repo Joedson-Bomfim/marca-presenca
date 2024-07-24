@@ -36,12 +36,27 @@ const insertDisciplina = (professor_fk, nome, codigo, curso, complemento, criado
     });
 };
 
+const updateDisciplina = (id, professor_fk, nome, codigo, curso, complemento, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(`
+                UPDATE Disciplinas 
+                SET professor_fk = ?, nome = ?, codigo = ?, curso = ?, complemento = ?, atualizado_em = ? 
+                WHERE id = ?`,
+                [professor_fk, nome, codigo, curso, complemento, atualizado_em, id],
+                () => console.log('Disciplina atualizada com sucesso'),
+                (error) => console.error('Erro ao atualizar Disciplina:', error)
+            );
+        });
+    });
+};
+
 const getDisciplina = () => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT * FROM Disciplinas',
+                    'SELECT * FROM Disciplinas ORDER BY nome ASC',
                     [],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
@@ -128,4 +143,4 @@ const deleteDisciplinaById = (id) => {
     });
 };
 
-export { createDisciplina, insertDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById, truncateDisciplina, deleteDisciplinaById };
+export { createDisciplina, insertDisciplina, updateDisciplina, getDisciplina, getDisciplinaProfessor, getProfessorById, truncateDisciplina, deleteDisciplinaById };
