@@ -56,8 +56,9 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
       setAula(listaAula);
     } catch (error) {
       console.log('Não foi possível carregar as aulas. Verifique se a tabela existe.');
+    } finally {
+        setVisible(false);
     }
-    setVisible(false);
   };
 
   const selecionaDisciplina = (item) => {

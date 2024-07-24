@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeDatabase, UserStatusController } from '../Controller/ProfessorController';
 
 import CadastroStacks from "./CdastroStack";
-import ProfessorDrawer from './ProfessorDrawer';
+import ProfessorDrawer from './DrawerNavigator';
 
 const Stack = createNativeStackNavigator();
 

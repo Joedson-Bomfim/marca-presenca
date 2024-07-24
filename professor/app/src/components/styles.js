@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
         paddingHorizontal: 16,
     },
-        icon: {
+    icon: {
         marginLeft: 10,
     },
     conteudoAlunoPresenca: {

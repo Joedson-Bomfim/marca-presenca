@@ -101,10 +101,9 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
             Alert.alert(
                 "Sucesso", "Lista de chamada registrada com sucesso",
                 [{ text: "OK", onPress: () => {
-                    // Limpa a pilha de navegação e navega para a tela 'Home'
                     navigation.reset({
                         index: 0,
-                        routes: [{ name: 'PresencaStack' }], // Nome da tela para onde você quer navegar
+                        routes: [{ name: 'PresencaStack' }],
                     });
                 }}]
             );
@@ -124,7 +123,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     }
 
     let situacaoBeacon = estadoBeacon ? <Icon name="lighthouse-on" color={colors.icone} size={40} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon> : 
-                                        <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença {alunosPresente}/{totalAlunos}</Text>
+                                        <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença <Icon name="lighthouse-on" color={colors.icone} size={20} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon></Text>
 
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>

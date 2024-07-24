@@ -10,6 +10,10 @@ import ProfessorEdita from "../pages/Professor/ProfessorEdita";
 
 import Perfil from '../pages/Perfil';
 
+import Aluno from '../pages/Aluno';
+import AlunoDetalhe from '../pages/Aluno/AlunoDetalhe';
+import AlunoForm from "../pages/Aluno/AlunoForm";
+
 import Disciplina from '../pages/Disciplina';
 import DisciplinaDetalhe from '../pages/Disciplina/DisciplinaDetalhe';
 import DisciplinaCadastra from "../pages/Disciplina/DisciplinaCadastra";
@@ -56,6 +60,16 @@ function PerfilStack() {
         <Stack.Screen options={{ headerShown: false }} name="Perfil" component={Perfil} />
       </Stack.Navigator>
     );
+}
+
+function AlunoStack() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen options={{ headerShown: false }} name="Aluno" component={Aluno} />
+      <Stack.Screen options={{ headerShown: false }} name="AlunoDetalhe" component={AlunoDetalhe} />
+      <Stack.Screen options={{ headerShown: false }} name="AlunoForm" component={AlunoForm} />
+    </Stack.Navigator>
+  );
 }
   
 function DisciplinaStack() {
@@ -125,6 +139,14 @@ export default function DrawerRoutes() {
           }}
         />
         <Drawer.Screen
+          name="AlunoStack"
+          component={AlunoStack}
+          options={{
+            drawerIcon: () => <Icon name="account-group" color={colors.icone} size={40} />,
+            drawerLabel: "Alunos",
+          }}
+        />
+        <Drawer.Screen
           name="DisciplinaStack"
           component={DisciplinaStack}
           options={{
@@ -145,7 +167,7 @@ export default function DrawerRoutes() {
           component={TesteBancoStack}
           options={{
             drawerIcon: () => <Icon name="database-search" color={colors.icone} size={40} />,
-            drawerLabel: "Beacons",
+            drawerLabel: "BD Teste",
           }}
         />
       </Drawer.Navigator>

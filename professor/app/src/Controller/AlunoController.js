@@ -1,4 +1,4 @@
-import { insertAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById } from '../Model/AlunoModel';
+import { insertAluno, updateAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById } from '../Model/AlunoModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addAluno = async (nome, matricula, beacon_id) => {
@@ -11,6 +11,19 @@ const addAluno = async (nome, matricula, beacon_id) => {
         console.log('Aluno adicionado');
     } catch (error) {
         console.error('Erro ao adicionar aluno:', error);
+    }
+};
+
+const editAluno = async (id, nome, matricula, beacon_id) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let atualizado_em = formattedDate;
+
+    try {
+        await updateAluno(id, nome, matricula, beacon_id, atualizado_em);
+        console.log('Aluno atualizado');
+    } catch (error) {
+        console.error('Erro ao atualizar aluno:', error);
     }
 };
 
@@ -57,4 +70,4 @@ const removeAlunoById = async (id) => {
     }
 };
 
-export { addAluno, fetchAluno, fetchProfessorById, cleanUpAluno, removeAlunoById };
+export { addAluno, editAluno, fetchAluno, fetchProfessorById, cleanUpAluno, removeAlunoById };

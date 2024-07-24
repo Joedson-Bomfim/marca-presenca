@@ -26,8 +26,21 @@ const insertAluno = (nome, matricula, beacon_id, criado_em) => {
             return tx.executeSql(
                 'INSERT INTO Alunos (nome, matricula, beacon_id, criado_em) VALUES (?, ?, ?, ?)',
                 [nome, matricula, beacon_id, criado_em],
-                () => console.log('ALuno cadastrado com sucesso'),
-                (error) => console.error('Erro ao cadastrar ALuno:', error)
+                () => console.log('Aluno cadastrado com sucesso'),
+                (error) => console.error('Erro ao cadastrar Aluno:', error)
+            );
+        });
+    });
+};
+
+const updateAluno = (id, nome, matricula, beacon_id, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(
+                'UPDATE Alunos SET nome = ?, matricula = ?, beacon_id = ?, atualizado_em = ? WHERE id = ?',
+                [nome, matricula, beacon_id, atualizado_em, id],
+                () => console.log('Aluno atualizado com sucesso'),
+                (error) => console.error('Erro ao atualizar Aluno:', error)
             );
         });
     });
@@ -38,7 +51,7 @@ const getAluno = () => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT * FROM Alunos',
+                    'SELECT * FROM Alunos ORDER BY nome ASC',
                     [],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
@@ -99,11 +112,11 @@ const deleteAlunoById = (id) => {
             return tx.executeSql(
                 'DELETE FROM Alunos WHERE id = ?',
                 [id],
-                () => console.log('ALuno excluído com sucesso'),
-                (error) => console.error('Erro ao excluir ALuno:', error)
+                () => console.log('Aluno excluído com sucesso'),
+                (error) => console.error('Erro ao excluir Aluno:', error)
             );
         });
     });
 };
 
-export { createAluno, insertAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById };
+export { createAluno, insertAluno, updateAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById };
