@@ -48,7 +48,7 @@ const Disciplina = ( {navigation} ) => {
                     <View>
 
                     <Button mode="contained" labelStyle={{ fontSize: 20 }}
-                            onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: true, id: item.id, professor_fk: item.professor_fk, nome: item.nome, codigo: item.codigo, curso: item.curso, complemento: item.complemento });}}
+                            onPress={() => {navigation.navigate('DisciplinaDetalhe', { isEdit: true, id: item.id, professor_fk: item.professor_fk, nome: item.nome, codigo: item.codigo, curso: item.curso, complemento: item.complemento });}}
                             style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
                         {item.nome}
                     </Button>

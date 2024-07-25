@@ -152,6 +152,8 @@ const DisciplinaTeste = () => {
                             <Text style={styles.complemento}>{item.dia_semana}</Text>
                             <Text style={styles.complemento}>{item.local}</Text>
                             <Text style={styles.complemento}>{item.quantidade_aulas}</Text>
+                            <Text style={styles.complemento}>{item.horario_inicio_aula}</Text>
+                            <Text style={styles.complemento}>{item.horario_fim_aula}</Text>
                             <Text style={styles.complemento}>{item.criado_em}</Text>
                         </View>
                         <TouchableOpacity onPress={() => apagaDisciplina(item.id.toString())}>

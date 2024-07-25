@@ -86,8 +86,12 @@ const removeAlunoById = async (id) => {
     try {
         await deleteAlunoById(id);
         console.log('Aluno apagado');
+        return { success: true };
     } catch (error) {
         console.error('Erro ao adicionar aluno:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 

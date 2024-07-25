@@ -11,12 +11,14 @@ import ProfessorEdita from "../pages/Professor/ProfessorEdita";
 import Perfil from '../pages/Perfil';
 
 import Aluno from '../pages/Aluno';
-import AlunoDetalhe from '../pages/Aluno/AlunoDetalhe';
 import AlunoForm from "../pages/Aluno/AlunoForm";
 
 import Disciplina from '../pages/Disciplina';
 import DisciplinaDetalhe from '../pages/Disciplina/DisciplinaDetalhe';
 import DisciplinaForm from "../pages/Disciplina/DisciplinaForm";
+
+import AulaForm from "../pages/Disciplina/AulaForm";
+import Aulas from "../pages/Disciplina/Aulas";
 
 import Presenca from '../pages/Presenca';
 import PresencaDetalhe from '../pages/Presenca/PresencaDetalhe';
@@ -65,7 +67,6 @@ function AlunoStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="Aluno" component={Aluno} />
-      <Stack.Screen options={{ headerShown: false }} name="AlunoDetalhe" component={AlunoDetalhe} />
       <Stack.Screen options={{ headerShown: false }} name="AlunoForm" component={AlunoForm} />
     </Stack.Navigator>
   );
@@ -77,6 +78,8 @@ function DisciplinaStack() {
         <Stack.Screen options={{ headerShown: false }} name="Disciplina" component={Disciplina} />
         <Stack.Screen options={{ headerShown: false }} name="DisciplinaForm" component={DisciplinaForm} />
         <Stack.Screen options={{ headerShown: false }} name="DisciplinaDetalhe" component={DisciplinaDetalhe} />
+        <Stack.Screen options={{ headerShown: false }} name="AulaForm" component={AulaForm} />
+        <Stack.Screen options={{ headerShown: false }} name="Aulas" component={Aulas} />
       </Stack.Navigator>
     );
 }

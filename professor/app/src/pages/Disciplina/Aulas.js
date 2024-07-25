@@ -13,7 +13,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
     const { colors } = useTheme();
     const route = useRoute();
 
-    const { id, professor_fk, nome, codigo, curso, complemento } = route.params;
+    const { disciplina_id, nome_disciplina } = route.params;
     const [aulas, setListaAula] = useState([]);
     const [visible, setVisible] = useState(false);
     const [isExist, setIsExist] = useState(true);
@@ -26,8 +26,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
         setVisible(true);
         setIsExist(true)
         try {
-            //const listAula = await fetchAulaDisciplina(id);
-            listAula = [];
+            const listAula = await fetchAulaDisciplina(disciplina_id);
             listAula.length === 0 ? setIsExist(false) : setListaAula(listAula);
             console.log(listAula);
         } catch (error) {
@@ -39,32 +38,19 @@ const DisciplinaDetalhe = ( {navigation} ) => {
 
     return(
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.titulo, {color: colors.text }]}>{nome}</Text>
-
-            <View style={TemaPrincipal.botoesEditRegistro}>
-                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
-                onPress={() => {navigation.navigate('DisciplinaForm', 
-                { complemento: complemento });}}>
-                    Detalhes
-                </Button>
-
-                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
-                onPress={() => {navigation.navigate('Aulas', { disciplina_id: id, nome_disciplina: nome });}}>
-                    Aulas
-                </Button>
-            </View> 
+            <Text style={[styles.titulo, {color: colors.text }]}>{nome_disciplina}</Text>
+            <Text style={[styles.titulo, {color: colors.text }]}>Lista de Aulas</Text>
 
             {isExist ?
             <ScrollView>
-                    <Loading visible={visible}/>
                     <Loading visible={visible}/>
                     {aulas.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
                         <View>
 
                         <Button mode="contained" labelStyle={{ fontSize: 20 }}
-                        onPress={() => {navigation.navigate('AulaDetalhe', 
-                        { id: item.id, disciplina_fk: item.disciplina_fk, disciplina_nome: nome, dia_semana: item.dia_semana, local: item.local, 
+                        onPress={() => {navigation.navigate('AulaForm', 
+                        { isEdit: true, id: item.id, disciplina_fk: item.disciplina_fk, nome_disciplina: nome_disciplina, dia_semana: item.dia_semana, local: item.local, 
                         quantidade_aulas: item.quantidade_aulas, horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula});}}
                         style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
                             {item.dia_semana}
@@ -75,9 +61,11 @@ const DisciplinaDetalhe = ( {navigation} ) => {
             </ScrollView> :
             <Text style={styles.aviso}>Ainda não há aulas cadastradas nesta disciplina</Text>}
 
-            <Button mode="contained" style={TemaPrincipal.inputPadrao}
-            onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: true, id: id, professor_fk: professor_fk, nome: nome, codigo: codigo, curso: curso, complemento: complemento });}}>
-                ATUALIZAR
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} 
+                onPress={() => {navigation.navigate('AulaForm', 
+                { isEdit: false, id: '', disciplina_fk: disciplina_id, nome_disciplina: nome_disciplina, dia_semana: '', local: '', 
+                quantidade_aulas: '', horario_inicio_aula: '', horario_fim_aula: '' });}}>
+                    Nova Aula
             </Button>
         </View>
     )

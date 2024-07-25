@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Text, ScrollView, Alert } from "react-native";
+import { ScrollView, View, Text, Alert } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
-import { addAluno, editAluno } from '../../Controller/AlunoController';
+import { addAluno, editAluno, removeAlunoById } from '../../Controller/AlunoController';
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -57,7 +57,7 @@ const AlunoForm = ( {navigation} ) => {
             const result = await editAluno(id, nomeForm, matriculaForm, beaconIdForm);
             if (result.success) {
                 Alert.alert(
-                    "Sucesso", "Lista de chamada atualizada com sucesso",
+                    "Sucesso", "Aluno(a) atualizado(a) com sucesso",
                     [{ text: "OK", onPress: () => {
                         navigation.reset({
                             index: 0,
@@ -71,7 +71,41 @@ const AlunoForm = ( {navigation} ) => {
         } else {
             Alert.alert('Atenção', 'Por favor preencha todos os campos');
         }
-    };               
+    };   
+    
+    function apagarAluno() {
+        Alert.alert(
+            "Confirmação",
+            "Tem certeza que deseja apagar o aluno "+nomeForm+"?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                },
+                {
+                    text: "Apagar",
+                    onPress: () => confirmarExclusao()
+                }
+            ]
+        );
+    }
+    
+    const confirmarExclusao = async () => {
+        const result = await removeAlunoById(id);
+        if (result.success) {
+            Alert.alert(
+                "Sucesso", "Aluno apagado com sucesso",
+                [{ text: "OK", onPress: () => {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'AlunoStack' }], 
+                    });
+                }}]
+            );
+        } else {
+            Alert.alert('Não foi possível apagar esse(a) aluno(a), tente novamente mais tarde');
+        }
+    };  
 
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
@@ -92,10 +126,16 @@ const AlunoForm = ( {navigation} ) => {
             {!isEdit ?
             <Button mode="contained" onPress={cadastrarAluno} style={TemaPrincipal.inputPadrao}>
                 CADASTRAR
-            </Button> :
-            <Button mode="contained" onPress={atualizarAluno} style={TemaPrincipal.inputPadrao}>
-                ATUALIZAR
-            </Button>}
+            </Button> :          
+            <View style={TemaPrincipal.botoesEditRegistro}>
+                <Button mode="contained" onPress={apagarAluno} style={[styles.button, { backgroundColor: '#CF4D4F' }]}>
+                    APAGAR
+                </Button>
+
+                <Button mode="contained" onPress={atualizarAluno}>
+                    ATUALIZAR
+                </Button>
+            </View>}
             
         </ScrollView>
     )

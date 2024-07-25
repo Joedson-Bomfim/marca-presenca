@@ -37,6 +37,20 @@ const insertAula = (disciplina_fk, dia_semana, local, quantidade_aulas, horario_
     });
 };
 
+const updateAula = (id, dia_semana, local, quantidade_aulas, horario_inicio_aula, horario_fim_aula, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(`
+                UPDATE Aulas SET dia_semana = ?, local = ?, quantidade_aulas = ?,
+                horario_inicio_aula = ?, horario_fim_aula = ?, atualizado_em = ? WHERE id = ?`,
+                [dia_semana, local, quantidade_aulas, horario_inicio_aula, horario_fim_aula, atualizado_em, id],
+                () => console.log('Aula atualizada com sucesso'),
+                (error) => console.error('Erro ao atualizar Aula:', error)
+            );
+        });
+    });
+};
+
 const getAula = () => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
@@ -60,7 +74,7 @@ const getAulaDisciplina = (id) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT id, dia_semana, quantidade_aulas FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana DESC',
+                    'SELECT * FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana DESC',
                     [id],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
@@ -128,4 +142,4 @@ const deleteAulaById = (id) => {
     });
 };
 
-export { createAula, insertAula, getAula, getAulaDisciplina, getProfessorById, truncateAula, deleteAulaById };
+export { createAula, insertAula, updateAula, getAula, getAulaDisciplina, getProfessorById, truncateAula, deleteAulaById };

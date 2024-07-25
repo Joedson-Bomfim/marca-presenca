@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Text, ScrollView, Alert } from "react-native";
+import { ScrollView, View,Text, Alert } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
-import { addDisciplina, editDisciplina } from '../../Controller/DisciplinaController';
+import { addDisciplina, editDisciplina, removeDisciplinaById } from '../../Controller/DisciplinaController';
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -72,7 +72,41 @@ const DisciplinaForm = ( {navigation} ) => {
         } else {
             Alert.alert('Atenção', 'Por favor preencha todos os campos');
         }
-    };               
+    };    
+    
+    function apagarDisciplina() {
+        Alert.alert(
+            "Confirmação",
+            "Tem certeza que deseja apagar a disciplina "+nome+"?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                },
+                {
+                    text: "Apagar",
+                    onPress: () => confirmarExclusao()
+                }
+            ]
+        );
+    }
+    
+    const confirmarExclusao = async () => {
+        const result = await removeDisciplinaById(id);
+        if (result.success) {
+            Alert.alert(
+                "Sucesso", "Disciplina apagado com sucesso",
+                [{ text: "OK", onPress: () => {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'DisciplinaStack' }], 
+                    });
+                }}]
+            );
+        } else {
+            Alert.alert('Não foi possível apagar a disciplina, tente novamente mais tarde');
+        }
+    };  
 
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
@@ -98,9 +132,15 @@ const DisciplinaForm = ( {navigation} ) => {
             <Button mode="contained" onPress={cadastrarDisciplina} style={TemaPrincipal.inputPadrao}>
                 CADASTRAR
             </Button> :
-            <Button mode="contained" onPress={atualizarDisciplina} style={TemaPrincipal.inputPadrao}>
-                ATUALIZAR
-            </Button>}
+            <View style={TemaPrincipal.botoesEditRegistro}>
+                <Button mode="contained" onPress={apagarDisciplina} style={[styles.button, { backgroundColor: '#CF4D4F' }]}>
+                    APAGAR
+                </Button>
+
+                <Button mode="contained" onPress={atualizarDisciplina}>
+                    ATUALIZAR
+                </Button>
+            </View>}
             
         </ScrollView>
     )

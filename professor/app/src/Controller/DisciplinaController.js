@@ -79,8 +79,12 @@ const removeDisciplinaById = async (id) => {
     try {
         await deleteDisciplinaById(id);
         console.log('Disciplina apagado');
+        return { success: true };
     } catch (error) {
         console.error('Erro ao adicionar disciplina:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 

@@ -49,18 +49,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // Cor de fundo do modal, com transparência
     },
-        modalContent: {
+    modalContent: {
         width: '80%',
         backgroundColor: 'white',
         borderRadius: 8,
         padding: 20,
     },
-        modalSelecinaAluno: {
+    modalSelecinaAluno: {
         width: '80%',
         backgroundColor: '#557CE1',
         borderRadius: 8,
         padding: 20,
-    }
+    },
+    alinhamento: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    botoesEditRegistro: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingBottom: 30,
+    },
 })
 
 export default styles;
