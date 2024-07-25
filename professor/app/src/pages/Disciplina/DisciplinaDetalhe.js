@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ScrollView  } from "react-native";
-import { TextInput, Button, useTheme } from "react-native-paper";
+import { Text, View, ScrollView, TouchableOpacity  } from "react-native";
+import { Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
-import { fetchAulaDisciplina } from '../../Controller/AulaController';
+import { fetchGrupoPresenca } from '../../Controller/PresencaController';
+import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
 
 import Loading from "../../components/loading";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -14,7 +15,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
     const route = useRoute();
 
     const { id, professor_fk, nome, codigo, curso, complemento } = route.params;
-    const [aulas, setListaAula] = useState([]);
+    const [presencas, setListaPresenca] = useState([]);
     const [visible, setVisible] = useState(false);
     const [isExist, setIsExist] = useState(true);
 
@@ -26,12 +27,11 @@ const DisciplinaDetalhe = ( {navigation} ) => {
         setVisible(true);
         setIsExist(true)
         try {
-            //const listAula = await fetchAulaDisciplina(id);
-            listAula = [];
-            listAula.length === 0 ? setIsExist(false) : setListaAula(listAula);
-            console.log(listAula);
+            const listPresenca = await fetchGrupoPresenca(id);
+            listPresenca.length === 0 ? setIsExist(false) : setListaPresenca(listPresenca);
+            console.log(listPresenca);
         } catch (error) {
-            console.log('Não foi possível carregar os aulas. Verifique se a tabela existe.');
+            console.log('Não foi possível carregar os presencas. Verifique se a tabela existe.');
         } finally {
             setVisible(false);
         }
@@ -57,27 +57,23 @@ const DisciplinaDetalhe = ( {navigation} ) => {
             {isExist ?
             <ScrollView>
                     <Loading visible={visible}/>
-                    <Loading visible={visible}/>
-                    {aulas.map((item) => (
+                    {presencas.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
-                        <View>
-
-                        <Button mode="contained" labelStyle={{ fontSize: 20 }}
-                        onPress={() => {navigation.navigate('AulaDetalhe', 
-                        { id: item.id, disciplina_fk: item.disciplina_fk, disciplina_nome: nome, dia_semana: item.dia_semana, local: item.local, 
-                        quantidade_aulas: item.quantidade_aulas, horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula});}}
-                        style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
-                            {item.dia_semana}
-                        </Button>
-                        </View>
+                        <TouchableOpacity onPress={() => { navigation.navigate('PresencaAula', { aula_id: item.aula_id, data_presenca: item.data, nome_disciplina: nome }); }}
+                        style={[styles.buttonTouchable, { backgroundColor: colors.secondary }]}>
+                            <View style={styles.buttonTouchableSegundo}>
+                                <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula}</Text>
+                                <Text style={styles.fonteTextoTouchable}><Icon name="account-group" color={colors.icone} size={25} />{item.total_alunos_presentes+'/'+item.total_alunos}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 ))}
             </ScrollView> :
-            <Text style={styles.aviso}>Ainda não há aulas cadastradas nesta disciplina</Text>}
+            <Text style={styles.aviso}>Ainda não há registros de presença</Text>}
 
             <Button mode="contained" style={TemaPrincipal.inputPadrao}
             onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: true, id: id, professor_fk: professor_fk, nome: nome, codigo: codigo, curso: curso, complemento: complemento });}}>
-                ATUALIZAR
+                Editar Disciplina
             </Button>
         </View>
     )

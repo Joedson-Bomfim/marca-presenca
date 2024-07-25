@@ -11,9 +11,14 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 30,
     },
-    tituloCadastro: {
+    tituloDois: {
         textAlign: 'center',
-        fontSize: 30,
+        fontSize: 25,
+        fontWeight: "bold",
+    },
+    subTitulo: {
+        textAlign: 'center',
+        fontSize: 20,
         marginBottom: 30,
         fontWeight: "bold"
     },
@@ -27,14 +32,28 @@ const styles = StyleSheet.create({
     },
     aviso: {
         marginBottom: 20,
-        fontSize: 30,
+        fontSize: 20,
         textAlign: 'center',
         fontWeight: 'bold'
         
     },
     marginBottom: {
         marginBottom: 30
-    }
+    },
+    buttonTouchable: {
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    buttonTouchableSegundo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    fonteTextoTouchable: {
+        fontSize: 20,
+        color: '#fff',
+    },
 })
 
 export default styles;

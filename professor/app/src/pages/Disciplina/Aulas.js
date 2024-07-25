@@ -38,8 +38,8 @@ const DisciplinaDetalhe = ( {navigation} ) => {
 
     return(
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.titulo, {color: colors.text }]}>{nome_disciplina}</Text>
-            <Text style={[styles.titulo, {color: colors.text }]}>Lista de Aulas</Text>
+            <Text style={[styles.tituloDois, {color: colors.text }]}>{nome_disciplina}</Text>
+            <Text style={[styles.subTitulo, {color: colors.text }]}>Lista de Aulas</Text>
 
             {isExist ?
             <ScrollView>

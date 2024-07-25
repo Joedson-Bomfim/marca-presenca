@@ -21,6 +21,11 @@ export function converteDataBrasileiraParaAmericana(dataBrasileira) {
     return `${ano}-${mes.padStart(2, '0')}-${dia.padStart(2, '0')}`;
 }
 
+export function converteDataAmericanaParaBrasileira(dataAmericana) {
+    const [ano, mes, dia] = dataAmericana.split('-');
+    return `${dia.padStart(2, '0')}/${mes.padStart(2, '0')}/${ano}`;
+}
+
 export function dataHora() {
     return new Date();
 }

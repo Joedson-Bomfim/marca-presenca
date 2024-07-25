@@ -1,4 +1,4 @@
-import { insertPresenca, insertMultiplePresencas, getPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
+import { insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, getGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao) => {
@@ -11,6 +11,23 @@ const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas,
         console.log('Presença adicionado');
     } catch (error) {
         console.error('Erro ao adicionar presença:', error);
+    }
+};
+
+const editPresenca = async (quantidade_aulas_assistidas, observacao, situacao) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let atualizado_em = formattedDate;
+
+    try {
+        await updateAluno(quantidade_aulas_assistidas, observacao, situacao, atualizado_em);
+        console.log('Presença adicionado');
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao adicionar presença:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 
@@ -30,6 +47,27 @@ const addMultiplePresenca = async (aula_fk, data, presencas) => {
 const fetchPresenca = async () => {
     try {
         const presencas = await getPresenca();
+        return presencas;
+    } catch (error) {
+        console.error('Erro ao listar presencas:', error.message || error);
+        return [];
+    }
+};
+
+const fetchPresencaByAula = async (aula_id, data_presenca) => {
+    try {
+        const presencas = await getPresencaByAula(aula_id, data_presenca);
+        return presencas;
+    } catch (error) {
+        console.error('Erro ao listar presencas:', error.message || error);
+        return [];
+    }
+};
+
+const fetchGrupoPresenca = async (disciplina_id) => {
+    try {
+        const presencas = await getGrupoPresenca(disciplina_id);
+        console.log(presencas)
         return presencas;
     } catch (error) {
         console.error('Erro ao listar presencas:', error.message || error);
@@ -70,4 +108,4 @@ const removePresencaById = async (id) => {
     }
 };
 
-export { addPresenca, addMultiplePresenca, fetchPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };
+export { addPresenca, editPresenca, addMultiplePresenca, fetchPresenca, fetchPresencaByAula, fetchGrupoPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };

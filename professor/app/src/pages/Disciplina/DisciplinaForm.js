@@ -110,7 +110,7 @@ const DisciplinaForm = ( {navigation} ) => {
 
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.tituloCadastro, {color: colors.text }]}>{tipoForm} Disciplina</Text>
+            <Text style={[styles.titulo, {color: colors.text }]}>{tipoForm} Disciplina</Text>
 
             <TextInput label="Nome" mode="flat" value={nomeForm} 
                     onChangeText={setNomeForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}

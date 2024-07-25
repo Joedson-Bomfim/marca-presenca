@@ -38,6 +38,19 @@ const insertPresenca = (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, ob
     });
 };
 
+const updateAluno = (id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(
+                'UPDATE Presencas SET quantidade_aulas_assistidas = ?, observacao = ?, situacao = ?, atualizado_em = ? WHERE id = ?',
+                [quantidade_aulas_assistidas, observacao, situacao, atualizado_em, id],
+                () => console.log('Aluno atualizado com sucesso'),
+                (error) => console.error('Erro ao atualizar Aluno:', error)
+            );
+        });
+    });
+};
+
 const insertPresencaLote = (tx, aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) => {
     console.log('Inserindo presença:', aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em);
     tx.executeSql(
@@ -99,17 +112,47 @@ const getPresenca = () => {
     });
 };
 
-const getProfessorById = (id) => {
+const getPresencaByAula = (aula_id, data_presenca) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
-                return tx.executeSql(
-                    'SELECT * FROM Presencas WHERE id = ?',
-                    [id],
+                return tx.executeSql(`
+                    SELECT A.nome, P.data, P.quantidade_aulas_assistidas, P.Situacao
+                    FROM Presencas AS P
+                    JOIN Alunos AS A ON A.id = P.aluno_fk
+                    JOIN Aulas AS Au ON Au.id = P.aula_fk
+                    WHERE Au.id = ? AND P.data = ?
+                    ORDER BY A.nome ASC`,
+                    [aula_id, data_presenca],
                     (tx, results) => {
-                        const rows = results.rows.raw();
-                        // Verifica se há resultados e retorna o primeiro (ou nenhum se não houver)
-                        resolve(rows.length > 0 ? rows[0] : null);
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
+const getGrupoPresenca = (disciplinaId) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql( `
+                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, p.data, a.horario_inicio_aula, 
+                        COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
+                        COUNT(p.aluno_fk) AS total_alunos
+                    FROM Presencas p
+                    JOIN Aulas a ON p.aula_fk = a.id
+                    JOIN Disciplinas d ON a.disciplina_fk = d.id
+                    WHERE d.id = ?
+                    GROUP BY d.nome, p.data, a.horario_inicio_aula
+                    ORDER BY p.data DESC;`,
+                    [disciplinaId],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
                     },
                     (error) => reject(error)
                 );
@@ -154,4 +197,4 @@ const deletePresencaById = (id) => {
     });
 };
 
-export { createPresenca, insertPresenca, insertMultiplePresencas, getPresenca, getProfessorById, truncatePresenca, deletePresencaById };
+export { createPresenca, insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, getGrupoPresenca, truncatePresenca, deletePresencaById };
