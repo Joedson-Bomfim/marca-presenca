@@ -59,7 +59,10 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                     <Loading visible={visible}/>
                     {presencas.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
-                        <TouchableOpacity onPress={() => { navigation.navigate('PresencaAula', { aula_id: item.aula_id, data_presenca: item.data, nome_disciplina: nome }); }}
+                        <TouchableOpacity 
+                        onPress={() => { navigation.navigate('PresencaAula', { aula_id: item.aula_id, data_presenca: item.data, 
+                        horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula, 
+                        total_alunos_presentes: item.total_alunos_presentes, total_alunos: item.total_alunos, nome_disciplina: nome }); }}
                         style={[styles.buttonTouchable, { backgroundColor: colors.secondary }]}>
                             <View style={styles.buttonTouchableSegundo}>
                                 <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula}</Text>

@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         fontWeight: "bold"
     },
+    detalhes: {
+        fontSize: 20,
+        fontWeight: "bold",  
+    },
     alinhaBotoes: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -53,6 +57,16 @@ const styles = StyleSheet.create({
     fonteTextoTouchable: {
         fontSize: 20,
         color: '#fff',
+    },
+    dataIcone: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    botaoSair: {     
+        alignSelf: 'center',
+        width: '40%',
+        marginBottom: 15
     },
 })
 

@@ -26,6 +26,7 @@ import PresencaAula from '../pages/Disciplina/PresencaAula';
 
 import Teste from '../pages/Teste';
 import TesteMelhorado from '../pages/Teste/testeMelhorado';
+import ExportaXML from '../pages/Teste/exportaXML';
 
 import TesteBanco from '../pages/Test';
 import ProfessorTeste from '../pages/Test/professorTeste';
@@ -51,6 +52,7 @@ function HomeStack() {
         <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP2" component={MarcaPresencaP2} />
         <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
         <Stack.Screen options={{ headerShown: false }} name="TesteMelhorado" component={TesteMelhorado} />
+        <Stack.Screen options={{ headerShown: false }} name="ExportaXML" component={ExportaXML} />
       </Stack.Navigator>
     );
 }
