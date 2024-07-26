@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { addProfessor, fetchProfessor, cleanUpProfessor, removeProfessorById } from '../../Controller/ProfessorController';
 import { dataHora, formataDataHoraPadraoAmericano } from '../../services/formatacao';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { Context } from '../../contexts/Context';
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 
 const ProfessorTeste = () => {  
     const { colors } = useTheme();
+
+    const { professorId, setProfessorId, setNomeCompleto, setNumeroRegistro } = useContext(Context);
 
     const now = dataHora();
     const formattedDate = formataDataHoraPadraoAmericano(now);
@@ -18,7 +21,7 @@ const ProfessorTeste = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [nome, setNome] = useState('');
-    const [numero_registro, setNumeroRegistro] = useState('');
+    const [numero_registro, setNumero_Registro] = useState('');
     const [criado_em, setCriadoEm] = useState(formattedDate);
 
     useEffect(() => {
@@ -49,6 +52,14 @@ const ProfessorTeste = () => {
             setError('Erro ao apagar');
         } finally {
             setLoading(false);
+
+            if(professorId == id) {
+                Alert.alert("Deslogado", "O professor dessa conta foi apagado" );
+                
+                setProfessorId('');
+                setNomeCompleto('');
+                setNumeroRegistro('');
+            }
         }
     };
 
@@ -60,6 +71,12 @@ const ProfessorTeste = () => {
             setError('Erro ao apagar');
         } finally {
             setLoading(false);
+
+            Alert.alert("Deslogado", "O professor dessa conta foi apagado" );
+
+            setProfessorId('');
+            setNomeCompleto('');
+            setNumeroRegistro('');
         }
     };
 
@@ -67,7 +84,7 @@ const ProfessorTeste = () => {
         if (nome && numero_registro && criado_em) {
             await addProfessor(nome, numero_registro, criado_em);
             setNome('');
-            setNumeroRegistro('');
+            setNumero_Registro('');
             listaProfessores();
         }
     };
@@ -132,7 +149,7 @@ const ProfessorTeste = () => {
 
             <TextInput label="Número de Registro" mode="flat" 
                        value={numero_registro}
-                       onChangeText={setNumeroRegistro}
+                       onChangeText={setNumero_Registro}
                        style={[styles.marginBottom, TemaPrincipal.inputPadrao]}/>
 
             <TextInput label="Criado em" mode="flat" 

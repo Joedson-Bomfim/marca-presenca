@@ -21,13 +21,21 @@ const createProfessor = () => {
 
 const insertProfessor = (nome, numero_registro, criado_em) => {
     return openDatabase().then((db) => {
-        return db.transaction((tx) => {
-            return tx.executeSql(
-                'INSERT INTO Professores (nome, numero_registro, criado_em) VALUES (?, ?, ?)',
-                [nome, numero_registro, criado_em],
-                () => console.log('Professor cadastrado com sucesso'),
-                (error) => console.error('Erro ao cadastrar Professor:', error)
-            );
+        return new Promise((resolve, reject) => {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    'INSERT INTO professores (nome, numero_registro, criado_em) VALUES (?, ?, ?)',
+                    [nome, numero_registro, criado_em],
+                    (_, results) => {
+                        console.log('Professor cadastrado com sucesso, id: ' + results.insertId);
+                        resolve(results.insertId); 
+                    },
+                    (_, error) => {
+                        console.error('Erro ao cadastrar Professor:', error);
+                        reject(error);
+                    }
+                );
+            });
         });
     });
 };
@@ -50,19 +58,19 @@ const getProfessor = () => {
     });
 };
 
-const getUserStatus = () => {
+const getPrimeiroProfessor = () => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
-            db.transaction((tx) => {
-                tx.executeSql(
-                    'SELECT * FROM Professores WHERE id = 1',
+            return db.transaction((tx) => {
+                return tx.executeSql(
+                    'SELECT * FROM Professores LIMIT 1',
                     [],
                     (tx, results) => {
-                        const rows = results.rows.raw();
+                        const rows = results.rows.raw(); 
                         if (rows.length > 0) {
-                            resolve(rows[0]); // Assumindo que sempre haverá apenas um registro com id = 1
+                            resolve(rows[0]); 
                         } else {
-                            resolve(null); // Nenhum registro encontrado
+                            resolve(null); 
                         }
                     },
                     (error) => reject(error)
@@ -71,7 +79,6 @@ const getUserStatus = () => {
         });
     });
 };
-
 
 const getProfessorById = (id) => {
     return new Promise((resolve, reject) => {
@@ -82,7 +89,6 @@ const getProfessorById = (id) => {
                     [id],
                     (tx, results) => {
                         const rows = results.rows.raw();
-                        // Verifica se há resultados e retorna o primeiro (ou nenhum se não houver)
                         resolve(rows.length > 0 ? rows[0] : null);
                     },
                     (error) => reject(error)
@@ -128,4 +134,4 @@ const deleteProfessorById = (id) => {
     });
 };
 
-export { createProfessor, insertProfessor, getProfessor, getUserStatus, getProfessorById, truncateProfessor, deleteProfessorById };
+export { createProfessor, insertProfessor, getProfessor, getPrimeiroProfessor, getProfessorById, truncateProfessor, deleteProfessorById };

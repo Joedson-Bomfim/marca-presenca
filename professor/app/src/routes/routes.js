@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { fetchProfessor } from '../Controller/ProfessorController';
+import { fetchPrimeiroProfessor } from '../Controller/ProfessorController';
+import { Context } from '../contexts/Context';
 
 import CadastroStack from "./CadastroStack";
 import DrawerNavigator from './DrawerNavigator';
@@ -11,17 +12,21 @@ import Loading from "../components/loading";
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
+    const { professorId, setProfessorId, setNomeCompleto, setNumeroRegistro } = useContext(Context);
+
     const[loading, setLoading] = useState(true);
-    const[professor, setProfessor] = useState([]);
 
     useEffect(() => {
-        listaProfessores();
+        listaPrimeiroProfessor();
     }, []);
 
-    const listaProfessores = async () => {
+    const listaPrimeiroProfessor = async () => {
         try {
-            const listaProfessor = await fetchProfessor();
-            setProfessor(listaProfessor);
+            const professor = await fetchPrimeiroProfessor();
+            setProfessorId(professor.id);
+            setNomeCompleto(professor.nome);
+            setNumeroRegistro(professor.numero_registro);
+            console.log('Dados do professor' +professor);
         } catch (error) {
             console.log('Não foi possível carregar os professores. Verifique se a tabela existe.');
         } finally {
@@ -35,7 +40,7 @@ const Routes = () => {
         )  
     }
 
-    const rota = professor.length === 0 ? <CadastroStack></CadastroStack> : <DrawerNavigator></DrawerNavigator>;
+    const rota = professorId ? <DrawerNavigator></DrawerNavigator> : <CadastroStack></CadastroStack>;
 
      return(
         <NavigationContainer>

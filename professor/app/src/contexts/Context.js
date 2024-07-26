@@ -3,11 +3,12 @@ import React, { createContext, useState } from 'react';
 export const Context = createContext({})
 
 function ContextProvider({children}) {
-    const [isCadastroConcluido, setIsCadastro] = useState(false);
-    const [professorId, setProfessorId] = useState('1'); //Usário provisório...dps irei adicionar uma lógica para setar o id do professor
-
+    const [professorId, setProfessorId] = useState('');
+    const [nomeCompleto, setNomeCompleto] = useState('');
+    const [numero_registro, setNumeroRegistro] = useState('');
+    
     return (
-        <Context.Provider value={{isCadastroConcluido, setIsCadastro, professorId, setProfessorId }}>
+        <Context.Provider value={{professorId, setProfessorId, nomeCompleto, setNomeCompleto, numero_registro, setNumeroRegistro }}>
             {children}
         </Context.Provider>
     );

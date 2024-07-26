@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         fontWeight: "bold"
     },
+    informativo: {
+        textAlign: 'center',
+        fontSize: 20,
+        marginBottom: 10,
+        fontWeight: "bold"
+    },
     tituloModal: {
         textAlign: 'center',
         fontSize: 20,

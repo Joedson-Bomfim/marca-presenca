@@ -1,11 +1,19 @@
-import { insertProfessor, getProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
+import { insertProfessor, getProfessor, getPrimeiroProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
+import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
-const addProfessor = async (nome, numero_registro, criado_em) => {
+const addProfessor = async (nome, numero_registro) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let criado_em = formattedDate;
+
     try {
-        await insertProfessor(nome, numero_registro, criado_em);
-        console.log('Professor adicionado');
+        const professorId = await insertProfessor(nome, numero_registro, criado_em);
+        console.log('Professor adicionado, ID: ' + professorId);
+        return { success: true, message: professorId };
     } catch (error) {
         console.error('Erro ao adicionar professor:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        return { success: false, message: errorMessage };
     }
 };
 
@@ -19,13 +27,19 @@ const fetchProfessor = async () => {
     }
 };
 
-const UserStatusController = async () => {
+const fetchPrimeiroProfessor = async () => {
     try {
-        const professorStatus = await getUserStatus();
-        return professorStatus;
+        const professor = await getPrimeiroProfessor();
+        if (professor) {
+            console.log('Dados do primeiro professor:', professor);
+            return professor; // Retorna o objeto do primeiro professor encontrado
+        } else {
+            console.log('Nenhum professor encontrado.');
+            return null; // Retorna null se nenhum professor for encontrado
+        }
     } catch (error) {
-        console.error('Erro ao encontrar um professor:', error);
-        return [];
+        console.error('Erro ao listar professor:', error.message || error);
+        return null; // Retorna null se houver um erro
     }
 };
 
@@ -62,4 +76,4 @@ const removeProfessorById = async (id) => {
     }
 };
 
-export { addProfessor, fetchProfessor, UserStatusController, fetchProfessorById, cleanUpProfessor, removeProfessorById };
+export { addProfessor, fetchProfessor, fetchPrimeiroProfessor, fetchProfessorById, cleanUpProfessor, removeProfessorById };
