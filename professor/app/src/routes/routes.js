@@ -7,7 +7,7 @@ import { Context } from '../contexts/Context';
 import CadastroStack from "./CadastroStack";
 import DrawerNavigator from './DrawerNavigator';
 
-import Loading from "../components/loading";
+import LoadingScreen from '../components/LoadingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -35,9 +35,7 @@ const Routes = () => {
     };
 
     if(loading) {
-        return(
-            <Loading/>
-        )  
+        return <LoadingScreen />;  
     }
 
     const rota = professorId ? <DrawerNavigator></DrawerNavigator> : <CadastroStack></CadastroStack>;
