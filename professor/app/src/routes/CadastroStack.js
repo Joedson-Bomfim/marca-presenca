@@ -5,7 +5,7 @@ import ProfessorCadastro from '../pages/Professor/ProfessorCadastra';
 
 const Stack = createNativeStackNavigator();
 
-const CadastroStacks = () => {
+const CadastroStack = () => {
     return(
         <Stack.Navigator initialRouteName="ProfessorCadastro">
             <Stack.Screen options={{ headerShown: false }} name="ProfessorCadastro" component={ProfessorCadastro}/>
@@ -13,4 +13,4 @@ const CadastroStacks = () => {
     )
 }
 
-export default CadastroStacks;
+export default CadastroStack;
