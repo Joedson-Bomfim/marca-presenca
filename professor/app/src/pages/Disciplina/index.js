@@ -57,7 +57,7 @@ const Disciplina = ( {navigation} ) => {
             ))}
             </ScrollView>
 
-            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: false, id: '', nome: '', matricula: '', beacon_id: '' });}} style={[TemaPrincipal.botaoCadastro, TemaPrincipal.botaoPrincipal]}>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: false, id: '', nome: '', matricula: '', beacon_id: '' });}} style={[TemaPrincipal.botaoCadastro]}>
                 Nova Disciplina
             </Button>  
         </View>

@@ -31,11 +31,6 @@ const Aluno = ( {navigation} ) => {
         }
     };
 
-    /* 
-    <TouchableOpacity onPress={() => {}}>
-        <Icon name="trash-can" color="#fff" size={40} />
-    </TouchableOpacity>
-    */
     return(
         //<Icon name="clipboard-text-clock-outline" color={ colors.icone } size={40}/>       
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>

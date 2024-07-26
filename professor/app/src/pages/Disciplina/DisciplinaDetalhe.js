@@ -74,10 +74,11 @@ const DisciplinaDetalhe = ( {navigation} ) => {
             </ScrollView> :
             <Text style={styles.aviso}>Ainda não há registros de presença</Text>}
 
-            <Button mode="contained" style={TemaPrincipal.inputPadrao}
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} 
+            style={[TemaPrincipal.botaoCadastro]}
             onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: true, id: id, professor_fk: professor_fk, nome: nome, codigo: codigo, curso: curso, complemento: complemento });}}>
-                Editar Disciplina
-            </Button>
+            Editar Disciplina
+            </Button>  
         </View>
     )
 }

@@ -27,9 +27,10 @@ const styles = StyleSheet.create({
         marginBottom: 40
     },
     botaoCadastro:{
-       width: 200, 
+       width: 250, 
        marginTop: 10,
        alignSelf: 'center',
+       padding: 4,
     },
     titulo: {
         textAlign: 'center',

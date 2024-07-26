@@ -14,13 +14,13 @@ const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas,
     }
 };
 
-const editPresenca = async (quantidade_aulas_assistidas, observacao, situacao) => {
+const editPresenca = async (id, quantidade_aulas_assistidas, observacao, situacao) => {
     let now = dataHora();
     let formattedDate = formataDataHoraPadraoAmericano(now);
     let atualizado_em = formattedDate;
 
     try {
-        await updateAluno(quantidade_aulas_assistidas, observacao, situacao, atualizado_em);
+        await updateAluno(id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em);
         console.log('Presença adicionado');
         return { success: true };
     } catch (error) {

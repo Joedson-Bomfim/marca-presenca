@@ -34,3 +34,14 @@ export function obterDataAtualBrasileira() {
     const dataAtual = new Date();
     return formataDataHora(dataAtual).split(' ')[0]; // Retorna apenas a data no formato brasileiro
 }
+
+const formatarComDoisDigitos = (numero) => numero.toString().padStart(2, '0');
+
+export function obterDataHoraAtualParaNomeArquivo() {
+    const dataAtual = new Date();
+    return `${formatarComDoisDigitos(dataAtual.getDate())}-${formatarComDoisDigitos(dataAtual.getMonth() + 1)}-${dataAtual.getFullYear()}_${formatarComDoisDigitos(dataAtual.getHours())}-${formatarComDoisDigitos(dataAtual.getMinutes())}-${formatarComDoisDigitos(dataAtual.getSeconds())}`;
+};
+
+function varDump(variavel) {
+    return JSON.stringify(variavel, null, 2);
+}

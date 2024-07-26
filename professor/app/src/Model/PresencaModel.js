@@ -117,11 +117,13 @@ const getPresencaByAula = (aula_id, data_presenca) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(`
-                    SELECT P.id as id, A.nome, P.data, P.quantidade_aulas_assistidas, P.Situacao
+                    SELECT P.id as id, A.nome, A.matricula, P.data, Aula.quantidade_aulas, D.nome as nome_disciplina, D.codigo as codigo_disciplina,
+                    P.quantidade_aulas_assistidas, Aula.local, P.observacao, P.Situacao
                     FROM Presencas AS P
                     JOIN Alunos AS A ON A.id = P.aluno_fk
-                    JOIN Aulas AS Au ON Au.id = P.aula_fk
-                    WHERE Au.id = ? AND P.data = ?
+                    JOIN Aulas AS Aula ON Aula.id = P.aula_fk
+                    JOIN Disciplinas AS D ON D.id = Aula.disciplina_fk
+                    WHERE Aula.id = ? AND P.data = ?
                     ORDER BY A.nome ASC`,
                     [aula_id, data_presenca],
                     (tx, results) => {

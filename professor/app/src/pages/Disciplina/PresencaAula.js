@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Text, ScrollView, View } from "react-native";
+import React, { useEffect, useState, useContext } from "react";
+import { Text, ScrollView, View, Alert } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { fetchPresencaByAula } from '../../Controller/PresencaController';
 import AlunoPresenca from '../../components/alunoPresencaRegistrada';
 import { useRoute } from '@react-navigation/native';
 import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
+import { Context } from "../../contexts/Context";
+import exportarEmXML from '../../services/exportacaoXML';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Loading from "../../components/loading";
@@ -15,10 +17,12 @@ const PresencaAula = ({ navigation }) => {
     const { colors } = useTheme();
     const route = useRoute();
 
+    const { professorId } = useContext(Context);
+
     const { aula_id, data_presenca, horario_inicio_aula, horario_fim_aula, 
             total_alunos_presentes, total_alunos, nome_disciplina } = route.params;
 
-    const [disciplinas, setDisciplina] = useState([]);
+    const [alunosPresenca, setDisciplina] = useState([]);
     const [visible, setVisible] = useState(false);
     const [presencas, setPresencas] = useState([]);
 
@@ -33,7 +37,7 @@ const PresencaAula = ({ navigation }) => {
             setDisciplina(listaAluno);
             console.log(listaAluno);
         } catch (error) {
-            console.log('Não foi possível carregar os disciplinas. Verifique se a tabela existe.');
+            console.log('Não foi possível carregar os alunosPresenca. Verifique se a tabela existe.');
         } finally {
             setVisible(false);
         }
@@ -44,6 +48,10 @@ const PresencaAula = ({ navigation }) => {
         newPresencas[index] = { ...updatedPresenca };
         setPresencas(newPresencas);
     };
+
+    function varDump(variavel) {
+        return JSON.stringify(variavel, null, 2);
+    }
 
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
@@ -57,10 +65,9 @@ const PresencaAula = ({ navigation }) => {
                 </View>
             </View>
             <Text style={[{marginBottom: 30}]}>Horário das {horario_inicio_aula} h até {horario_fim_aula} h </Text>
-
             <ScrollView>
                 <Loading visible={visible} />
-                {disciplinas.map((item, index) => (
+                {alunosPresenca.map((item, index) => (
                     <View key={item.id} style={styles.bookItem}>
                         <AlunoPresenca
                             id={item.id}
@@ -75,8 +82,8 @@ const PresencaAula = ({ navigation }) => {
                     </View>
                 ))}
             </ScrollView>
-
-            <Button mode="contained" onPress={()=> {}}>
+            
+            <Button mode="contained" onPress={() => exportarEmXML(alunosPresenca)} labelStyle={{ fontSize: 20 }} style={[TemaPrincipal.botaoCadastro]} icon={() => <Icon name={'file-export'} size={30} color="#ffffff" />}>
                 Exportar
             </Button>
         </View>

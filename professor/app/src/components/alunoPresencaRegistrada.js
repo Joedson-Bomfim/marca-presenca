@@ -40,7 +40,8 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
     const finalizarAlteracao = async () => {
         if (aulas_assistidasForm) {
             console.log('Campos preenchidos. Chamando editPresença...');
-            const result = await editPresenca(id, aulas_assistidasForm, observacaoForm);
+            let situacao = 'Ausente';
+            const result = await editPresenca(id, aulas_assistidasForm, observacaoForm, situacao);
             if (result.success) {
                 Alert.alert(
                     "Sucesso", "Aluno(a) atualizado(a) com sucesso",
