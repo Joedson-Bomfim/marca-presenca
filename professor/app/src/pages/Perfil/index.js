@@ -1,86 +1,63 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Text, View, ScrollView, TouchableOpacity, Alert } from "react-native";
-import { Button, useTheme } from "react-native-paper";
-import { fetchProfessorById } from '../../Controller/ProfessorController';
+import { Button, TextInput, useTheme } from "react-native-paper";
+import { editProfessor } from '../../Controller/ProfessorController';
 import { Context } from '../../contexts/Context';
 
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
-import Loading from "../../components/loading";
 
 const Perfil = ({ navigation }) => {
     const { colors } = useTheme();
-    //const { setIsAuthenticated, tipo, usuario, matricula, numero_registro } = useContext(Context);
-    const [visible, setVisible] = useState(false);
-    const[nome, setNome] = useState('');
-    const[numero_registro, setNumeroRegistro] = useState('');
 
-    const { professorId, setProfessorId } = useContext(Context);
+    const { professorId, nomeCompleto, setNomeCompleto, numero_registro, setNumeroRegistro } = useContext(Context);
 
-    useEffect(() => {
-        const init = async () => {
-            carregarDadosProfessor();
-        };
-        init();
-    }, []);
-
-    const carregarDadosProfessor = async () => {
-        try {
-            const professor = await fetchProfessorById(1);
-            setNome(professor.nome);
-            setNumeroRegistro(professor.numero_registro);
-        } catch (error) {
-            console.log('Falha ao carregar professor');
+    const confirmarAtualizacao = async () => {
+        if (professorId && nomeCompleto && numero_registro) {
+            const result = await editProfessor(professorId, nomeCompleto, numero_registro);
+            if (result.success) {
+                Alert.alert(
+                    "Sucesso", "Professor(a) atualizado(a) com sucesso");
+            } else {
+                Alert.alert('Atenção', result.message);
+            }
+        } else {
+            Alert.alert('Atenção', 'Por favor preencha todos os campos');
         }
-    };
-
-    const confirmarSaida = () => {
+    };   
+    
+    function atualizarPerfil() {
         Alert.alert(
             "Confirmação",
-            "Tem certeza que deseja sair?",
+            "Tem certeza que que atualizar o seu perfil?",
             [
                 {
                     text: "Cancelar",
                     style: "cancel"
                 },
                 {
-                    text: "Sair",
-                    onPress: () => sair()
+                    text: "Atualizar",
+                    onPress: () => confirmarAtualizacao()
                 }
             ]
         );
-    };
-
-    function sair() {
-        setVisible(true);
-        setIsAuthenticated(false);
-        setVisible(false);
     }
 
     return (
         <ScrollView style={[styles.fundoTela, { backgroundColor: colors.background }]}>
-            <Loading visible={visible}/>
-            <View style={styles.cabecalho}>
-                <Text style={[styles.tituloDadosPessoais, { color: colors.text }]}>Perfil</Text>
+            <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>Perfil</Text>
 
-                <TouchableOpacity onPress={() => { navigation.navigate(rotaEdita) }}>
-                    <Icon name="square-edit-outline" color="#fff" size={40} />
-                </TouchableOpacity>
-            </View>
+            <TextInput label="Nome Completo" mode="flat" value={nomeCompleto} 
+            onChangeText={(text)=>setNomeCompleto(text)} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
+            ></TextInput>
 
-            <View>
-                <Text style={[styles.conteudo, { color: colors.text, flexWrap: 'wrap', width: '80%'  }]} >{nome}</Text>
-            </View>
-            <View>
-                <Text style={[styles.conteudo, { color: colors.text }]}>Número de Registro: </Text>
-                <Text style={[styles.conteudo, { color: colors.text }]}>{numero_registro}</Text>
-            </View>
-            <Text>{professorId}</Text>
+            <TextInput label="Número Registro" mode="flat" value={numero_registro} 
+            onChangeText={(text)=>setNumeroRegistro(text)} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
+            ></TextInput>
 
-            <Button mode="contained" onPress={confirmarSaida} style={[styles.botaoSair, TemaPrincipal.buttonCadastraEdita]}>
-                SAIR
-            </Button>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={atualizarPerfil} style={[TemaPrincipal.botaoCadastro, TemaPrincipal.botaoPrincipal]}>
+                Editar
+            </Button>  
         </ScrollView>
     )
 }

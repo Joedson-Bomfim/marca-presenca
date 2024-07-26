@@ -1,4 +1,4 @@
-import { insertProfessor, getProfessor, getPrimeiroProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
+import { insertProfessor, updateProfessor, getProfessor, getPrimeiroProfessor, getUserStatus, getProfessorById , truncateProfessor, deleteProfessorById } from '../Model/ProfessorModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addProfessor = async (nome, numero_registro) => {
@@ -13,6 +13,21 @@ const addProfessor = async (nome, numero_registro) => {
     } catch (error) {
         console.error('Erro ao adicionar professor:', error);
         const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        return { success: false, message: errorMessage };
+    }
+};
+
+const editProfessor = async (id, nome, numero_registro) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let atualizado_em = formattedDate;
+
+    try {
+        await updateProfessor(id, nome, numero_registro, atualizado_em);
+        return { success: true };
+    } catch (error) {
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
         return { success: false, message: errorMessage };
     }
 };
@@ -76,4 +91,4 @@ const removeProfessorById = async (id) => {
     }
 };
 
-export { addProfessor, fetchProfessor, fetchPrimeiroProfessor, fetchProfessorById, cleanUpProfessor, removeProfessorById };
+export { addProfessor, editProfessor, fetchProfessor, fetchPrimeiroProfessor, fetchProfessorById, cleanUpProfessor, removeProfessorById };

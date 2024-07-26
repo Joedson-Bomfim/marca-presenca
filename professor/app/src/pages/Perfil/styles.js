@@ -5,11 +5,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20
     },
-    cabecalho: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginBottom: 15
-    },
     tituloDadosPessoais: {
         fontSize: 30,
         fontWeight: "bold"
@@ -24,12 +19,6 @@ const styles = StyleSheet.create({
     },
     linhaConteudo: {
         flexDirection: 'row'
-    },
-    botaoSair: {     
-        marginTop: 20,
-        backgroundColor: '#EE7152',
-        alignSelf: 'center',
-        width: '40%'
     }
 })
 

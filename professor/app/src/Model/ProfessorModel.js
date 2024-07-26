@@ -40,6 +40,19 @@ const insertProfessor = (nome, numero_registro, criado_em) => {
     });
 };
 
+const updateProfessor = (id, nome, numero_registro, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(
+                'UPDATE professores SET nome = ?, numero_registro = ?, atualizado_em = ? WHERE id = ?',
+                [nome, numero_registro, atualizado_em, id],
+                () => console.log('Professor atualizado com sucesso'),
+                (error) => console.error('Erro ao atualizar Professor:', error)
+            );
+        });
+    });
+};
+
 const getProfessor = () => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
@@ -134,4 +147,4 @@ const deleteProfessorById = (id) => {
     });
 };
 
-export { createProfessor, insertProfessor, getProfessor, getPrimeiroProfessor, getProfessorById, truncateProfessor, deleteProfessorById };
+export { createProfessor, insertProfessor, updateProfessor, getProfessor, getPrimeiroProfessor, getProfessorById, truncateProfessor, deleteProfessorById };
