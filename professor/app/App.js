@@ -7,7 +7,7 @@ import Routes from './src/routes/routes';
 import AuthProvider from './src/contexts/Context';
 
 import { closeDatabase } from './src/database/database';
-import { criarTabelas } from './src/Controller/DatabaseController';
+import { incicializarBancoDeDados } from './src/Controller/DatabaseController';
 
 const App = () => {
     const theme = {
@@ -32,8 +32,7 @@ const App = () => {
         
         AppState.addEventListener('change', estadoDoAplicativo);
         
-        //Lembrar de ativar esse daqui quando eu criar novas tabelas
-        //criarTabelas();
+        incicializarBancoDeDados();
     }, []);
 
     return(

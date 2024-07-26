@@ -20,7 +20,7 @@ const initializeDatabase = async () => {
     }
 };
 
-const criarTabelas = async () => {
+const incicializarBancoDeDados = async () => {
     try {
         await initializeDatabase();
     } catch (error) {
@@ -54,4 +54,4 @@ const UserStatusController = async () => {
 };
 */
 
-export { criarTabelas, fetchTabela, deleteTabela };
+export { incicializarBancoDeDados, fetchTabela, deleteTabela };
