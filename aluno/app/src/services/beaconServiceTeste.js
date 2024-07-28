@@ -1,12 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PermissionsAndroid, Platform, Alert } from 'react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import BeaconBroadcast from '@lovemh9395/react-native-ibeacon-simulator';
-import { Context } from '../contexts/Context';
+import uuid from 'react-native-uuid';
 
 const identifier = 'MyBeacon';
 const major = 1;
 const minor = 1;
+
+export const generateUUID = () => {
+  return uuid.v4();
+};
 
 export const checkAndRequestPermissions = async () => {
   try {
@@ -62,16 +66,17 @@ export const stopBeaconBroadcasting = (setIsBroadcasting) => {
 };
 
 export const useBluetoothAndBeacon = () => {
-  const { uuid } = useContext(Context);
-
   const [isBroadcasting, setIsBroadcasting] = useState(false);
+  const [uuidValue, setUuidValue] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   useEffect(() => {
     const initialize = async () => {
+      const newUuid = generateUUID();
+      setUuidValue(newUuid);
       const permissionsGranted = await checkAndRequestPermissions();
       if (permissionsGranted) {
-        startBeaconBroadcasting(uuid, setIsBroadcasting);
+        startBeaconBroadcasting(newUuid, setIsBroadcasting);
       }
     };
 
@@ -100,15 +105,21 @@ export const useBluetoothAndBeacon = () => {
       }
     }, true);
 
+    // Retorne uma função de limpeza para remover o listener ao desmontar o componente
     return () => {
       subscription.remove();
     };
-  }, [uuid]);
+  }, []);
 
   return {
     isBroadcasting,
+    uuidValue,
     isButtonDisabled,
-    handleStartBroadcasting: () => startBeaconBroadcasting(uuid, setIsBroadcasting),
+    handleGenerateUUID: () => {
+      const newUuid = generateUUID();
+      setUuidValue(newUuid);
+    },
+    handleStartBroadcasting: () => startBeaconBroadcasting(uuidValue, setIsBroadcasting),
     handleStopBroadcasting: () => stopBeaconBroadcasting(setIsBroadcasting),
   };
 };

@@ -13,6 +13,7 @@ const App = () => {
             ... DefaultTheme.colors,
             primary: '#3838FF',
             secundary: '#2E2E9C',
+            tertiary: '#5F668F',
             background: '#557CE1',
             text: '#fff',
             icone: '#fff'

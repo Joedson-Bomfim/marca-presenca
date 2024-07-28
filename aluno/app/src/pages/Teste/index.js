@@ -3,7 +3,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import styles from "./styles";
-import { useBluetoothAndBeacon } from '../../services/beaconService';
+import { useBluetoothAndBeacon } from '../../services/beaconServiceTeste';
 
 const Teste = ({ navigation }) => {
   const { colors } = useTheme();

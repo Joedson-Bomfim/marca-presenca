@@ -1,54 +1,63 @@
 // pages/Home.js
-import React from "react";
-import { Text, View } from "react-native";
+import React, { useContext } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import { Button, useTheme } from "react-native-paper";
-import styles from "./styles";
 import { useBluetoothAndBeacon } from '../../services/beaconService';
+import { Context } from '../../contexts/Context';
+import Loading from "../../components/Loading";
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import styles from './styles';
 
 const Home = ({ navigation }) => {
   const { colors } = useTheme();
-  const {
-    isBroadcasting,
-    uuidValue,
-    isButtonDisabled,
-    handleGenerateUUID,
-    handleStartBroadcasting,
-    handleStopBroadcasting,
-  } = useBluetoothAndBeacon();
+  const { isBroadcasting, isButtonDisabled, handleStartBroadcasting, handleStopBroadcasting } = useBluetoothAndBeacon();
+  const { nome, uuid } = useContext(Context);
+
+  // Função para formatar o UUID
+  const formatUUID = (uuid, visibleLength = 8, fillerLength = 10, fillerChar = '*') => {
+    if (uuid.length <= (visibleLength * 2 + fillerLength)) return uuid; // Handle short UUIDs
+
+    const firstPart = uuid.slice(0, visibleLength); // Primeiro grupo de caracteres
+    const lastPart = uuid.slice(-visibleLength); // Últimos caracteres
+    const maskedPart = fillerChar.repeat(fillerLength); // Filler para o meio
+
+    return `${firstPart}${maskedPart}${lastPart}`;
+  };
 
   return (
-    <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
-      <Text style={[styles.titulo, { color: colors.text }]}>Olá Joedson!</Text>
-      <Text style={[styles.tituloCadastro, { color: colors.text }]}>Detecção de Beacons</Text>
-      {isBroadcasting ? (
-        <Button
-          mode="contained"
-          labelStyle={{ fontSize: 15 }}
-          onPress={handleStopBroadcasting}
-          style={[styles.marginBottomPrimario, styles.botaoPrincipal, styles.marginBottom]}
-        >
-          Parar simulação beacon
-        </Button>
-      ) : (
-        <Button
-          mode="contained"
-          labelStyle={{ fontSize: 15 }}
-          onPress={handleStartBroadcasting}
-          style={[styles.marginBottomPrimario, styles.botaoPrincipal, styles.marginBottom]}
-          disabled={isButtonDisabled}
-        >
-          Iniciar Simulação de Beacon
-        </Button>
-      )}
-      <Text style={[styles.subTitulo, { color: colors.text }]}>UUID atual:</Text>
-      <Text style={[styles.marginBottom, { color: colors.text }]}>{uuidValue}</Text>
-      <Button
-        mode="contained"
-        labelStyle={{ fontSize: 20 }}
-        onPress={handleGenerateUUID}
-        style={[styles.marginBottomPrimario, styles.botaoPrincipal]}
-      >
-        Gerar UUID
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      <View style={styles.header}>
+        <Text style={[styles.titulo, { color: colors.text }]}>Olá {nome}!</Text>
+        <TouchableOpacity onPress={() => { navigation.navigate('AlunoEdita') }}>
+          <Icon name="square-edit-outline" color="#fff" size={40} />
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.row}>
+        <Text style={[styles.subTitulo, { color: colors.text }]}>Meu ID:</Text>
+        <Text style={[{ color: colors.text, fontSize: 14 }]}>{formatUUID(uuid)}</Text>
+      </View>
+
+      <View style={styles.parteInferior}>
+        {isBroadcasting ? (
+          <View>
+            <Loading/>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={handleStopBroadcasting}
+              style={[styles.botao, { backgroundColor: '#6346F5' }]}>
+              Parar de transmitir
+            </Button>
+          </View>
+        ) : (
+          <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={handleStartBroadcasting} disabled={isButtonDisabled}
+            style={[styles.botao]}>
+            Transmitir ID de aluno
+          </Button>
+        )}
+      </View>
+
+      <Button onPress={() => { navigation.navigate('Teste'); }} theme={{ colors: { primary: "#fff" } }}>
+        Página de testes
       </Button>
     </View>
   );
