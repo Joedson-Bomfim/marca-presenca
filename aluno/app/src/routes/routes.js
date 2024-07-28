@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Platform } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Context } from '../contexts/Context';
@@ -7,7 +8,8 @@ import { registroAluno } from '../services/cadastro';
 import CadastroStack from "./CadastroStack";
 import HomeStack from "./HomeStack";
 
-import LoadingScreen from '../components/LoadingScreen';
+import LoadingScreenDefaulft from '../components/LoadingScreenDefaulft';
+import LoadingScreenDots from '../components/LoadingScreenDots';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +43,9 @@ const Routes = () => {
     }
 
     if(loading) {
-        return <LoadingScreen />;  
+        // Animação padrão para celulares abaixo do android 8
+        const loading = Platform.Version >= 26 ? <LoadingScreenDots/> : <LoadingScreenDefaulft/>;
+        return loading;  
     }
 
     const rota = uuid ? <HomeStack/> : <CadastroStack/>;

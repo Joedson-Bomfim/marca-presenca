@@ -1,10 +1,10 @@
 // pages/Home.js
 import React, { useContext } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Platform } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { useBluetoothAndBeacon } from '../../services/beaconService';
 import { Context } from '../../contexts/Context';
-import Loading from "../../components/Loading";
+import Loading from "../../components/LoadingDots";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from './styles';
@@ -25,6 +25,9 @@ const Home = ({ navigation }) => {
     return `${firstPart}${maskedPart}${lastPart}`;
   };
 
+  // Para Android 8 a cima
+  const loading = Platform.Version >= 26 ? <Loading/> : '';
+
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
@@ -42,7 +45,7 @@ const Home = ({ navigation }) => {
       <View style={styles.parteInferior}>
         {isBroadcasting ? (
           <View>
-            <Loading/>
+            {loading}
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={handleStopBroadcasting}
               style={[styles.botao, { backgroundColor: '#6346F5' }]}>
               Parar de transmitir
