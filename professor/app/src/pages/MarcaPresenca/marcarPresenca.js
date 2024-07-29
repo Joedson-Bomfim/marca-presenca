@@ -8,7 +8,7 @@ import AlunoPresenca from '../../components/alunoPresenca';
 import { addMultiplePresenca } from '../../Controller/PresencaController';
 import { converteDataBrasileiraParaAmericana } from '../../services/formatacao';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../../assets/styles";
 import styles from "./styles";

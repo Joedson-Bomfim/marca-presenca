@@ -7,7 +7,7 @@ const LoadingScreen = () => {
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background }]}>
-            <ActivityIndicator size="large" color={colors.primary} />
+            <ActivityIndicator size="large" color={'white'} />
         </View>
     );
 };

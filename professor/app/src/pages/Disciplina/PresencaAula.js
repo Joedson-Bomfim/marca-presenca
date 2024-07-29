@@ -9,7 +9,7 @@ import { Context } from "../../contexts/Context";
 import exportarEmXML from '../../services/exportacaoXML';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 

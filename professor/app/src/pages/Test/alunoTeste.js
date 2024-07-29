@@ -4,7 +4,7 @@ import { TextInput, Button, useTheme } from "react-native-paper";
 import { addAluno, fetchAluno, cleanUpAluno, removeAlunoById } from '../../Controller/AlunoController';
 
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";

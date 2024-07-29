@@ -6,7 +6,7 @@ import { fetchAulaDisciplina } from "../../Controller/AulaController";
 import { Context } from '../../contexts/Context';
 import { obterDataAtualBrasileira } from '../../services/formatacao';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import DropdownSelect from '../../components/dropdown';
 import TemaPrincipal from "../../assets/styles";
 import styles from "./styles";

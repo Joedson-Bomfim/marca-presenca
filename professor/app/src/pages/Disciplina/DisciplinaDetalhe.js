@@ -5,7 +5,7 @@ import { useRoute } from '@react-navigation/native';
 import { fetchGrupoPresenca } from '../../Controller/PresencaController';
 import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -45,7 +45,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                 <Button mode="contained" labelStyle={{ fontSize: 20 }} 
                 onPress={() => {navigation.navigate('DisciplinaForm', 
                 { complemento: complemento });}}>
-                    Detalhes
+                    Alunos
                 </Button>
 
                 <Button mode="contained" labelStyle={{ fontSize: 20 }} 

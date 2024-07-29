@@ -4,7 +4,7 @@ import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { fetchAulaDisciplina } from '../../Controller/AulaController';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";

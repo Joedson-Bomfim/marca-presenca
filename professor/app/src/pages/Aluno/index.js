@@ -3,7 +3,7 @@ import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { fetchAluno } from '../../Controller/AlunoController';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";

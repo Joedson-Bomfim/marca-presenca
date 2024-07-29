@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Text, ScrollView, View, TouchableOpacity } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
-import { fetchDisciplina } from '../../Controller/DisciplinaController';
+import { fetchDisciplinaProfessor } from '../../Controller/DisciplinaController';
+import { Context } from '../../contexts/Context';
 
-import Loading from "../../components/loading";
+import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 
 const Disciplina = ( {navigation} ) => {
     const { colors } = useTheme();
+
+    const { professorId } = useContext(Context);
     
     const [disciplinas, setDisciplina] = useState([]);
     const [visible, setVisible] = useState(false);
@@ -21,7 +24,7 @@ const Disciplina = ( {navigation} ) => {
     const listaDisciplinas = async () => {
         setVisible(true);
         try {
-            const listaluno = await fetchDisciplina();
+            const listaluno = await fetchDisciplinaProfessor(professorId);
             setDisciplina(listaluno);
             console.log(listaluno);
         } catch (error) {
@@ -31,11 +34,6 @@ const Disciplina = ( {navigation} ) => {
         }
     };
 
-    /* 
-    <TouchableOpacity onPress={() => {}}>
-        <Icon name="trash-can" color="#fff" size={40} />
-    </TouchableOpacity>
-    */
     return(
         //<Icon name="clipboard-text-clock-outline" color={ colors.icone } size={40}/>       
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
@@ -57,7 +55,7 @@ const Disciplina = ( {navigation} ) => {
             ))}
             </ScrollView>
 
-            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: false, id: '', nome: '', matricula: '', beacon_id: '' });}} style={[TemaPrincipal.botaoCadastro]}>
+            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: false, id: '', professor_fk: professorId });}} style={[TemaPrincipal.botaoCadastro]}>
                 Nova Disciplina
             </Button>  
         </View>

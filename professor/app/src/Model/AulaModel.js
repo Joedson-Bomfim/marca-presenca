@@ -14,7 +14,7 @@ const createAula = () => {
                     horario_fim_aula TEXT,
                     criado_em TEXT,
                     atualizado_em TEXT,
-                    FOREIGN KEY (disciplina_fk) REFERENCES Aulas(id)
+                    FOREIGN KEY (disciplina_fk) REFERENCES Disciplinas(id)
                 )`,
                 [],
                 () => console.log('Table Aulas criada com sucesso'),

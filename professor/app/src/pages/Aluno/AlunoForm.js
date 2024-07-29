@@ -35,7 +35,7 @@ const AlunoForm = ( {navigation} ) => {
             
             if(result.success) {
                 Alert.alert(
-                    "Sucesso", "Lista de chamada registrada com sucesso",
+                    "Sucesso", "Aluno(a) registrado(a) com sucesso",
                     [{ text: "OK", onPress: () => {
                         navigation.reset({
                             index: 0,
