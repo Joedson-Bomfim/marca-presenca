@@ -14,6 +14,7 @@ const DisciplinaTeste = () => {
 
     const [disciplinas, setDisciplina] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [professor_fk, setProfessor_fk] = useState('1');
     const [nome, setNome] = useState('');
     const [matricula, setMatricula] = useState('');
     const [beacon_id, setBeacon_id] = useState('38709793-01a6-4020-8a7a-30c880605f7d');
@@ -64,7 +65,7 @@ const DisciplinaTeste = () => {
     const handleAddBook = async () => {
         if (nome && matricula && beacon_id) {
             setVisible(true);
-            await addAluno(nome, matricula, beacon_id);
+            await addAluno(professor_fk, nome, matricula, beacon_id);
             setNome('');
             setMatricula('');
             setBeacon_id('');
@@ -111,6 +112,11 @@ const DisciplinaTeste = () => {
     return (
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Loading visible={visible}/>
+            <TextInput label="Professor ID" mode="flat" 
+                       value={professor_fk}
+                       onChangeText={setProfessor_fk}
+                       style={[styles.marginBottom, TemaPrincipal.inputPadrao]}/>
+
             <TextInput label="Nome" mode="flat" 
                        value={nome}
                        onChangeText={setNome}
@@ -135,6 +141,7 @@ const DisciplinaTeste = () => {
                     <View style={styles.linhaConteudo}>
                         <View>
                             <Text style={styles.id}>{item.id}</Text>
+                            <Text style={styles.primeiro}>Professor ID {item.professor_fk}</Text>
                             <Text style={styles.primeiro}>{item.nome}</Text>
                             <Text style={styles.complemento}>{item.matricula}</Text>
                             <Text style={styles.complemento}>{item.beacon_id}</Text>

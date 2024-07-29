@@ -1,13 +1,13 @@
-import { insertAluno, updateAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById } from '../Model/AlunoModel';
+import { insertAluno, updateAluno, getAluno, getAlunoProfessor, getProfessorById, truncateAluno, deleteAlunoById } from '../Model/AlunoModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
-const addAluno = async (nome, matricula, beacon_id) => {
+const addAluno = async (professor_fk, nome, matricula, beacon_id) => {
     let now = dataHora();
     let formattedDate = formataDataHoraPadraoAmericano(now);
     let criado_em = formattedDate;
 
     try {
-        await insertAluno(nome, matricula, beacon_id, criado_em);
+        await insertAluno(professor_fk, nome, matricula, beacon_id, criado_em);
         return { success: true };
 
     } catch (error) {
@@ -58,6 +58,16 @@ const fetchAluno = async () => {
     }
 };
 
+const fetchAlunoProfessor = async (professor_fk) => {
+    try {
+        const professores = await getAlunoProfessor(professor_fk);
+        return professores;
+    } catch (error) {
+        console.error('Erro ao listar alunos:', error.message || error);
+        return [];
+    }
+};
+
 const fetchProfessorById = async (id) => {
     try {
         const aluno = await getProfessorById(id);
@@ -95,4 +105,4 @@ const removeAlunoById = async (id) => {
     }
 };
 
-export { addAluno, editAluno, fetchAluno, fetchProfessorById, cleanUpAluno, removeAlunoById };
+export { addAluno, editAluno, fetchAluno, fetchAlunoProfessor, fetchProfessorById, cleanUpAluno, removeAlunoById };

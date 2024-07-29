@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { ScrollView, View, Text, Alert } from "react-native";
+import { ScrollView, View, Text, Alert, TouchableOpacity , StyleSheet } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { addAula, editAula, removeAulaById } from '../../Controller/AulaController';
+import InputArrow from "../../components/InputArrow";
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -15,11 +16,27 @@ const DisciplinaForm = ( {navigation} ) => {
             quantidade_aulas, horario_inicio_aula, horario_fim_aula  } = route.params;
 
     const [tipoForm, setTipoForm] = useState('');
-    const [dia_semanaForm, setDiaSemanaForm] = useState('');
+    const [dia_semanaForm, setDiaSemanaForm] = useState(!dia_semana ? 'Seg' : dia_semana);
     const [localForm, setLocalForm] = useState('');
     const [quantidade_aulasForm, setQuantidadeAulas] = useState('');
     const [horario_inicio_aulaForm, setHoarioInicioAulaForm] = useState('');
     const [horario_fim_aulaForm, setHoarioFimAulaForm] = useState('');
+
+    const diasDaSemana = [
+        'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab', 'Dom'
+    ];
+
+    const indiceAtual = diasDaSemana.indexOf(dia_semanaForm);
+
+    const proximoDia = () => {
+        const proximoIndice = (indiceAtual + 1) % diasDaSemana.length;
+        setDiaSemanaForm(diasDaSemana[proximoIndice]);
+    };
+
+    const diaAnterior = () => {
+        const indiceAnterior = (indiceAtual - 1 + diasDaSemana.length) % diasDaSemana.length;
+        setDiaSemanaForm(diasDaSemana[indiceAnterior]);
+    };
 
     useEffect(() => {
         if(isEdit) {
@@ -109,15 +126,14 @@ const DisciplinaForm = ( {navigation} ) => {
         } else {
             Alert.alert('Não foi possível apagar essa aula, tente novamente mais tarde');
         }
-    };  
+    }; 
 
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.tituloCadastro, {color: colors.text }]}>{tipoForm} Aula</Text>
+            <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>{tipoForm} Aula</Text>
 
-            <TextInput label="Dia da Semana - Período do Dia" mode="flat" value={dia_semanaForm} 
-                    onChangeText={setDiaSemanaForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <InputArrow titulo={'Dia da Semana'} conteudoForm={dia_semanaForm} 
+            setaAnterior={diaAnterior} setSeguinte={proximoDia} color={colors.text}/>
 
             <TextInput label="Local (Ex: Pavilhão 2 - Sala 6)" mode="flat" value={localForm} 
                     onChangeText={setLocalForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
@@ -136,15 +152,15 @@ const DisciplinaForm = ( {navigation} ) => {
             ></TextInput>
 
             {!isEdit ?
-            <Button mode="contained" onPress={cadastrarAula} style={TemaPrincipal.inputPadrao}>
+            <Button mode="contained" onPress={cadastrarAula} style={[TemaPrincipal.inputPadrao, TemaPrincipal.marginBottomPadrao]}>
                 CADASTRAR
             </Button> :
             <View style={TemaPrincipal.botoesEditRegistro}>
-                <Button mode="contained" onPress={apagarDisciplina} style={[styles.button, { backgroundColor: '#CF4D4F' }]}>
+                <Button mode="contained" onPress={apagarDisciplina} style={[styles.button, TemaPrincipal.marginBottomPadrao, { backgroundColor: '#CF4D4F' }]}>
                     APAGAR
                 </Button>
 
-                <Button mode="contained" onPress={atualizarAula}>
+                <Button mode="contained" onPress={atualizarAula} style={[TemaPrincipal.marginBottomPadrao]}>
                     ATUALIZAR
                 </Button>
             </View> 

@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     subTitulo: {
         textAlign: 'center',
         fontSize: 20,
-        marginBottom: 30,
         fontWeight: "bold"
     },
     detalhes: {

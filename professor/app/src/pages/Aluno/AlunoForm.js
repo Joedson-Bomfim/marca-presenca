@@ -11,7 +11,7 @@ const AlunoForm = ( {navigation} ) => {
     const { colors } = useTheme();
     const route = useRoute();
 
-    const { isEdit, id, nome, matricula, beacon_id  } = route.params;
+    const { isEdit, id, professor_fk, nome, matricula, beacon_id  } = route.params;
 
     const [tipoForm, setTipoForm] = useState('');
     const [nomeForm, setNomeForm] = useState('');
@@ -31,7 +31,7 @@ const AlunoForm = ( {navigation} ) => {
 
     const cadastrarAluno = async () => {
         if (nomeForm && matriculaForm) {
-            const result = await addAluno(nomeForm, matriculaForm, beaconIdForm);
+            const result = await addAluno(professor_fk, nomeForm, matriculaForm, beaconIdForm);
             
             if(result.success) {
                 Alert.alert(

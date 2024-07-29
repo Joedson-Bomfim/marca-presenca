@@ -21,7 +21,6 @@ const DisciplinaDetalhe = ( {navigation} ) => {
 
     useEffect(() => {
         listaDisciplinas();
-        console.log('ID: '+id+' Professor_fk: '+professor_fk+' Nome: '+nome+' Codigo: '+codigo+' Complemento: '+complemento)
     }, []);
 
     const listaDisciplinas = async () => {

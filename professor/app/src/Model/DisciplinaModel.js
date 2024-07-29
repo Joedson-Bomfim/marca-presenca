@@ -69,13 +69,13 @@ const getDisciplina = () => {
     });
 };
 
-const getDisciplinaProfessor = (id) => {
+const getDisciplinaProfessor = (professor_fk) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
                     'SELECT * FROM Disciplinas WHERE professor_fk = ? ORDER BY nome ASC',
-                    [id],
+                    [professor_fk],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
                         resolve(rows);

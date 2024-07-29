@@ -56,7 +56,7 @@ const getAula = () => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT * FROM Aulas',
+                    'SELECT * FROM Aulas ORDER BY dia_semana ASC',
                     [],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
@@ -73,8 +73,20 @@ const getAulaDisciplina = (id) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
-                return tx.executeSql(
-                    'SELECT * FROM Aulas WHERE disciplina_fk = ? ORDER BY dia_semana DESC',
+                return tx.executeSql(`
+                    SELECT * FROM Aulas WHERE disciplina_fk = ? 
+                    ORDER BY 
+                    CASE dia_semana 
+                        WHEN 'Seg' THEN 1
+                        WHEN 'Ter' THEN 2
+                        WHEN 'Qua' THEN 3
+                        WHEN 'Qui' THEN 4
+                        WHEN 'Sex' THEN 5
+                        WHEN 'Sab' THEN 6
+                        WHEN 'Dom' THEN 7
+                        ELSE 8 -- Para tratar qualquer valor inesperado
+                    END ASC, 
+                    horario_inicio_aula ASC`,
                     [id],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array

@@ -6,11 +6,13 @@ const createAluno = () => {
             return tx.executeSql(`
                 CREATE TABLE IF NOT EXISTS Alunos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                professor_fk INTEGER,
                 nome TEXT,
                 matricula TEXT UNIQUE,
                 beacon_id UNIQUE, 
                 criado_em TEXT, 
-                atualizado_em TEXT
+                atualizado_em TEXT,
+                FOREIGN KEY (professor_fk) REFERENCES Professores(id)
                 )`,
                 [],
                 () => console.log('Table Alunos criada com sucesso'),
@@ -20,13 +22,13 @@ const createAluno = () => {
     });
 };
 
-const insertAluno = (nome, matricula, beacon_id, criado_em) => {
+const insertAluno = (professor_fk, nome, matricula, beacon_id, criado_em) => {
     beacon_id = beacon_id ? beacon_id : null;
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(
-                'INSERT INTO Alunos (nome, matricula, beacon_id, criado_em) VALUES (?, ?, ?, ?)',
-                [nome, matricula, beacon_id, criado_em],
+                'INSERT INTO Alunos (professor_fk, nome, matricula, beacon_id, criado_em) VALUES (?, ?, ?, ?, ?)',
+                [professor_fk, nome, matricula, beacon_id, criado_em],
                 () => console.log('Aluno cadastrado com sucesso'),
                 (error) => console.error('Erro ao cadastrar Aluno:', error)
             );
@@ -56,7 +58,25 @@ const getAluno = () => {
                     'SELECT * FROM Alunos ORDER BY nome ASC',
                     [],
                     (tx, results) => {
-                        const rows = results.rows.raw(); // raw() returns an array
+                        const rows = results.rows.raw(); 
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
+const getAlunoProfessor = (professor_fk) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql(
+                    'SELECT * FROM Alunos WHERE professor_fk = ? ORDER BY nome ASC',
+                    [professor_fk],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); 
                         resolve(rows);
                     },
                     (error) => reject(error)
@@ -121,4 +141,4 @@ const deleteAlunoById = (id) => {
     });
 };
 
-export { createAluno, insertAluno, updateAluno, getAluno, getProfessorById, truncateAluno, deleteAlunoById };
+export { createAluno, insertAluno, updateAluno, getAluno, getAlunoProfessor, getProfessorById, truncateAluno, deleteAlunoById };

@@ -77,6 +77,23 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingBottom: 30,
     },
+    searchSection: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomColor: '#FFF',
+        borderBottomWidth: 1,
+        marginBottom: 20,
+    },
+    searchIcon: {
+        padding: 10,
+    },
+    inputSearch: {
+        flex: 1,
+        paddingRight: 10,
+        paddingLeft: 0,
+        backgroundColor: 'transparent',
+        color: '#424242',
+    },
 })
 
 export default styles;

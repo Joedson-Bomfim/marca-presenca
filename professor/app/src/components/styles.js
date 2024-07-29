@@ -24,7 +24,30 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         padding: 10,
         alignItems: 'flex-start',
-    }
+    },
+    containerInputSetas: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 8, 
+      },
+      botaoSeta: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 4,
+        padding: 10,
+        marginHorizontal: 8,
+      },
+      buttonTextSeta: {
+        color: '#FFFFFF', 
+        fontSize: 24,
+      },
+      ConteudoBotaoSeta: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginHorizontal: 16,
+        color: '#FFFFFF', 
+      },
 })
 
 export default styles;
