@@ -9,7 +9,7 @@ const createPresenca = () => {
                     aluno_fk INTEGER,
                     aula_fk INTEGER,
                     data TEXT,
-                    quantidade_aulas_assistidas TEXT,
+                    quantidade_aulas_assistidas INTEGER,
                     observacao TEXT,
                     situacao TEXT,
                     criado_em TEXT,

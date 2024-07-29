@@ -74,7 +74,7 @@ const getDisciplinaProfessor = (id) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(
-                    'SELECT id, nome FROM Disciplinas WHERE professor_fk = ? ORDER BY nome ASC',
+                    'SELECT * FROM Disciplinas WHERE professor_fk = ? ORDER BY nome ASC',
                     [id],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array

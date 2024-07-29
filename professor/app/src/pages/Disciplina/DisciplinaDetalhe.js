@@ -21,6 +21,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
 
     useEffect(() => {
         listaDisciplinas();
+        console.log('ID: '+id+' Professor_fk: '+professor_fk+' Nome: '+nome+' Codigo: '+codigo+' Complemento: '+complemento)
     }, []);
 
     const listaDisciplinas = async () => {
@@ -76,7 +77,9 @@ const DisciplinaDetalhe = ( {navigation} ) => {
 
             <Button mode="contained" labelStyle={{ fontSize: 20 }} 
             style={[TemaPrincipal.botaoCadastro]}
-            onPress={() => {navigation.navigate('DisciplinaForm', { isEdit: true, id: id, professor_fk: professor_fk, nome: nome, codigo: codigo, curso: curso, complemento: complemento });}}>
+            onPress={() => {navigation.navigate('DisciplinaForm', { 
+                isEdit: true, id: id, professor_fk: professor_fk, 
+                nome: nome, codigo: codigo, curso: curso, complemento: complemento });}}>
             Editar Disciplina
             </Button>  
         </View>

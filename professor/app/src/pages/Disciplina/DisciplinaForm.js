@@ -43,6 +43,7 @@ const DisciplinaForm = ( {navigation} ) => {
                             index: 0,
                             routes: [{ name: 'DisciplinaStack' }], 
                         });
+                        navigation.navigate('DisciplinaDetalhe', { replace: true });
                     }}]
                 );
             }else {         
