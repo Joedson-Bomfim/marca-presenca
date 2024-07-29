@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 30,
         fontWeight: "bold",
-        marginBottom: 30
     },
     tituloCadastro: {
         textAlign: 'center',

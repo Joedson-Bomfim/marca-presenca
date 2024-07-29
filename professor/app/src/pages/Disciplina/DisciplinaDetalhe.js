@@ -4,6 +4,7 @@ import { Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { fetchGrupoPresenca } from '../../Controller/PresencaController';
 import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
+import InputSearch from "../../components/InputSearch";
 
 import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
@@ -18,6 +19,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
     const [presencas, setListaPresenca] = useState([]);
     const [visible, setVisible] = useState(false);
     const [isExist, setIsExist] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
         listaDisciplinas();
@@ -37,9 +39,16 @@ const DisciplinaDetalhe = ( {navigation} ) => {
         }
     };
 
+    const filteredPresencas = presencas.filter(aula => {
+        const formattedDate = converteDataAmericanaParaBrasileira(aula.data);
+    
+        return formattedDate.includes(searchTerm) || 
+               aula.horario_inicio_aula.includes(searchTerm);
+    });
+
     return(
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
-            <Text style={[styles.titulo, {color: colors.text }]}>{nome}</Text>
+            <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>{nome}</Text>
 
             <View style={TemaPrincipal.botoesEditRegistro}>
                 <Button mode="contained" labelStyle={{ fontSize: 20 }} 
@@ -54,10 +63,12 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                 </Button>
             </View> 
 
+            <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+
             {isExist ?
             <ScrollView>
                     <Loading visible={visible}/>
-                    {presencas.map((item) => (
+                    {filteredPresencas.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
                         <TouchableOpacity 
                         onPress={() => { navigation.navigate('PresencaAula', { aula_id: item.aula_id, data_presenca: item.data, 

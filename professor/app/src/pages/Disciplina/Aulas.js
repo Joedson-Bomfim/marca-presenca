@@ -3,9 +3,9 @@ import { Text, View, ScrollView, TextInput, StyleSheet  } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { fetchAulaDisciplina } from '../../Controller/AulaController';
+import InputSearch from "../../components/InputSearch";
 
 import Loading from "../../components/LoadingDefaulft";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 
@@ -47,11 +47,7 @@ const DisciplinaDetalhe = ({ navigation }) => {
             <Text style={[styles.tituloDois, { color: colors.text }]}>{nome_disciplina}</Text>
             <Text style={[styles.subTitulo, { color: colors.text }]}>Lista de Aulas</Text>
 
-            <View style={TemaPrincipal.searchSection}>
-                <Icon style={TemaPrincipal.searchIcon} name="magnify" size={20} color="#FFF"/>
-                <TextInput placeholder="Pesquisar aula..." value={searchTerm} onChangeText={text => setSearchTerm(text)}
-                style={[TemaPrincipal.inputSearch, { color: colors.text }]} placeholderTextColor="#FFF"/>
-            </View>
+            <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
             {isExist ? (
                 <ScrollView>

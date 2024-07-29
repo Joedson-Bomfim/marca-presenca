@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     botoesEditRegistro: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingBottom: 30,
     },
     searchSection: {
         flexDirection: 'row',

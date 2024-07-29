@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 25,
         fontWeight: "bold",
-        marginBottom: 30,
     },
     tituloDois: {
         textAlign: 'center',
