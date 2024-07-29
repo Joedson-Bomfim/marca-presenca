@@ -23,6 +23,7 @@ const createAluno = () => {
 };
 
 const insertAluno = (professor_fk, nome, matricula, beacon_id, criado_em) => {
+    matricula = matricula ? matricula : null;
     beacon_id = beacon_id ? beacon_id : null;
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
@@ -37,6 +38,7 @@ const insertAluno = (professor_fk, nome, matricula, beacon_id, criado_em) => {
 };
 
 const updateAluno = (id, nome, matricula, beacon_id, atualizado_em) => {
+    matricula = matricula ? matricula : null;
     beacon_id = beacon_id ? beacon_id : null;
     return openDatabase().then((db) => {
         return db.transaction((tx) => {

@@ -2,23 +2,17 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { TextInput } from 'react-native-paper';
 
-const Input = ({ label, value, onChangeText, secureTextEntry = false, error, setError, containerStyle, autoCapitalize, maxLength, style, ...props }) => {
+const Input = ({ onChangeText, error, setError, containerStyle, ...props }) => {
     return (
         <View style={containerStyle}>
             <TextInput
-                label={label}
                 mode="flat"
-                value={value}
-                secureTextEntry={secureTextEntry}
                 onChangeText={(text) => {
                     onChangeText(text);
                     if (error) {
                         setError('');
                     }
                 }}
-                style={style}
-                autoCapitalize={autoCapitalize}
-                maxLength={maxLength}
                 error={!!error}
                 {...props}
             />

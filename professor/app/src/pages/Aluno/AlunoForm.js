@@ -3,6 +3,7 @@ import { ScrollView, View, Text, Alert } from "react-native";
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { addAluno, editAluno, removeAlunoById } from '../../Controller/AlunoController';
+import Input from "../../components/Input";
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -15,7 +16,9 @@ const AlunoForm = ( {navigation} ) => {
 
     const [tipoForm, setTipoForm] = useState('');
     const [nomeForm, setNomeForm] = useState('');
+    const [ErrorNomeForm, setErrorNomeForm] = useState('');
     const [matriculaForm, setMatriculaForm] = useState('');
+    const [ErrorMatriculaForm, setErrorMatriculaForm] = useState('');
     const [beaconIdForm, setBeaconIdForm] = useState('');
 
     useEffect(() => {
@@ -30,46 +33,57 @@ const AlunoForm = ( {navigation} ) => {
     }, []);
 
     const cadastrarAluno = async () => {
-        if (nomeForm && matriculaForm) {
-            const result = await addAluno(professor_fk, nomeForm, matriculaForm, beaconIdForm);
-            
-            if(result.success) {
-                Alert.alert(
-                    "Sucesso", "Aluno(a) registrado(a) com sucesso",
-                    [{ text: "OK", onPress: () => {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'AlunoStack' }], 
-                        });
-                    }}]
-                );
-            }else {         
-                Alert.alert('Atenção',result.message);  
-            }
-        }else{
-            Alert.alert('Atenção','Por favor preencha todos os campos');
+        const trimmedNome = nomeForm.trim();
+        const trimmedMatricula = matriculaForm.trim();
+        setNomeForm(trimmedNome);
+        setMatriculaForm(trimmedMatricula);
+
+        if (!trimmedNome) {
+            setErrorNomeForm('Por favor, preencha o campo Nome!');
+            return;
+        }
+        
+        const result = await addAluno(professor_fk, trimmedNome, trimmedMatricula, beaconIdForm);
+        
+        if(result.success) {
+            Alert.alert(
+                "Sucesso", "Aluno(a) registrado(a) com sucesso",
+                [{ text: "OK", onPress: () => {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'AlunoStack' }], 
+                    });
+                }}]
+            );
+        }else {    
+            setErrorMatriculaForm(result.message);
         }
     }; 
     
     const atualizarAluno = async () => {
-        if (nomeForm && matriculaForm) {
-            console.log('Campos preenchidos. Chamando editAluno...');
-            const result = await editAluno(id, nomeForm, matriculaForm, beaconIdForm);
-            if (result.success) {
-                Alert.alert(
-                    "Sucesso", "Aluno(a) atualizado(a) com sucesso",
-                    [{ text: "OK", onPress: () => {
-                        navigation.reset({
-                            index: 0,
-                            routes: [{ name: 'AlunoStack' }], 
-                        });
-                    }}]
-                );
-            } else {
-                Alert.alert('Atenção', result.message);
-            }
+        const trimmedNome = nomeForm.trim();
+        const trimmedMatricula = matriculaForm.trim();
+        setNomeForm(trimmedNome);
+        setMatriculaForm(trimmedMatricula);
+
+        if (!trimmedNome) {
+            setErrorNomeForm('Por favor, preencha o campo Nome!');
+            return;
+        }
+        
+        const result = await editAluno(id, trimmedNome, trimmedMatricula, beaconIdForm);
+        if (result.success) {
+            Alert.alert(
+                "Sucesso", "Aluno(a) atualizado(a) com sucesso",
+                [{ text: "OK", onPress: () => {
+                    navigation.reset({
+                        index: 0,
+                        routes: [{ name: 'AlunoStack' }], 
+                    });
+                }}]
+            );
         } else {
-            Alert.alert('Atenção', 'Por favor preencha todos os campos');
+            setErrorMatriculaForm(result.message);
         }
     };   
     
@@ -111,13 +125,13 @@ const AlunoForm = ( {navigation} ) => {
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Text style={[styles.tituloCadastro, {color: colors.text }]}>{tipoForm} Aluno</Text>
 
-            <TextInput label="Nome" mode="flat" value={nomeForm} 
-                    onChangeText={setNomeForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <Input label="Nome Completo" value={nomeForm} error={ErrorNomeForm} setError={setErrorNomeForm}
+            onChangeText={(text) => { setNomeForm(text); if (ErrorNomeForm) { setErrorNomeForm(''); }}} 
+            containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}/>
 
-            <TextInput label="Matrícula" mode="flat" value={matriculaForm} 
-                    onChangeText={setMatriculaForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <Input label="Matrícula" value={matriculaForm} error={ErrorMatriculaForm} setError={setErrorMatriculaForm}
+            onChangeText={(text) => { setMatriculaForm(text); if (ErrorMatriculaForm) { setErrorMatriculaForm(''); }}} 
+            containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}/>
 
             <TextInput label="Beacon ID" mode="flat" value={beaconIdForm} 
                     onChangeText={setBeaconIdForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
