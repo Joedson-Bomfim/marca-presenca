@@ -3,7 +3,10 @@ import { ScrollView, View, Text, Alert, TouchableOpacity , StyleSheet } from "re
 import { TextInput, Button, useTheme } from "react-native-paper";
 import { useRoute } from '@react-navigation/native';
 import { addAula, editAula, removeAulaById } from '../../Controller/AulaController';
+import InputTime from "../../components/InputTime";
 import InputArrow from "../../components/InputArrow";
+import Input from "../../components/Input";
+import InputOptional from "../../components/InputOptional";
 
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
@@ -18,8 +21,10 @@ const DisciplinaForm = ( {navigation} ) => {
     const [tipoForm, setTipoForm] = useState('');
     const [dia_semanaForm, setDiaSemanaForm] = useState(!dia_semana ? 'Seg' : dia_semana);
     const [localForm, setLocalForm] = useState('');
+    const [ErrorLocalForm, setErrorLocalForm] = useState('');
     const [quantidade_aulasForm, setQuantidadeAulas] = useState('');
-    const [horario_inicio_aulaForm, setHoarioInicioAulaForm] = useState('');
+    const [ErrorQuantidadeAulasForm, setErrorQuantidadeAulasForm] = useState('');
+    const [horario_inicio_aulaForm, setHoararioInicioAulaForm] = useState('');
     const [horario_fim_aulaForm, setHoarioFimAulaForm] = useState('');
 
     const diasDaSemana = [
@@ -44,16 +49,34 @@ const DisciplinaForm = ( {navigation} ) => {
             setDiaSemanaForm(dia_semana);
             setLocalForm(local);
             setQuantidadeAulas(quantidade_aulas.toString());
-            setHoarioInicioAulaForm(horario_inicio_aula);
+            setHoararioInicioAulaForm(horario_inicio_aula);
             setHoarioFimAulaForm(horario_fim_aula);
         }else {
             setTipoForm('Cadastrar');
         }
-    }, []);
+    }, [isEdit, dia_semana, local, quantidade_aulas, horario_inicio_aula, horario_fim_aula]);
 
     const cadastrarAula = async () => {
-        if (dia_semanaForm && quantidade_aulasForm && horario_inicio_aulaForm && horario_fim_aulaForm) {
-            const result = await addAula(disciplina_fk, dia_semanaForm, localForm, quantidade_aulasForm, horario_inicio_aulaForm, horario_fim_aulaForm);
+        const trimmedLocal = localForm.trim();
+        setLocalForm(trimmedLocal);
+        
+        if (!trimmedLocal || !quantidade_aulasForm) {
+            if(!trimmedLocal) {
+                setErrorLocalForm('Por favor, informe um local!');
+            }
+            
+            if(!quantidade_aulasForm) {
+                setErrorQuantidadeAulasForm('informe a quantidade de aulas');
+            }
+            
+            return;
+        }
+
+        const quantidade_aulas_formatada = quantidade_aulasForm.replace(/[^0-9]/g, '');
+
+        if (horario_inicio_aulaForm && horario_fim_aulaForm) {
+
+            const result = await addAula(disciplina_fk, dia_semanaForm, trimmedLocal, quantidade_aulas_formatada, horario_inicio_aulaForm, horario_fim_aulaForm);
             
             if(result.success) {
                 Alert.alert(
@@ -69,13 +92,30 @@ const DisciplinaForm = ( {navigation} ) => {
                 Alert.alert('Atenção',result.message);  
             }
         }else{
-            Alert.alert('Atenção','Por favor preencha todos os campos');
+            Alert.alert('Atenção','Por favor escolha o Horário de Início e Fim da(s) aula(s)');
         }
     }; 
     
     const atualizarAula = async () => {
-        if (dia_semanaForm && quantidade_aulasForm && horario_inicio_aulaForm && horario_fim_aulaForm) {
-            const result = await editAula(id, dia_semanaForm, localForm, quantidade_aulasForm, horario_inicio_aulaForm, horario_fim_aulaForm);
+        const trimmedLocal = localForm.trim();
+        setLocalForm(trimmedLocal);
+        
+        if (!trimmedLocal || !quantidade_aulasForm) {
+            if(!trimmedLocal) {
+                setErrorLocalForm('Por favor, informe um local!');
+            }
+            
+            if(!quantidade_aulasForm) {
+                setErrorQuantidadeAulasForm('informe a quantidade de aulas');
+            }
+            
+            return;
+        }
+
+        const quantidade_aulas_formatada = quantidade_aulasForm.replace(/[^0-9]/g, '');
+        
+        if (horario_inicio_aulaForm && horario_fim_aulaForm) {
+            const result = await editAula(id, dia_semanaForm, trimmedLocal, quantidade_aulas_formatada, horario_inicio_aulaForm, horario_fim_aulaForm);
             if (result.success) {
                 Alert.alert(
                     "Sucesso", "Aula atualizada com sucesso da disciplina "+ nome_disciplina+"",
@@ -128,6 +168,9 @@ const DisciplinaForm = ( {navigation} ) => {
         }
     }; 
 
+    let horario_inicio = horario_inicio_aula;
+    let horario_fim = horario_fim_aula;
+
     return(
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>{tipoForm} Aula</Text>
@@ -135,21 +178,17 @@ const DisciplinaForm = ( {navigation} ) => {
             <InputArrow titulo={'Dia da Semana'} conteudoForm={dia_semanaForm} 
             setaAnterior={diaAnterior} setSeguinte={proximoDia} color={colors.text}/>
 
-            <TextInput label="Local (Ex: Pavilhão 2 - Sala 6)" mode="flat" value={localForm} 
-                    onChangeText={setLocalForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <Input label="Local (Ex: Pavilhão 2 - Sala 6)" value={localForm} error={ErrorLocalForm} setError={setErrorLocalForm}
+            onChangeText={(text) => { setLocalForm(text); if (ErrorLocalForm) { setErrorLocalForm(''); }}} 
+            containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}/>
 
-            <TextInput label="Quantidade Aulas" mode="flat" value={quantidade_aulasForm} 
-                    onChangeText={setQuantidadeAulas} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <Input label="Quantidade Aulas" value={quantidade_aulasForm} error={ErrorQuantidadeAulasForm} setError={setErrorQuantidadeAulasForm} keyboardType="numeric"
+            onChangeText={(text) => { setQuantidadeAulas(text); if (ErrorQuantidadeAulasForm) { setErrorQuantidadeAulasForm(''); }}} 
+            containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}/>
 
-            <TextInput label="Horário Início Aula" mode="flat" value={horario_inicio_aulaForm} 
-                    onChangeText={setHoarioInicioAulaForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
-
-            <TextInput label="Horário Fim Aula" mode="flat" value={horario_fim_aulaForm} 
-                    onChangeText={setHoarioFimAulaForm} style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.inputPadrao]}
-            ></TextInput>
+            <InputTime titulo={'Selecione Horário Início Aula'} icon={'clock-time-eight'} initialTime={horario_inicio} onTimeSelected={(horarInicioSelecionada) => setHoararioInicioAulaForm(horarInicioSelecionada)}/>
+            
+            <InputTime titulo={'Selecione Horário Fim Aula'} icon={'clock-time-ten'} initialTime={horario_fim} onTimeSelected={(horaFimSelecionada) => setHoarioFimAulaForm(horaFimSelecionada)}/>
 
             {!isEdit ?
             <Button mode="contained" onPress={cadastrarAula} style={[TemaPrincipal.inputPadrao, TemaPrincipal.marginBottomPadrao]}>

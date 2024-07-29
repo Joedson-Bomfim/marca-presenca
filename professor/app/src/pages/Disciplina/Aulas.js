@@ -29,7 +29,6 @@ const DisciplinaDetalhe = ({ navigation }) => {
         try {
             const listAula = await fetchAulaDisciplina(disciplina_id);
             listAula.length === 0 ? setIsExist(false) : setListaAula(listAula);
-            console.log(listAula);
         } catch (error) {
             console.log('Não foi possível carregar os aulas. Verifique se a tabela existe.');
         } finally {
@@ -37,9 +36,11 @@ const DisciplinaDetalhe = ({ navigation }) => {
         }
     };
 
+    //Obs: Se der erro, retire o terceiro parâmetro de busca
     const filteredAulas = aulas.filter(aula =>
         aula.dia_semana.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        aula.local.toLowerCase().includes(searchTerm.toLowerCase())
+        aula.horario_inicio_aula.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        aula.horario_fim_aula.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
@@ -61,7 +62,7 @@ const DisciplinaDetalhe = ({ navigation }) => {
                                 dia_semana: item.dia_semana, local: item.local, quantidade_aulas: item.quantidade_aulas, 
                                 horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula, }); }}
                                 style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
-                                    {item.dia_semana}
+                                    {item.dia_semana} {item.horario_inicio_aula}-{item.horario_fim_aula}
                                 </Button>
                             </View>
                         </View>

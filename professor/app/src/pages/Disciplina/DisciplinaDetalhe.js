@@ -31,7 +31,6 @@ const DisciplinaDetalhe = ( {navigation} ) => {
         try {
             const listPresenca = await fetchGrupoPresenca(id);
             listPresenca.length === 0 ? setIsExist(false) : setListaPresenca(listPresenca);
-            console.log(listPresenca);
         } catch (error) {
             console.log('Não foi possível carregar os presencas. Verifique se a tabela existe.');
         } finally {

@@ -67,7 +67,6 @@ const fetchPresencaByAula = async (aula_id, data_presenca) => {
 const fetchGrupoPresenca = async (disciplina_id) => {
     try {
         const presencas = await getGrupoPresenca(disciplina_id);
-        console.log(presencas)
         return presencas;
     } catch (error) {
         console.error('Erro ao listar presencas:', error.message || error);

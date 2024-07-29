@@ -6,8 +6,6 @@ import Home from '../pages/Home';
 import MarcaPresencaP1 from '../pages/MarcaPresenca/selecionaDisciplinaAula';
 import MarcaPresencaP2 from '../pages/MarcaPresenca/marcarPresenca';
 
-import ProfessorEdita from "../pages/Professor/ProfessorEdita";
-
 import Perfil from '../pages/Perfil';
 
 import Aluno from '../pages/Aluno';

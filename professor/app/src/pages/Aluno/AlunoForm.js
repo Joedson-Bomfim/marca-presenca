@@ -55,8 +55,8 @@ const AlunoForm = ( {navigation} ) => {
                     });
                 }}]
             );
-        }else {    
-            setErrorMatriculaForm(result.message);
+        }else {        
+            Alert.alert('Atenção', 'Houve um erro ao tentar atualizar os seus dados');  
         }
     }; 
     
