@@ -52,7 +52,7 @@ const getAlunoDisciplin = () => {
     });
 };
 
-const getAlunoDisciplinaMarcaPresenca = (id) => {
+const getAlunoDisciplinaMarcaPresenca = (disciplina_fk) => {
     return new Promise((resolve, reject) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
@@ -62,7 +62,29 @@ const getAlunoDisciplinaMarcaPresenca = (id) => {
                     JOIN Disciplinas as D ON D.id = disciplina_fk
                     WHERE D.id = ?
                     ORDER BY A.nome ASC`,
-                    [id],
+                    [disciplina_fk],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
+const getAlunoNaoEstaNestaDisciplina = (disciplina_fk) => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql(`
+                    SELECT DISTINCT A.id as id, A.nome as nome 
+                    FROM Alunos as A
+                    LEFT JOIN AlunosDisciplinas as AD ON AD.aluno_fk = A.id
+                    WHERE (AD.disciplina_fk IS NULL OR AD.disciplina_fk != ?)
+                    ORDER BY A.nome ASC`,
+                    [disciplina_fk],
                     (tx, results) => {
                         const rows = results.rows.raw(); // raw() returns an array
                         resolve(rows);
@@ -129,4 +151,5 @@ const deleteAlunoDisciplinaById = (id) => {
     });
 };
 
-export { createAlunoDisciplina, insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById };
+export { createAlunoDisciplina, insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getAlunoNaoEstaNestaDisciplina, 
+         getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById };

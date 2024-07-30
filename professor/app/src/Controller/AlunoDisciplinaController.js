@@ -1,4 +1,5 @@
-import { insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getProfessorById, truncateAlunoDisciplina, deleteAlunoDisciplinaById } from '../Model/AlunoDisciplinaModel';
+import { insertAlunoDisciplina, getAlunoDisciplin, getAlunoDisciplinaMarcaPresenca, getAlunoNaoEstaNestaDisciplina, getProfessorById, 
+         truncateAlunoDisciplina, deleteAlunoDisciplinaById } from '../Model/AlunoDisciplinaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addAlunoDisciplina = async (aluno_fk, disciplina_fk) => {
@@ -9,8 +10,12 @@ const addAlunoDisciplina = async (aluno_fk, disciplina_fk) => {
     try {
         await insertAlunoDisciplina(aluno_fk, disciplina_fk, criado_em);
         console.log('AlunoDisciplina adicionado');
+        return { success: true };
     } catch (error) {
-        console.error('Erro ao adicionar alunoDisciplina:', error);
+        console.error('Erro ao adicionar alunoDisciplina:', error);   
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 
@@ -24,9 +29,19 @@ const fetchAlunoDisciplina = async () => {
     }
 };
 
-const fetchAlunoDisciplinaMarcaPresenca = async (id) => {
+const fetchAlunoDisciplinaMarcaPresenca = async (disciplina_fk) => {
     try {
-        const professores = await getAlunoDisciplinaMarcaPresenca(id);
+        const professores = await getAlunoDisciplinaMarcaPresenca(disciplina_fk);
+        return professores;
+    } catch (error) {
+        console.error('Erro ao listar alunos:', error.message || error);
+        return [];
+    }
+};
+
+const fetchAlunoNaoEstaNestaDisciplina = async (disciplina_fk) => {
+    try {
+        const professores = await getAlunoNaoEstaNestaDisciplina(disciplina_fk);
         return professores;
     } catch (error) {
         console.error('Erro ao listar alunos:', error.message || error);
@@ -61,10 +76,14 @@ const removeAlunoDisciplinaById = async (id) => {
     console.log('AlunoDisciplina excluído com sucesso');
     try {
         await deleteAlunoDisciplinaById(id);
-        console.log('AlunoDisciplina apagado');
+        return { success: true };
     } catch (error) {
-        console.error('Erro ao apagar alunoDisciplina:', error);
+        console.error('Erro ao adicionar alunoDisciplina:', error);   
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
     }
 };
 
-export { addAlunoDisciplina, fetchAlunoDisciplina, fetchAlunoDisciplinaMarcaPresenca, fetchProfessorById, cleanUpAlunoDisciplina, removeAlunoDisciplinaById };
+export { addAlunoDisciplina, fetchAlunoDisciplina, fetchAlunoDisciplinaMarcaPresenca, fetchAlunoNaoEstaNestaDisciplina, fetchProfessorById,
+         cleanUpAlunoDisciplina, removeAlunoDisciplinaById };

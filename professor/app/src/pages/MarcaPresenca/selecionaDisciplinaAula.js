@@ -5,6 +5,7 @@ import { fetchDisciplinaProfessor } from "../../Controller/DisciplinaController"
 import { fetchAulaDisciplina } from "../../Controller/AulaController";
 import { Context } from '../../contexts/Context';
 import { obterDataAtualBrasileira } from '../../services/formatacao';
+import InputDate from "../../components/inputDate";
 
 import Loading from "../../components/LoadingDefaulft";
 import DropdownSelect from '../../components/dropdown';
@@ -91,9 +92,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
       <Loading visible={visible} />
       <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
 
-      <TextInput label="Data" mode="flat" value={data}
-        onChangeText={setData} style={[styles.marginBottom, TemaPrincipal.inputPadrao]}
-      ></TextInput>
+      <InputDate titulo={'Selecione para alterar a data'} icon={'calendar-month'} initialDate={data} onDateSelected={(dataSelecionada) => setData(dataSelecionada)}/>
 
       <DropdownSelect options={opcoesDisciplinas} onSelect={selecionaDisciplina} placeholder="Selecione uma Disciplina" selected={selectedDisciplina}/>
 

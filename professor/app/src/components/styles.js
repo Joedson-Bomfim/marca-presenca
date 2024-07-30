@@ -6,13 +6,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomWidth: 1,
         marginBottom: 10,
+        borderBottomColor: 'white'
     },
     containerModal: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginBottom: 10,
     },
-        input: {
+    input: {
         flex: 1,
         paddingVertical: 8,
         paddingHorizontal: 16,

@@ -49,19 +49,6 @@ const DisciplinaDetalhe = ( {navigation} ) => {
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>{nome}</Text>
 
-            <View style={TemaPrincipal.botoesEditRegistro}>
-                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
-                onPress={() => {navigation.navigate('DisciplinaForm', 
-                { complemento: complemento });}}>
-                    Alunos
-                </Button>
-
-                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
-                onPress={() => {navigation.navigate('Aulas', { disciplina_id: id, nome_disciplina: nome });}}>
-                    Aulas
-                </Button>
-            </View> 
-
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
             {isExist ?
@@ -83,6 +70,18 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                 ))}
             </ScrollView> :
             <Text style={styles.aviso}>Ainda não há registros de presença</Text>}
+
+            <View style={[TemaPrincipal.botoesEditRegistro, TemaPrincipal.marginBottomPadrao]}>
+                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
+                onPress={() => {navigation.navigate('DisciplinaAluno', { disciplina_id: id, nome_disciplina: nome });}}>
+                    Alunos
+                </Button>
+
+                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
+                onPress={() => {navigation.navigate('Aulas', { disciplina_id: id, nome_disciplina: nome });}}>
+                    Aulas
+                </Button>
+            </View> 
 
             <Button mode="contained" labelStyle={{ fontSize: 20 }} 
             style={[TemaPrincipal.botaoCadastro]}
