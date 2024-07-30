@@ -19,11 +19,15 @@ const AlunoPresenca = ({ nome, data, estadoBeacon, presenca = {}, setPresenca, i
     const indiceAtual = SituacaoAluno.indexOf(situacaoAluno);
 
     useEffect(() => {
+        setSituacaoAluno(presenca.situacao || 'Presente');
+        setLocalPresenca(presenca);
+    }, [presenca]);
+
+    useEffect(() => {
         alterarDados('situacao', situacaoAluno);
     }, [situacaoAluno]);
 
     function selecionaAluno() {
-        setLocalPresenca(presenca);
         setModalVisible(true);
     }
 

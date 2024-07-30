@@ -127,9 +127,11 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     </View> :
     <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença <Icon name="lighthouse-on" color={colors.icone} size={20} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon></Text>
 
+    let quantidadeAulas = quantidade_aulas == 1 ? '1 aula' : quantidade_aulas+' aulas';
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
+            <Text style={{alignSelf: 'center'}}>{quantidadeAulas}</Text>
             
             {situacaoBeacon}
             <ScrollView style={{ marginTop: 20 }}>

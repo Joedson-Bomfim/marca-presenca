@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     titulo: {
         textAlign: 'center',
         fontSize: 30,
-        marginBottom: 30,
+        marginBottom: 20,
         fontWeight: "bold"
     },
     informativo: {
