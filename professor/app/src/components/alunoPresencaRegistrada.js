@@ -40,6 +40,7 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
 
     const finalizarAlteracao = async () => {
         if (aulas_assistidasForm) {
+            const aulas_assistidasFormFormatada = aulas_assistidasForm.replace(/[^0-9]/g, '');
             console.log('Campos preenchidos. Chamando editPresença...');
             let situacao = 'Ausente';
             const result = await editPresenca(id, aulas_assistidasForm, observacaoForm, situacao);

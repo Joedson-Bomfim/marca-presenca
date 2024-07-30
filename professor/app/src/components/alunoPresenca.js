@@ -85,7 +85,7 @@ const AlunoPresenca = ({ nome, data, estadoBeacon, presenca = {}, setPresenca, i
                         <TextInput label="Data" mode="flat" value={data} editable={false} style={TemaPrincipal.inputModal} />
 
                         <TextInput label="Total Aulas Assistidas" mode="flat" value={localPresenca.quantidade_aulas_assistidas || ''}  keyboardType="numeric"
-                        onChangeText={text => alterarDados('quantidade_aulas_assistidas', text)} style={TemaPrincipal.inputModal} />
+                        onChangeText={text => alterarDados('quantidade_aulas_assistidas', text.replace(/[^0-9]/g, ''))} style={TemaPrincipal.inputModal} />
 
 
                         <TextInput label="Observação" mode="flat" value={localPresenca.observacao || ''}
