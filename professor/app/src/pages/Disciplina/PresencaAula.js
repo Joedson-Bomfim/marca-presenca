@@ -72,6 +72,7 @@ const PresencaAula = ({ navigation }) => {
                         <AlunoPresenca
                             id={item.id}
                             nome={item.nome}
+                            situacao={item.situacao}
                             data={converteDataAmericanaParaBrasileira(item.data)}
                             aulas_assistidas={item.quantidade_aulas_assistidas}
                             observacao={item.observacao}

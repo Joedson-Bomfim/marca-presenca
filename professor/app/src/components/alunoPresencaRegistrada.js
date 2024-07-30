@@ -8,16 +8,14 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
 import styles from "./styles";
 
-const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBeacon, presenca = {}, 
-                         setPresenca, icon, modalBorderColor = '#8C8C8C', modalBorderWidth = 2 }) => {
+const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao, estadoBeacon, 
+                         icon, modalBorderColor = '#8C8C8C', modalBorderWidth = 2 }) => {
     const { colors } = useTheme();
     const [modalVisible, setModalVisible] = useState(false);
-    const [localPresenca, setLocalPresenca] = useState(presenca);
     const [aulas_assistidasForm, setAulasAssistidas] = useState(aulas_assistidas);
     const [observacaoForm, setObservacaoForm] = useState(observacao);
 
     function selecionaAluno() {
-        setLocalPresenca(presenca);
         setModalVisible(true);
     }
 
@@ -41,9 +39,10 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
     const finalizarAlteracao = async () => {
         if (aulas_assistidasForm) {
             const aulas_assistidasFormFormatada = aulas_assistidasForm.replace(/[^0-9]/g, '');
+            setAulasAssistidas(aulas_assistidasFormFormatada);
             console.log('Campos preenchidos. Chamando editPresença...');
             let situacao = 'Ausente';
-            const result = await editPresenca(id, aulas_assistidasForm, observacaoForm, situacao);
+            const result = await editPresenca(id, aulas_assistidasFormFormatada, observacaoForm, situacaoAluno);
             if (result.success) {
                 Alert.alert(
                     "Sucesso", "Aluno(a) atualizado(a) com sucesso",
@@ -58,7 +57,7 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
         setModalVisible(false);
     }
 
-    const [situacaoAluno, setSituacaoAluno] = useState('Presente');
+    const [situacaoAluno, setSituacaoAluno] = useState(situacao || 'Presente');
 
     const SituacaoAluno = [
         'Presente', 'Ausente', 'Justificado', 'Presença Parcial'
@@ -94,7 +93,7 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
                         <Text style={[TemaPrincipal.tituloModal, { color: colors.text }]}>{nome}</Text>
 
                         <InputArrow titulo={'Situação do aluno'} fontSizeTitulo={14} fontSizeConteudo={16} conteudoForm={situacaoAluno}
-                            setaAnterior={situacaoAnterior} setSeguinte={proximaSituacao} color={colors.text} />
+                        onChangeText={setSituacaoAluno}  setaAnterior={situacaoAnterior} setSeguinte={proximaSituacao} color={colors.text} />
 
                         <TextInput label="Data" mode="flat" value={data} editable={false} style={TemaPrincipal.inputModal} />
 
