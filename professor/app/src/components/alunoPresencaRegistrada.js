@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Modal, Alert } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { editPresenca } from '../Controller/PresencaController';
+import InputArrow from "../components/InputArrow";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
@@ -56,6 +57,24 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
         setModalVisible(false);
     }
 
+    const [situacaoAluno, setSituacaoAluno] = useState('Presente');
+
+    const SituacaoAluno = [
+        'Presente', 'Ausente', 'Justificado', 'Presença Parcial'
+    ];
+
+    const indiceAtual = SituacaoAluno.indexOf(situacaoAluno);
+
+    const proximaSituacao = () => {
+        const proximoIndice = (indiceAtual + 1) % SituacaoAluno.length;
+        setSituacaoAluno(SituacaoAluno[proximoIndice]);
+    };
+
+    const situacaoAnterior = () => {
+        const indiceAnterior = (indiceAtual - 1 + SituacaoAluno.length) % SituacaoAluno.length;
+        setSituacaoAluno(SituacaoAluno[indiceAnterior]);
+    };
+
     return (
         <View>
             <Button
@@ -73,11 +92,13 @@ const AlunoPresenca = ({ id, nome, data, aulas_assistidas, observacao, estadoBea
                     <View style={[TemaPrincipal.modalSelecinaAluno, { borderColor: modalBorderColor, borderWidth: modalBorderWidth }]}>
                         <Text style={[TemaPrincipal.tituloModal, { color: colors.text }]}>{nome}</Text>
 
+                        <InputArrow titulo={'Situação do aluno'} fontSizeTitulo={14} fontSizeConteudo={16} conteudoForm={situacaoAluno}
+                            setaAnterior={situacaoAnterior} setSeguinte={proximaSituacao} color={colors.text} />
+
                         <TextInput label="Data" mode="flat" value={data} editable={false} style={TemaPrincipal.inputModal} />
 
-                        <TextInput label="Total Aulas Assistidas" mode="flat" value={aulas_assistidasForm}
-                            onChangeText={setAulasAssistidas} style={TemaPrincipal.inputModal}
-                        />
+                        <TextInput label="Total Aulas Assistidas" mode="flat" value={aulas_assistidasForm} keyboardType="numeric"
+                        onChangeText={setAulasAssistidas} style={TemaPrincipal.inputModal} />
 
                         <TextInput label="Observação" mode="flat" value={observacaoForm}
                             onChangeText={setObservacaoForm} style={TemaPrincipal.inputModal}

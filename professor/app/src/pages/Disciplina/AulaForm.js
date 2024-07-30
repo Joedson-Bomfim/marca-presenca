@@ -175,7 +175,7 @@ const DisciplinaForm = ( {navigation} ) => {
         <ScrollView style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Text style={[TemaPrincipal.titulo, {color: colors.text }]}>{tipoForm} Aula</Text>
 
-            <InputArrow titulo={'Dia da Semana'} conteudoForm={dia_semanaForm} 
+            <InputArrow titulo={'Dia da Semana'} fontSizeTitulo={20} fontSizeConteudo={25} conteudoForm={dia_semanaForm} 
             setaAnterior={diaAnterior} setSeguinte={proximoDia} color={colors.text}/>
 
             <Input label="Local (Ex: Pavilhão 2 - Sala 6)" value={localForm} error={ErrorLocalForm} setError={setErrorLocalForm}

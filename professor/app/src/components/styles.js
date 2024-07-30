@@ -13,6 +13,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginBottom: 10,
     },
+    tituloModal: {
+        textAlign: 'center',
+        fontSize: 22,
+        marginBottom: 10,
+        fontWeight: "bold"
+    },
     input: {
         flex: 1,
         paddingVertical: 8,
@@ -30,25 +36,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        margin: 8, 
-      },
-      botaoSeta: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 4,
-        padding: 10,
-        marginHorizontal: 8,
-      },
-      buttonTextSeta: {
-        color: '#FFFFFF', 
-        fontSize: 24,
-      },
-      ConteudoBotaoSeta: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginHorizontal: 16,
-        color: '#FFFFFF', 
-      },
+    },
+    botaoSeta: {
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 4,
+      padding: 10,
+      marginHorizontal: 8,
+    },
+    buttonTextSeta: {
+      color: '#FFFFFF', 
+      fontSize: 24,
+    },
+    ConteudoBotaoSeta: {
+      fontWeight: 'bold',
+      marginHorizontal: 10,
+      color: '#FFFFFF', 
+    },
 })
 
 export default styles;

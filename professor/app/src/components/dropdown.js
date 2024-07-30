@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Modal } from 'react-native';
 import { IconButton, Button, useTheme } from 'react-native-paper';
+
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
 import styles from "./styles";
 
@@ -51,41 +53,25 @@ const DropdownSelect = ({
         <View style={TemaPrincipal.modalOverlay}>
           <View style={[TemaPrincipal.modalContent, { borderColor: modalBorderColor, borderWidth: modalBorderWidth }]}>
             <View style={styles.container}>
-              <TextInput
-                placeholder="Pesquisar..."
-                value={search}
-                onChangeText={setSearch}
-                ref={inputRef}
-                placeholderTextColor={textColor}
-                style={[styles.input, { borderBottomColor: searchBorderColor, color: textColor }]}
-              />
-              <IconButton
-                icon="magnify"
-                size={24}
-                color={colors.placeholder}
-                onPress={() => inputRef.current.focus()}
-                style={styles.icon}
-              />
+              <TextInput placeholder="Pesquisar..." value={search} onChangeText={setSearch} ref={inputRef} placeholderTextColor={colors.text}
+              style={[styles.input, { borderBottomColor: searchBorderColor, color: colors.text }]}/>
+              <Icon name={'magnify'} size={24} color="#ffffff" onPress={() => inputRef.current.focus()} style={styles.icon}/>
             </View>
             {filteredOptions.length === 0 ? (
-              <Text style={{ padding: 10, color: textColor, textAlign: 'center' }}>Não há dados a serem listados</Text>
+              <Text style={{ padding: 10, color: colors.text, textAlign: 'center' }}>Não há dados a serem listados</Text>
             ) : (
               <FlatList
                 data={filteredOptions}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handleSelect(item)}>
-                    <Text style={{ padding: 10, color: textColor }}>{item.name}</Text>
+                    <Text style={{ padding: 10, color: colors.text }}>{item.name}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}
               />
             )}
-            <Button
-              mode="text"
-              onPress={() => setModalVisible(false)}
-              style={{ marginTop: 10 }}
-            >
-              Fechar
+            <Button mode="contained" onPress={() => setModalVisible(false)} style={{ marginTop: 10, width: 150, alignSelf: 'center', }}>
+                Fechar
             </Button>
           </View>
         </View>

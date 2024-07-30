@@ -7,8 +7,8 @@ import { useRoute } from '@react-navigation/native';
 import AlunoPresenca from '../../components/alunoPresenca';
 import { addMultiplePresenca } from '../../Controller/PresencaController';
 import { converteDataBrasileiraParaAmericana } from '../../services/formatacao';
+import Loading from '../../components/LoadingScreenDots';
 
-import Loading from "../../components/LoadingDefaulft";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../../assets/styles";
 import styles from "./styles";
@@ -21,7 +21,6 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     const { uuidList, estadoBeacon, startBeaconRanging, stopBeaconRanging } = useBeaconService();
     const [alunosDisciplinas, setAlunoDisciplina] = useState([]);
     const [presencas, setPresencas] = useState([]);
-    const [botaoHome, setHome] = useState(false);
 
     const aula_fk = aulaId; 
     const dataPresenca = converteDataBrasileiraParaAmericana(data); 
@@ -97,7 +96,6 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     const registrarPresenca = async () => {
         try {
             await addMultiplePresenca(aula_fk, dataPresenca, presencas);
-            setHome(true);
             Alert.alert(
                 "Sucesso", "Lista de chamada registrada com sucesso",
                 [{ text: "OK", onPress: () => {
@@ -122,8 +120,12 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         atualizarPresencas();
     }
 
-    let situacaoBeacon = estadoBeacon ? <Icon name="lighthouse-on" color={colors.icone} size={40} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon> : 
-                                        <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença <Icon name="lighthouse-on" color={colors.icone} size={20} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon></Text>
+    let situacaoBeacon = estadoBeacon ? 
+    <View>
+        <Loading/>
+        <Icon name="lighthouse-on" color={colors.icone} size={40} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon>  
+    </View> :
+    <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença <Icon name="lighthouse-on" color={colors.icone} size={20} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon></Text>
 
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
@@ -134,8 +136,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
                 {alunosDisciplinas.map((item, index) => (
                     <View key={item.id} style={styles.bookItem}>
                         <AlunoPresenca nome={item.nome} data={data} estadoBeacon={estadoBeacon} icon={uuidList.includes(item.beacon_id) ? "check-bold" : "close-thick"}
-                                       presenca={presencas[index]} setPresenca={(updatedPresenca) => handlePresencaChange(index, updatedPresenca)}
-                        />
+                        presenca={presencas[index]} setPresenca={(updatedPresenca) => handlePresencaChange(index, updatedPresenca)}/>
                     </View>
                 ))}
             </ScrollView>
