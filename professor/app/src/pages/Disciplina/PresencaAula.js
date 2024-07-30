@@ -19,12 +19,11 @@ const PresencaAula = ({ navigation }) => {
 
     const { professorId } = useContext(Context);
 
-    const { aula_id, data_presenca, horario_inicio_aula, horario_fim_aula, 
+    const { aula_id, data_presenca, horario_inicio_aula, horario_fim_aula, quantidade_aulas,
             total_alunos_presentes, total_alunos, nome_disciplina } = route.params;
 
     const [alunosPresenca, setDisciplina] = useState([]);
     const [visible, setVisible] = useState(false);
-    const [presencas, setPresencas] = useState([]);
 
     useEffect(() => {
         listaDisciplinas();
@@ -43,15 +42,9 @@ const PresencaAula = ({ navigation }) => {
         }
     };
 
-    const handlePresencaChange = (index, updatedPresenca) => {
-        const newPresencas = [...presencas];
-        newPresencas[index] = { ...updatedPresenca };
-        setPresencas(newPresencas);
+    const handleSituacaoChange = () => {
+        listaDisciplinas();
     };
-
-    function varDump(variavel) {
-        return JSON.stringify(variavel, null, 2);
-    }
 
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
@@ -64,7 +57,8 @@ const PresencaAula = ({ navigation }) => {
                     <Text>{total_alunos_presentes}/{total_alunos}</Text>
                 </View>
             </View>
-            <Text style={[{marginBottom: 30}]}>Horário das {horario_inicio_aula} h até {horario_fim_aula} h </Text>
+            <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
+            <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
             <ScrollView>
                 <Loading visible={visible} />
                 {alunosPresenca.map((item, index) => (
@@ -77,7 +71,7 @@ const PresencaAula = ({ navigation }) => {
                             aulas_assistidas={item.quantidade_aulas_assistidas}
                             observacao={item.observacao}
                             presenca={item}
-                            setPresenca={(updatedPresenca) => handlePresencaChange(index, updatedPresenca)}
+                            atualizaSituacao={() => handleSituacaoChange()}
                             icon={item.situacao !== 'Ausente' ? "check-bold" : "close-thick"}
                         />
                     </View>

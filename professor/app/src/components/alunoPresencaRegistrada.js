@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
 import styles from "./styles";
 
-const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao, estadoBeacon, 
+const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao, estadoBeacon, atualizaSituacao,
                          icon, modalBorderColor = '#8C8C8C', modalBorderWidth = 2 }) => {
     const { colors } = useTheme();
     const [modalVisible, setModalVisible] = useState(false);
@@ -44,6 +44,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
             let situacao = 'Ausente';
             const result = await editPresenca(id, aulas_assistidasFormFormatada, observacaoForm, situacaoAluno);
             if (result.success) {
+                atualizaSituacao();
                 Alert.alert(
                     "Sucesso", "Aluno(a) atualizado(a) com sucesso",
                     [{ text: "OK", onPress: () => { setModalVisible(false); }}]
