@@ -18,7 +18,21 @@ const styles = StyleSheet.create({
     },
     marginBottom: {
         marginBottom: 30
-    }
+    },
+    buttonTouchable: {
+        padding: 10,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    buttonTouchableSegundo: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+    },
+    fonteTextoTouchable: {
+        fontSize: 15,
+        color: '#fff',
+    },
 })
 
 export default styles;

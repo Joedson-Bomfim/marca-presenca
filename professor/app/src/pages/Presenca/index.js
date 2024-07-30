@@ -1,26 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { ScrollView, View, Text, TouchableOpacity } from "react-native";
 import { Button, useTheme } from "react-native-paper";
+import { useIsFocused } from '@react-navigation/native';
+import { fetchTodosGrupoPresenca } from '../../Controller/PresencaController';
+import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
 import InputSearch from "../../components/InputSearch";
 
+import Loading from "../../components/LoadingDefaulft";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import styles from "./styles";
 import TemaPrincipal from "../../assets/styles";
 
 const Presenca = ( {navigation} ) => {
     const { colors } = useTheme();
 
-    const [presencas, setPresenca] = useState([]);
+    const [presencas, setListaPresenca] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [isExist, setIsExist] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
 
+    const isFocused = useIsFocused(); //Sempre irá consultar as presenças quando a tela for aberta (Isso garante que sempre esteja atualizado)
+    
     useEffect(() => {
-        //listaDisciplinas();
-    }, []);
+        listaTodosGrupoPresenca();
 
-    /*
-    const filtereddisciplinas = presencas.filter(aula =>
-        //aula.nome.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    */
+    }, [isFocused]);
+
+    const listaTodosGrupoPresenca = async () => {
+        setVisible(true);
+        setIsExist(true)
+        try {
+            const listPresenca = await fetchTodosGrupoPresenca();
+            listPresenca.length === 0 ? setIsExist(false) : setListaPresenca(listPresenca);
+        } catch (error) {
+            console.log('Não foi possível carregar os presencas. Verifique se a tabela existe.');
+        } finally {
+            setVisible(false);
+        }
+    };
+
+    const filteredPresencas = presencas.filter(aula => {
+        const formattedDate = converteDataAmericanaParaBrasileira(aula.data);
+    
+        return formattedDate.includes(searchTerm) || 
+               aula.horario_inicio_aula.includes(searchTerm);
+    });
 
     return(
         //<Icon name="clipboard-text-clock-outline" color={ colors.icone } size={40}/>       
@@ -28,6 +52,45 @@ const Presenca = ( {navigation} ) => {
             <Text style={[styles.titulo, {color: colors.text }]}>Presenças</Text>
 
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
+
+            {isExist ?
+            <ScrollView>
+                    <Loading visible={visible}/>
+                    {filteredPresencas.map((item) => (
+                    <View key={item.id} style={styles.bookItem}>
+                        <TouchableOpacity 
+                        onPress={() => {
+                            navigation.reset({
+                                index: 0,
+                                routes: [{ name: 'DisciplinaStack' }], 
+                            }); //Limpar a pilha caso alguma disciplina esteja aberta
+                        
+                            setTimeout(() => {
+                                navigation.navigate('DisciplinaStack', {
+                                    screen: 'PresencaAula',
+                                    params: {
+                                        aula_id: item.aula_id,
+                                        data_presenca: item.data,
+                                        horario_inicio_aula: item.horario_inicio_aula,
+                                        horario_fim_aula: item.horario_fim_aula,
+                                        total_alunos_presentes: item.total_alunos_presentes,
+                                        total_alunos: item.total_alunos,
+                                        quantidade_aulas: item.quantidade_aulas,
+                                        nome_disciplina: item.disciplina
+                                    }
+                                });
+                            }, 5); // Tempo de atraso (em milissegundos) para garantir a navegação seja empilhada
+                        }}
+                            style={[styles.buttonTouchable, { backgroundColor: colors.secondary }]}>
+                            <View style={styles.buttonTouchableSegundo}>
+                                <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula} {item.disciplina}</Text>
+                                <Text style={styles.fonteTextoTouchable}>{item.total_alunos_presentes+'/'+item.total_alunos} <Icon name="account-group" color={colors.icone} size={25} /></Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+                ))}
+            </ScrollView> :
+            <Text style={styles.aviso}>Ainda não há registros de presença</Text>}
         </View>
     )
 }

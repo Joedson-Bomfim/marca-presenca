@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, Modal, Alert } from 'react-native';
 import { Button, TextInput, useTheme } from 'react-native-paper';
 import { editPresenca } from '../Controller/PresencaController';
+import { fetchTodosGrupoPresenca } from '../Controller/PresencaController';
 import InputArrow from "../components/InputArrow";
+import Input from "../components/Input";
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
@@ -13,6 +15,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
     const { colors } = useTheme();
     const [modalVisible, setModalVisible] = useState(false);
     const [aulas_assistidasForm, setAulasAssistidas] = useState(aulas_assistidas);
+    const [ErrorAulasAssistidas, setErrorAulasAssistidas] = useState('');
     const [observacaoForm, setObservacaoForm] = useState(observacao);
 
     function selecionaAluno() {
@@ -20,6 +23,11 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
     }
 
     const atualizar = () => {
+        if(!aulas_assistidasForm) {
+            setErrorAulasAssistidas('Por favor informe a quantidade de aulas');
+            return;
+        }
+
         Alert.alert(
             "Confirmação",
             `Tem certeza que deseja alterar os dados do(a) aluno(a) ${nome}?`,
@@ -37,26 +45,32 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
     };
 
     const finalizarAlteracao = async () => {
-        if (aulas_assistidasForm) {
-            const aulas_assistidasFormFormatada = aulas_assistidasForm.replace(/[^0-9]/g, '');
-            setAulasAssistidas(aulas_assistidasFormFormatada);
-            console.log('Campos preenchidos. Chamando editPresença...');
-            let situacao = 'Ausente';
-            const result = await editPresenca(id, aulas_assistidasFormFormatada, observacaoForm, situacaoAluno);
-            if (result.success) {
-                atualizaSituacao();
-                Alert.alert(
-                    "Sucesso", "Aluno(a) atualizado(a) com sucesso",
-                    [{ text: "OK", onPress: () => { setModalVisible(false); }}]
-                );
-            } else {
-                Alert.alert('Atenção', result.message);
-            }
+        const aulas_assistidasFormFormatada = aulas_assistidasForm.replace(/[^0-9]/g, '');
+        setAulasAssistidas(aulas_assistidasFormFormatada);
+        console.log('Campos preenchidos. Chamando editPresença...');
+        const result = await editPresenca(id, aulas_assistidasFormFormatada, observacaoForm, situacaoAluno);
+        if (result.success) {
+            atualizaSituacao();
+            Alert.alert(
+                "Sucesso", "Aluno(a) atualizado(a) com sucesso",
+                [{ text: "OK", onPress: () => { setModalVisible(false); }}]
+            );
+            listaTodosGrupoPresenca();
         } else {
-            Alert.alert('Atenção', 'Por favor preencha todos os campos');
+            Alert.alert('Atenção', result.message);
         }
+        
         setModalVisible(false);
     }
+
+    const listaTodosGrupoPresenca = async () => {
+        try {
+            const listPresenca = await fetchTodosGrupoPresenca();
+            listPresenca.length === 0 ? setIsExist(false) : setListaPresenca(listPresenca);
+        } catch (error) {
+            console.log('Não foi possível carregar os presencas. Verifique se a tabela existe.');
+        }
+    };
 
     const [situacaoAluno, setSituacaoAluno] = useState(situacao || 'Presente');
 
@@ -98,8 +112,9 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
 
                         <TextInput label="Data" mode="flat" value={data} editable={false} style={TemaPrincipal.inputModal} />
 
-                        <TextInput label="Total Aulas Assistidas" mode="flat" value={aulas_assistidasForm} keyboardType="numeric"
-                        onChangeText={setAulasAssistidas} style={TemaPrincipal.inputModal} />
+                        <Input label="Nome Completo" value={aulas_assistidasForm} error={ErrorAulasAssistidas} setError={setErrorAulasAssistidas}
+                        onChangeText={(text) => { setAulasAssistidas(text); if (ErrorAulasAssistidas) { setErrorAulasAssistidas(''); }}} 
+                        containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}  keyboardType="numeric"/>
 
                         <TextInput label="Observação" mode="flat" value={observacaoForm}
                             onChangeText={setObservacaoForm} style={TemaPrincipal.inputModal}

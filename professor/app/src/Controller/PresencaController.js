@@ -1,4 +1,5 @@
-import { insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, getGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
+import { insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, 
+        getGrupoPresenca, getTodosGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao) => {
@@ -73,6 +74,15 @@ const fetchGrupoPresenca = async (disciplina_id) => {
         return [];
     }
 };
+const fetchTodosGrupoPresenca = async () => {
+    try {
+        const presencas = await getTodosGrupoPresenca();
+        return presencas;
+    } catch (error) {
+        console.error('Erro ao listar presencas:', error.message || error);
+        return [];
+    }
+};
 
 const fetchProfessorById = async (id) => {
     try {
@@ -107,4 +117,5 @@ const removePresencaById = async (id) => {
     }
 };
 
-export { addPresenca, editPresenca, addMultiplePresenca, fetchPresenca, fetchPresencaByAula, fetchGrupoPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };
+export { addPresenca, editPresenca, addMultiplePresenca, fetchPresenca, fetchPresencaByAula, 
+         fetchGrupoPresenca, fetchTodosGrupoPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };

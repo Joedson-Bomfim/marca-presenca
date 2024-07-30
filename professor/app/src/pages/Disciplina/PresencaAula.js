@@ -17,12 +17,11 @@ const PresencaAula = ({ navigation }) => {
     const { colors } = useTheme();
     const route = useRoute();
 
-    const { professorId } = useContext(Context);
-
     const { aula_id, data_presenca, horario_inicio_aula, horario_fim_aula, quantidade_aulas,
-            total_alunos_presentes, total_alunos, nome_disciplina } = route.params;
+            total_alunos, nome_disciplina } = route.params;
 
     const [alunosPresenca, setDisciplina] = useState([]);
+    const [quantidadeAlunosPresentes, setQuantidadeAlunosPresentes] = useState(0);
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -34,7 +33,11 @@ const PresencaAula = ({ navigation }) => {
         try {
             const listaAluno = await fetchPresencaByAula(aula_id, data_presenca);
             setDisciplina(listaAluno);
-            console.log(listaAluno);
+            
+            const quantidade_presentes = listaAluno.reduce((count, item) => 
+                item.situacao !== 'Ausente' ? count + 1 : count, 0
+            );
+            setQuantidadeAlunosPresentes(quantidade_presentes);
         } catch (error) {
             console.log('Não foi possível carregar os alunosPresenca. Verifique se a tabela existe.');
         } finally {
@@ -54,7 +57,7 @@ const PresencaAula = ({ navigation }) => {
                 <Text style={styles.detalhes}>{converteDataAmericanaParaBrasileira(data_presenca)}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Icon name="account-group" color={colors.icone} size={25} />
-                    <Text>{total_alunos_presentes}/{total_alunos}</Text>
+                    <Text>{quantidadeAlunosPresentes}/{total_alunos}</Text>
                 </View>
             </View>
             <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>

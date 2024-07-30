@@ -164,6 +164,32 @@ const getGrupoPresenca = (disciplinaId) => {
     });
 };
 
+const getTodosGrupoPresenca = () => {
+    return new Promise((resolve, reject) => {
+        openDatabase().then((db) => {
+            return db.transaction((tx) => {
+                return tx.executeSql( `
+                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, 
+                           p.data, a.horario_inicio_aula, a.horario_fim_aula, a.quantidade_aulas,
+                           COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
+                           COUNT(p.aluno_fk) AS total_alunos
+                    FROM Presencas p
+                    JOIN Aulas a ON p.aula_fk = a.id
+                    JOIN Disciplinas d ON a.disciplina_fk = d.id
+                    GROUP BY d.nome, p.data, a.horario_inicio_aula
+                    ORDER BY p.data DESC;`,
+                    [],
+                    (tx, results) => {
+                        const rows = results.rows.raw(); // raw() returns an array
+                        resolve(rows);
+                    },
+                    (error) => reject(error)
+                );
+            });
+        });
+    });
+};
+
 const truncatePresenca = () => {
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
@@ -200,4 +226,5 @@ const deletePresencaById = (id) => {
     });
 };
 
-export { createPresenca, insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, getGrupoPresenca, truncatePresenca, deletePresencaById };
+export { createPresenca, insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, 
+         getGrupoPresenca, getTodosGrupoPresenca, truncatePresenca, deletePresencaById };

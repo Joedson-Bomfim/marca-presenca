@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     fonteTextoTouchable: {
-        fontSize: 20,
+        fontSize: 18,
         color: '#fff',
     },
     dataIcone: {
