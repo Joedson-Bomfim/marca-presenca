@@ -32,6 +32,11 @@ const AlunoPresenca = ({ nome, data, estadoBeacon, presenca = {}, setPresenca, i
     }
 
     const alterarDados = (field, value) => {
+        console.log(value);
+        if(field == 'quantidade_aulas_assistidas' && value == '') {
+            value = 0;
+        }
+        console.log(value);
         setLocalPresenca(prev => ({ ...prev, [field]: value }));
     };
 

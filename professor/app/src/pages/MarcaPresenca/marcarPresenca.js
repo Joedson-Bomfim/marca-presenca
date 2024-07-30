@@ -19,8 +19,9 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     
     const { disciplinaId, aulaId, quantidade_aulas, data } = route.params;
     const { uuidList, estadoBeacon, startBeaconRanging, stopBeaconRanging } = useBeaconService();
-    const [alunosDisciplinas, setAlunoDisciplina] = useState([]);
-    const [presencas, setPresencas] = useState([]);
+    const [ alunosDisciplinas, setAlunoDisciplina] = useState([]);
+    const [ presencas, setPresencas] = useState([]);
+    const [ procuraPrimeiraVez, setProcuraPrimeiraVez] = useState(true);
 
     const aula_fk = aulaId; 
     const dataPresenca = converteDataBrasileiraParaAmericana(data); 
@@ -118,6 +119,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     function pararProcura() {
         stopBeaconRanging();
         atualizarPresencas();
+        setProcuraPrimeiraVez(false);
     }
 
     let situacaoBeacon = estadoBeacon ? 
@@ -132,17 +134,31 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
             <Text style={{alignSelf: 'center'}}>{quantidadeAulas}</Text>
-            
             {situacaoBeacon}
             <ScrollView style={{ marginTop: 20 }}>
-                {alunosDisciplinas.map((item, index) => (
-                    <View key={item.id} style={styles.bookItem}>
-                        <AlunoPresenca nome={item.nome} data={data} estadoBeacon={estadoBeacon} icon={uuidList.includes(item.beacon_id) ? "check-bold" : "close-thick"}
-                        presenca={presencas[index]} setPresenca={(updatedPresenca) => handlePresencaChange(index, updatedPresenca)}/>
-                    </View>
-                ))}
-            </ScrollView>
+                {alunosDisciplinas.map((item, index) => {
+                const presencaAtual = presencas && presencas.length > index ? presencas[index] : '';
+                const situacao = presencaAtual ? presencaAtual.situacao : '';
+                let icon = '';
+                icon = uuidList.includes(item.beacon_id) ? "check-bold" : "close-thick";
+                if(!procuraPrimeiraVez) {
+                    icon = situacao != 'Ausente' ? "check-bold" : "close-thick";
+                }
 
+                return (
+                <View key={item.id} style={styles.bookItem}>
+                    <AlunoPresenca 
+                    nome={item.nome} 
+                    data={data} 
+                    estadoBeacon={estadoBeacon} 
+                    icon={icon}
+                    presenca={presencaAtual} 
+                    setPresenca={(updatedPresenca) => handlePresencaChange(index, updatedPresenca)}
+                    />
+                </View>
+                );
+            })}
+            </ScrollView>
             {estadoBeacon ?
             <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={pararProcura} 
             style={[TemaPrincipal.marginBottomPadrao, TemaPrincipal.botaoPrincipal, { backgroundColor: '#6346F5' }]}>
