@@ -96,7 +96,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
                 mode="contained"
                 icon={() => <Icon name={icon} size={30} color="#ffffff" />}
                 contentStyle={{ flexDirection: 'row-reverse' }}
-                labelStyle={{ fontSize: 20 }}
+                labelStyle={{ fontSize: 18 }}
                 onPress={estadoBeacon ? () => { } : selecionaAluno}
                 style={[styles.conteudoAlunoPresenca, { backgroundColor: estadoBeacon ? colors.tertiary : colors.secundary }]}>
                 {nome}
@@ -112,7 +112,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
 
                         <TextInput label="Data" mode="flat" value={data} editable={false} style={TemaPrincipal.inputModal} />
 
-                        <Input label="Nome Completo" value={aulas_assistidasForm} error={ErrorAulasAssistidas} setError={setErrorAulasAssistidas}
+                        <Input label="Total de Aulas Assistidas" value={aulas_assistidasForm} error={ErrorAulasAssistidas} setError={setErrorAulasAssistidas}
                         onChangeText={(text) => { setAulasAssistidas(text); if (ErrorAulasAssistidas) { setErrorAulasAssistidas(''); }}} 
                         containerStyle={TemaPrincipal.marginBottomPadrao} style={TemaPrincipal.inputPadrao}  keyboardType="numeric"/>
 

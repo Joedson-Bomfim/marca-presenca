@@ -54,7 +54,7 @@ const DropdownSelect = ({
           <View style={[TemaPrincipal.modalContent, { borderColor: modalBorderColor, borderWidth: modalBorderWidth }]}>
             <View style={styles.container}>
               <TextInput placeholder="Pesquisar..." value={search} onChangeText={setSearch} ref={inputRef} placeholderTextColor={colors.text}
-              style={[styles.input, { borderBottomColor: searchBorderColor, color: colors.text }]}/>
+              style={[styles.input, { borderBottomColor: searchBorderColor, color: colors.text, fontSize: 20 }]}/>
               <Icon name={'magnify'} size={24} color="#ffffff" onPress={() => inputRef.current.focus()} style={styles.icon}/>
             </View>
             {filteredOptions.length === 0 ? (
@@ -64,7 +64,7 @@ const DropdownSelect = ({
                 data={filteredOptions}
                 renderItem={({ item }) => (
                   <TouchableOpacity onPress={() => handleSelect(item)}>
-                    <Text style={{ padding: 10, color: colors.text }}>{item.name}</Text>
+                    <Text style={{ padding: 10, color: colors.text, fontSize: 20 }}>{item.name}</Text>
                   </TouchableOpacity>
                 )}
                 keyExtractor={(item) => item.id.toString()}

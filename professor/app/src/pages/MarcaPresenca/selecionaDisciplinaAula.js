@@ -31,7 +31,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
 
   const opcoesAulas = aulas.map(option => ({
     id: option.id,
-    name: option.dia_semana+' '+option.horario_inicio_aula+'-'+option.horario_fim_aula,
+    name: option.dia_semana+' '+option.horario_inicio_aula+'-'+option.horario_fim_aula+' '+option.quantidade_aulas+' Aula(s)',
     quantidade_aulas: option.quantidade_aulas
   }));
 

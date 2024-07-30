@@ -71,7 +71,7 @@ const AlunoEdita = ( {navigation} ) => {
 
                     <Text style={[TemaPrincipal.informativo, {color: colors.text }]}>Gostaria de alterar seu nome?</Text>
 
-                    <Input label="Nome" value={nomeForm} error={errorNome} setError={setErrorNome} maxLength={30}
+                    <Input label="Nome" value={nomeForm} error={errorNome} setError={setErrorNome} maxLength={50}
                     onChangeText={(text) => { setNomeForm(text); if (errorNome) { setErrorNome(''); }}}/>
 
                     <Button mode="contained" onPress={AtualizarAluno} labelStyle={{ fontSize: 20 }} style={[TemaPrincipal.botaoCadastro]}>

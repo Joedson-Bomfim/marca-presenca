@@ -142,7 +142,7 @@ const getGrupoPresenca = (disciplinaId) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql( `
-                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, 
+                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, a.dia_semana, 
                            p.data, a.horario_inicio_aula, a.horario_fim_aula, a.quantidade_aulas,
                            COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
                            COUNT(p.aluno_fk) AS total_alunos
@@ -169,7 +169,7 @@ const getTodosGrupoPresenca = () => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql( `
-                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, 
+                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, a.dia_semana, 
                            p.data, a.horario_inicio_aula, a.horario_fim_aula, a.quantidade_aulas,
                            COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
                            COUNT(p.aluno_fk) AS total_alunos

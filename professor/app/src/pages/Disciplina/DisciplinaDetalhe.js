@@ -60,6 +60,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                         onPress={() => { navigation.navigate('PresencaAula', { 
                             aula_id: item.aula_id, 
                             data_presenca: item.data, 
+                            dia_semana: item.dia_semana, 
                             horario_inicio_aula: item.horario_inicio_aula, 
                             horario_fim_aula: item.horario_fim_aula, 
                             total_alunos_presentes: item.total_alunos_presentes, 

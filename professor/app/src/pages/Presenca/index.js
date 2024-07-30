@@ -70,7 +70,8 @@ const Presenca = ( {navigation} ) => {
                                     screen: 'PresencaAula',
                                     params: {
                                         aula_id: item.aula_id,
-                                        data_presenca: item.data,
+                                        data_presenca: item.data, 
+                                        dia_semana: item.dia_semana, 
                                         horario_inicio_aula: item.horario_inicio_aula,
                                         horario_fim_aula: item.horario_fim_aula,
                                         total_alunos_presentes: item.total_alunos_presentes,
@@ -83,7 +84,7 @@ const Presenca = ( {navigation} ) => {
                         }}
                             style={[styles.buttonTouchable, { backgroundColor: colors.secondary }]}>
                             <View style={styles.buttonTouchableSegundo}>
-                                <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula} {item.disciplina}</Text>
+                                <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula} {(item.disciplina.length > 20 ? item.disciplina.slice(0, 15) + '...' : item.disciplina)}</Text>
                                 <Text style={styles.fonteTextoTouchable}>{item.total_alunos_presentes+'/'+item.total_alunos} <Icon name="account-group" color={colors.icone} size={25} /></Text>
                             </View>
                         </TouchableOpacity>

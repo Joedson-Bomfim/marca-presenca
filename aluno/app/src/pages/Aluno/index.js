@@ -80,7 +80,7 @@ const AlunoCadastra = ( {navigation} ) => {
 
             <Text style={[TemaPrincipal.informativo, {color: colors.text }]}>Como você gostaria de ser chamado?</Text>
 
-            <Input label="Nome" value={nome} error={errorNome} setError={setErrorNome}  autoCapitalize={'sentences'}
+            <Input label="Nome" value={nome} error={errorNome} setError={setErrorNome}  autoCapitalize={'sentences'} maxLength={50}
             onChangeText={(text) => { setNome(text); if (errorNome) { setErrorNome(''); }}}/>
 
             <Text style={[styles.informativoSobreSenha, {color: colors.text }]}>A senha é para caso seja necessário redefinir o seu ID</Text>

@@ -17,8 +17,8 @@ const PresencaAula = ({ navigation }) => {
     const { colors } = useTheme();
     const route = useRoute();
 
-    const { aula_id, data_presenca, horario_inicio_aula, horario_fim_aula, quantidade_aulas,
-            total_alunos, nome_disciplina } = route.params;
+    const { aula_id, data_presenca, dia_semana, horario_inicio_aula, horario_fim_aula, 
+            quantidade_aulas, total_alunos, nome_disciplina } = route.params;
 
     const [alunosPresenca, setDisciplina] = useState([]);
     const [quantidadeAlunosPresentes, setQuantidadeAlunosPresentes] = useState(0);
@@ -60,6 +60,7 @@ const PresencaAula = ({ navigation }) => {
                     <Text>{quantidadeAlunosPresentes}/{total_alunos}</Text>
                 </View>
             </View>
+            <Text>Dia da Semana: {dia_semana} </Text>
             <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
             <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
             <ScrollView>

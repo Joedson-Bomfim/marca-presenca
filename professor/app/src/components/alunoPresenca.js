@@ -74,7 +74,7 @@ const AlunoPresenca = ({ nome, data, estadoBeacon, presenca = {}, setPresenca, i
 
     return (
         <View>
-            <Button mode="contained" icon={() => <Icon name={icon} size={30} color="#ffffff" />} contentStyle={{ flexDirection: 'row-reverse' }} labelStyle={{ fontSize: 20 }}
+            <Button mode="contained" icon={() => <Icon name={icon} size={30} color="#ffffff" />} contentStyle={{ flexDirection: 'row-reverse' }} labelStyle={{ fontSize: 18 }}
             onPress={estadoBeacon ? () => { } : selecionaAluno} style={[styles.conteudoAlunoPresenca, { backgroundColor: estadoBeacon ? colors.tertiary : colors.secundary }]}>
                 {nome}
             </Button>
