@@ -6229,6 +6229,11 @@ react-native-eventemitter@^0.0.1:
   resolved "https://registry.npmjs.org/react-native-eventemitter/-/react-native-eventemitter-0.0.1.tgz"
   integrity sha512-DMUkXNWdrnf3GDcXovcY4Z5XgkoZCCLEde6//3K6E28npM8FsUFrb9a0oK2O6+y5wNgBpTxlIgHkLUw5tdwxSw==
 
+react-native-file-viewer@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.npmjs.org/react-native-file-viewer/-/react-native-file-viewer-2.1.5.tgz"
+  integrity sha512-MGC6sx9jsqHdefhVQ6o0akdsPGpkXgiIbpygb2Sg4g4bh7v6K1cardLV1NwGB9A6u1yICOSDT/MOC//9Ez6EUg==
+
 react-native-fs@^2.20.0:
   version "2.20.0"
   resolved "https://registry.npmjs.org/react-native-fs/-/react-native-fs-2.20.0.tgz"
@@ -6308,7 +6313,7 @@ react-native-vector-icons@*, react-native-vector-icons@^9.2.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@*, "react-native@>= 0.44", react-native@>=0.14.0, react-native@>=0.41.2, react-native@>=0.57, react-native@>=0.65.0, react-native@0.71.3:
+react-native@*, "react-native@>= 0.44", react-native@>=0.14.0, react-native@>=0.41.2, react-native@>=0.47, react-native@>=0.57, react-native@>=0.65.0, react-native@0.71.3:
   version "0.71.3"
   resolved "https://registry.npmjs.org/react-native/-/react-native-0.71.3.tgz"
   integrity sha512-RYJXCcQGa4NTfKiPgl92eRDUuQ6JGDnHqFEzRwJSqEx9lWvlvRRIebstJfurzPDKLQWQrvITR7aI7e09E25mLw==

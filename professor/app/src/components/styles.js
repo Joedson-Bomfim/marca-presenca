@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     conteudoAlunoPresenca: {
-        marginBottom: 30,
-        padding: 10,
+        marginBottom: 20,
+        padding: 5,
         alignItems: 'flex-start',
     },
     containerInputSetas: {

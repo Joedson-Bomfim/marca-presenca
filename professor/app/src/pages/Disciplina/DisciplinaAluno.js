@@ -130,7 +130,7 @@ const Aluno = ({ navigation }) => {
 
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-            <ScrollView>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 <Loading visible={visible} />
                 {filteredAlunos.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
@@ -154,7 +154,6 @@ const Aluno = ({ navigation }) => {
                     icon={'account-plus'}
                     options={opcoesAlunos} 
                     onSelect={adicionarAlunoADisciplina}
-                    contentStyle={{ paddingTop: 10, paddingBottom: 10 }} 
                     placeholder="Adicionar Aluno" /> 
         </View>
     );

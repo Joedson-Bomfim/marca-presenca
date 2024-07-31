@@ -46,7 +46,7 @@ const Aluno = ( {navigation} ) => {
 
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
-            <ScrollView>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 <Loading visible={visible}/>
                 {filteredAlunos.map((item) => (
                 <View key={item.id} style={styles.bookItem}>

@@ -51,7 +51,7 @@ const DisciplinaDetalhe = ({ navigation }) => {
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
             {isExist ? (
-                <ScrollView>
+                <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                     <Loading visible={visible} />
                     {filteredAulas.map((item) => (
                         <View key={item.id} style={styles.bookItem}>

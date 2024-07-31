@@ -21,6 +21,7 @@
     "react-native": "0.71.3",
     "react-native-bluetooth-state-manager": "^1.3.5",
     "react-native-eventemitter": "^0.0.1",
+    "react-native-file-viewer": "^2.1.5",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.17.1",
     "react-native-modal-datetime-picker": "^17.1.0",

@@ -43,7 +43,8 @@ const Presenca = ( {navigation} ) => {
         const formattedDate = converteDataAmericanaParaBrasileira(aula.data);
     
         return formattedDate.includes(searchTerm) || 
-               aula.horario_inicio_aula.includes(searchTerm);
+               aula.horario_inicio_aula.includes(searchTerm)|| 
+               aula.disciplina.includes(searchTerm);
     });
 
     return(
@@ -54,7 +55,7 @@ const Presenca = ( {navigation} ) => {
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
             {isExist ?
-            <ScrollView>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                     <Loading visible={visible}/>
                     {filteredPresencas.map((item) => (
                     <View key={item.id}>

@@ -46,7 +46,7 @@ const Disciplina = ( {navigation} ) => {
 
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
-            <ScrollView>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 <Loading visible={visible}/>
                 {filteredDisciplinas.map((item) => (
                 <View key={item.id} style={styles.bookItem}>

@@ -146,7 +146,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
             <Text style={{alignSelf: 'center'}}>{quantidadeAulas}</Text>
             {situacaoBeacon}
-            <ScrollView style={{ marginTop: 20 }}>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 {alunosDisciplinas.map((item, index) => {
                 const presencaAtual = presencas && presencas.length > index ? presencas[index] : '';
                 const situacao = presencaAtual ? presencaAtual.situacao : '';
@@ -157,7 +157,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
                 }
 
                 return (
-                <View key={item.id} style={styles.bookItem}>
+                <View key={item.id}>
                     <AlunoPresenca 
                     nome={item.nome} 
                     data={data} 

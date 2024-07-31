@@ -17,8 +17,15 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     listaTabela: {
-        marginBottom: 30,
-        padding: 10,
+        marginBottom: 25,
+        padding: 5,
+    },
+    lista: {
+        padding: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
+        marginBottom: 10,
+        borderRadius: 10,
     },
     marginBottomPadrao: {
         marginBottom: 30

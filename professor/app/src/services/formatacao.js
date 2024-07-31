@@ -52,6 +52,17 @@ export function formatUUID(uuid, visibleLength = 8, fillerLength = 10, fillerCha
     return `${firstPart}${maskedPart}${lastPart}`;
 };
 
+export function formataNomeArquivo(fileName){
+    const invalidChars = /[\\/:*?"<>|]/g;
+    
+    return fileName.replace(invalidChars, '_');
+};
+
+export function fornataDataParaNomeArquivo(dateString){
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+};
+
 function varDump(variavel) {
     return JSON.stringify(variavel, null, 2);
 }

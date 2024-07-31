@@ -4,9 +4,11 @@ import { Button, useTheme } from "react-native-paper";
 import { fetchPresencaByAula } from '../../Controller/PresencaController';
 import AlunoPresenca from '../../components/alunoPresencaRegistrada';
 import { useRoute } from '@react-navigation/native';
-import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
-import { Context } from "../../contexts/Context";
+import RNFS from 'react-native-fs';
+import FileViewer from 'react-native-file-viewer';
 import exportarEmXML from '../../services/exportacaoXML';
+import { closeDatabase } from '../../database/database';
+import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
 
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import Loading from "../../components/LoadingDefaulft";
@@ -49,6 +51,41 @@ const PresencaAula = ({ navigation }) => {
         listaDisciplinas();
     };
 
+    function abrirPasta() {
+        const downloadDir = RNFS.DownloadDirectoryPath;
+        const customDir = `${downloadDir}/Lista Presenca CheckMate`;
+
+        const abrirPastaCustomizada = async () => {
+            const exists = await RNFS.exists(customDir);
+            if (!exists) {
+                Alert.alert('Atenção', 'Ainda não há registros na lista de chamdas');
+
+                return;
+            }
+        }
+
+        abrirPastaCustomizada();
+        closeDatabase();
+
+        Alert.alert(
+            'Confirmação',
+            'Você deseja abrir a pasta de destino dos registros de presença?',
+            [
+                { text: 'Não', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                { text: 'Sim', onPress: () => {
+                    FileViewer.open(customDir)
+                        .then(() => {
+                            console.log('Pasta aberta com sucesso!');
+                        })
+                        .catch(error => {
+                            Alert.alert('Erro', 'Não foi possível abrir a pasta: ' + error.message);
+                        });
+                }},
+            ],
+            { cancelable: false }
+        );
+    }
+
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>{nome_disciplina}</Text>
@@ -63,7 +100,13 @@ const PresencaAula = ({ navigation }) => {
             <Text>Dia da Semana: {dia_semana} </Text>
             <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
             <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
-            <ScrollView>
+            <Button 
+                    mode="contained" onPress={() => exportarEmXML(alunosPresenca, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula)} 
+                    style={[TemaPrincipal.botaoPrincipal, TemaPrincipal.marginBottomPadrao]}
+                    icon={() => <Icon name={'file-export'} size={30} color="#ffffff" />}>
+                    Exportar Lista de Presenças
+            </Button>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 <Loading visible={visible} />
                 {alunosPresenca.map((item, index) => (
                     <View key={item.id} style={styles.bookItem}>
@@ -82,9 +125,21 @@ const PresencaAula = ({ navigation }) => {
                 ))}
             </ScrollView>
             
-            <Button mode="contained" onPress={() => exportarEmXML(alunosPresenca)} labelStyle={{ fontSize: 20 }} style={[TemaPrincipal.botaoCadastro]} icon={() => <Icon name={'file-export'} size={30} color="#ffffff" />}>
-                Exportar
-            </Button>
+            <View style={[TemaPrincipal.botoesEditRegistro, {marginTop: 10}]}>
+                <Button 
+                    mode="contained" 
+                    style={{width: 150}}
+                    onPress={() => {}}>
+                    ATUALIZAR
+                </Button>
+            
+                <Button 
+                    mode="contained" onPress={abrirPasta} 
+                    style={{width: 150}}
+                    icon={() => <Icon name={'folder'} size={30} color="#ffffff" />}>
+                    Abrir Pasta
+                </Button>
+            </View>
         </View>
     );
 }
