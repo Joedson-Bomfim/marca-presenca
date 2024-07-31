@@ -19,8 +19,16 @@ const PresencaAula = ({ navigation }) => {
     const { colors } = useTheme();
     const route = useRoute();
 
-    const { aula_id, data_presenca, dia_semana, horario_inicio_aula, horario_fim_aula, 
-            quantidade_aulas, total_alunos, nome_disciplina } = route.params;
+    const { 
+            aula_id, 
+            data_presenca, 
+            dia_semana, 
+            horario_inicio_aula, 
+            horario_fim_aula, 
+            quantidade_aulas, 
+            total_alunos, 
+            nome_disciplina 
+        } = route.params;
 
     const [alunosPresenca, setDisciplina] = useState([]);
     const [quantidadeAlunosPresentes, setQuantidadeAlunosPresentes] = useState(0);
@@ -86,6 +94,8 @@ const PresencaAula = ({ navigation }) => {
         );
     }
 
+    let quantidade_aulas_edita = 0;
+
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>{nome_disciplina}</Text>
@@ -97,9 +107,11 @@ const PresencaAula = ({ navigation }) => {
                     <Text>{quantidadeAlunosPresentes}/{total_alunos}</Text>
                 </View>
             </View>
-            <Text>Dia da Semana: {dia_semana} </Text>
+            
+            <Text>Dia da Semana: {dia_semana}</Text>
             <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
             <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
+
             <Button 
                     mode="contained" onPress={() => exportarEmXML(alunosPresenca, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula)} 
                     style={[TemaPrincipal.botaoPrincipal, TemaPrincipal.marginBottomPadrao]}
@@ -108,8 +120,19 @@ const PresencaAula = ({ navigation }) => {
             </Button>
             <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 <Loading visible={visible} />
-                {alunosPresenca.map((item, index) => (
-                    <View key={item.id} style={styles.bookItem}>
+                {alunosPresenca.map((item, index) => {
+                    let iconeLista = '';
+                    if(item.situacao == 'Presente') {
+                        iconeLista = 'check-bold';
+                        quantidade_aulas_edita = item.quantidade_aulas_assistidas;
+                    }else if(item.situacao != 'Ausente'){
+                        iconeLista = 'information';
+                    }else {
+                        iconeLista = 'close-thick';
+                    }
+
+                    return (
+                        <View key={item.id}>
                         <AlunoPresenca
                             id={item.id}
                             nome={item.nome}
@@ -119,18 +142,19 @@ const PresencaAula = ({ navigation }) => {
                             observacao={item.observacao}
                             presenca={item}
                             atualizaSituacao={() => handleSituacaoChange()}
-                            icon={item.situacao !== 'Ausente' ? "check-bold" : "close-thick"}
+                            icon={iconeLista}
                         />
                     </View>
-                ))}
+                    );
+            })}
             </ScrollView>
             
             <View style={[TemaPrincipal.botoesEditRegistro, {marginTop: 10}]}>
                 <Button 
                     mode="contained" 
                     style={{width: 150}}
-                    onPress={() => {}}>
-                    ATUALIZAR
+                    onPress={() => {navigation.navigate('PresencaForm', { aula_fk: aula_id, data_antiga: data_presenca, quantidade_aulas: quantidade_aulas_edita });}}>
+                    Editar Grupo
                 </Button>
             
                 <Button 

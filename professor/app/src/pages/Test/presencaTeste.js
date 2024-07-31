@@ -148,13 +148,14 @@ const DisciplinaTeste = () => {
                     <View style={styles.linhaConteudo}>
                         <View>
                             <Text style={styles.id}>{item.id}</Text>
-                            <Text style={styles.primeiro}>{item.aluno_fk}</Text>
+                            <Text style={styles.primeiro}>Aluno Fk: {item.aluno_fk}</Text>
                             <Text style={styles.complemento}>Aula FK: {item.aula_fk}</Text>
                             <Text style={styles.complemento}>{item.data}</Text>
                             <Text style={styles.complemento}>Q. Aulas Assis: {item.quantidade_aulas_assistidas}</Text>
                             <Text style={styles.complemento}>{item.situacao}</Text>
                             <Text style={styles.complemento}>Obser: {item.observacao}</Text>
                             <Text style={styles.complemento}>{item.criado_em}</Text>
+                            <Text style={styles.complemento}>Att: {item.atualizado_em}</Text>
                         </View>
                         <TouchableOpacity onPress={() => apagaDisciplina(item.id.toString())}>
                             <Icon name="trash-can" color="#fff" size={40} />

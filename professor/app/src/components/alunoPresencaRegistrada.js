@@ -57,7 +57,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
             );
             listaTodosGrupoPresenca();
         } else {
-            Alert.alert('Atenção', result.message);
+            Alert.alert('Atenção', 'Houve um problema ao tentar atualizar o seu registro de presença');
         }
         
         setModalVisible(false);

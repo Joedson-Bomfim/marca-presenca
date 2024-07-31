@@ -38,12 +38,33 @@ const insertPresenca = (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, ob
     });
 };
 
-const updateAluno = (id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em) => {
+const updatePresencaAluno = (id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em) => {
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(
                 'UPDATE Presencas SET quantidade_aulas_assistidas = ?, observacao = ?, situacao = ?, atualizado_em = ? WHERE id = ?',
                 [quantidade_aulas_assistidas, observacao, situacao, atualizado_em, id],
+                () => console.log('Aluno atualizado com sucesso'),
+                (error) => console.error('Erro ao atualizar Aluno:', error)
+            );
+        });
+    });
+};
+
+const updateGrupoPresenca = (aula_fk, data, dataForm, quantidade_aulas, atualizado_em) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(`
+                UPDATE Presencas 
+                SET 
+                    data = ?,
+                    quantidade_aulas_assistidas = CASE 
+                        WHEN situacao = 'Presente' THEN ? 
+                        ELSE 0 
+                    END,
+                    atualizado_em = ?
+                WHERE aula_fk = ? AND data = ?`,
+                [dataForm, quantidade_aulas, atualizado_em, aula_fk, data],
                 () => console.log('Aluno atualizado com sucesso'),
                 (error) => console.error('Erro ao atualizar Aluno:', error)
             );
@@ -117,8 +138,18 @@ const getPresencaByAula = (aula_id, data_presenca) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql(`
-                    SELECT P.id as id, A.nome, A.matricula, P.data, Aula.quantidade_aulas, D.nome as nome_disciplina, D.codigo as codigo_disciplina,
-                    P.quantidade_aulas_assistidas, Aula.local, P.observacao, P.Situacao
+                    SELECT 
+                            P.id as id, 
+                            A.nome, 
+                            A.matricula, 
+                            P.data, 
+                            Aula.quantidade_aulas, 
+                            D.nome as nome_disciplina, 
+                            D.codigo as codigo_disciplina,
+                            P.quantidade_aulas_assistidas, 
+                            Aula.local, 
+                            P.observacao, 
+                            P.Situacao
                     FROM Presencas AS P
                     JOIN Alunos AS A ON A.id = P.aluno_fk
                     JOIN Aulas AS Aula ON Aula.id = P.aula_fk
@@ -142,10 +173,17 @@ const getGrupoPresenca = (disciplinaId) => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql( `
-                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, a.dia_semana, 
-                           p.data, a.horario_inicio_aula, a.horario_fim_aula, a.quantidade_aulas,
-                           COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
-                           COUNT(p.aluno_fk) AS total_alunos
+                    SELECT 
+                        p.id AS id, 
+                        a.id as aula_id, 
+                        d.nome AS disciplina, 
+                        a.dia_semana, 
+                        p.data, 
+                        a.horario_inicio_aula, 
+                        a.horario_fim_aula, 
+                        a.quantidade_aulas,
+                        COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
+                        COUNT(p.aluno_fk) AS total_alunos
                     FROM Presencas p
                     JOIN Aulas a ON p.aula_fk = a.id
                     JOIN Disciplinas d ON a.disciplina_fk = d.id
@@ -169,10 +207,17 @@ const getTodosGrupoPresenca = () => {
         openDatabase().then((db) => {
             return db.transaction((tx) => {
                 return tx.executeSql( `
-                    SELECT p.id AS id, a.id as aula_id, d.nome AS disciplina, a.dia_semana, 
-                           p.data, a.horario_inicio_aula, a.horario_fim_aula, a.quantidade_aulas,
-                           COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
-                           COUNT(p.aluno_fk) AS total_alunos
+                    SELECT 
+                        p.id AS id, 
+                        a.id as aula_id, 
+                        d.nome AS disciplina, 
+                        a.dia_semana, 
+                        p.data, 
+                        a.horario_inicio_aula, 
+                        a.horario_fim_aula, 
+                        a.quantidade_aulas,
+                        COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
+                        COUNT(p.aluno_fk) AS total_alunos
                     FROM Presencas p
                     JOIN Aulas a ON p.aula_fk = a.id
                     JOIN Disciplinas d ON a.disciplina_fk = d.id
@@ -226,5 +271,18 @@ const deletePresencaById = (id) => {
     });
 };
 
-export { createPresenca, insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, 
-         getGrupoPresenca, getTodosGrupoPresenca, truncatePresenca, deletePresencaById };
+const deleteGrupoPresenca = (aula_fk, data) => {
+    return openDatabase().then((db) => {
+        return db.transaction((tx) => {
+            return tx.executeSql(
+                'DELETE FROM Presencas WHERE aula_fk = ? AND data = ?',
+                [aula_fk, data],
+                () => console.log('Presenca excluída com sucesso'),
+                (error) => console.error('Erro ao excluir Presenca:', error)
+            );
+        });
+    });
+};
+
+export { createPresenca, insertPresenca, updatePresencaAluno, updateGrupoPresenca, insertMultiplePresencas, getPresenca, getPresencaByAula, 
+         getGrupoPresenca, getTodosGrupoPresenca, truncatePresenca, deletePresencaById, deleteGrupoPresenca };

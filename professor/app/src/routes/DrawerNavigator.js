@@ -19,6 +19,8 @@ import DisciplinaAluno from "../pages/Disciplina/DisciplinaAluno";
 import AulaForm from "../pages/Disciplina/AulaForm";
 import Aulas from "../pages/Disciplina/Aulas";
 
+import PresencaForm from "../pages/Disciplina/PresencaForm";
+
 import Presenca from '../pages/Presenca';
 
 import PresencaAula from '../pages/Disciplina/PresencaAula';
@@ -83,6 +85,7 @@ function DisciplinaStack() {
         <Stack.Screen options={{ headerShown: false }} name="AulaForm" component={AulaForm} />
         <Stack.Screen options={{ headerShown: false }} name="Aulas" component={Aulas} />
         <Stack.Screen options={{ headerShown: false }} name="PresencaAula" component={PresencaAula} />
+        <Stack.Screen options={{ headerShown: false }} name="PresencaForm" component={PresencaForm} />
       </Stack.Navigator>
     );
 }

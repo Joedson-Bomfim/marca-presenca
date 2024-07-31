@@ -1,5 +1,5 @@
-import { insertPresenca, updateAluno, insertMultiplePresencas, getPresenca, getPresencaByAula, 
-        getGrupoPresenca, getTodosGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById } from '../Model/PresencaModel';
+import { insertPresenca, updatePresencaAluno, updateGrupoPresenca, insertMultiplePresencas, getPresenca, getPresencaByAula, 
+        getGrupoPresenca, getTodosGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById, deleteGrupoPresenca } from '../Model/PresencaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
 const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao) => {
@@ -21,11 +21,28 @@ const editPresenca = async (id, quantidade_aulas_assistidas, observacao, situaca
     let atualizado_em = formattedDate;
 
     try {
-        await updateAluno(id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em);
-        console.log('Presença adicionado');
+        await updatePresencaAluno(id, quantidade_aulas_assistidas, observacao, situacao, atualizado_em);
+        console.log('Presença atualizada');
         return { success: true };
     } catch (error) {
-        console.error('Erro ao adicionar presença:', error);
+        console.error('Erro ao atualizar presença:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
+    }
+};
+
+const editGrupoPresenca = async (aula_fk, data_antiga, data_form, quantidade_aulas) => {
+    let now = dataHora();
+    let formattedDate = formataDataHoraPadraoAmericano(now);
+    let atualizado_em = formattedDate;
+
+    try {
+        await updateGrupoPresenca(aula_fk, data_antiga, data_form, quantidade_aulas, atualizado_em);
+        console.log('Presenças atualizadas');
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao atualizar presenças:', error);
         const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
         
         return { success: false, message: errorMessage };
@@ -117,5 +134,19 @@ const removePresencaById = async (id) => {
     }
 };
 
-export { addPresenca, editPresenca, addMultiplePresenca, fetchPresenca, fetchPresencaByAula, 
-         fetchGrupoPresenca, fetchTodosGrupoPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById };
+const removeGrupoPresenca = async (aula_fk, data) => {
+    console.log('Presença excluído com sucesso');
+    try {
+        await deleteGrupoPresenca(aula_fk, data);
+        console.log('Presença apagado');
+        return { success: true };
+    } catch (error) {
+        console.error('Erro ao apagar presença:', error);
+        const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
+        
+        return { success: false, message: errorMessage };
+    }
+};
+
+export { addPresenca, editPresenca, editGrupoPresenca, addMultiplePresenca, fetchPresenca, fetchPresencaByAula, 
+         fetchGrupoPresenca, fetchTodosGrupoPresenca, fetchProfessorById, cleanUpPresenca, removePresencaById, removeGrupoPresenca };

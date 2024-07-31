@@ -110,6 +110,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
             console.log('Presença registrada com sucesso.');
         } catch (error) {
             console.log('Erro ao registrar presença:', error.message);
+            Alert.alert('Atenção', 'Houve um erro e a lista de presença não foi registrada');
         }
     };
 
@@ -153,7 +154,13 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
                 let icon = '';
                 icon = uuidList.includes(item.beacon_id) ? "check-bold" : "close-thick";
                 if(!procuraPrimeiraVez) {
-                    icon = situacao != 'Ausente' ? "check-bold" : "close-thick";
+                    if(situacao == 'Presente') {
+                        icon = 'check-bold';
+                    }else if(situacao != 'Ausente'){
+                        icon = 'information';
+                    }else {
+                        icon = 'close-thick';
+                    }
                 }
 
                 return (
