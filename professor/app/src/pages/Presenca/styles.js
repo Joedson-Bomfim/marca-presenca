@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
     },
     fonteTextoTouchable: {
         fontSize: 15,
-        color: '#fff',
     },
 })
 

@@ -108,7 +108,7 @@ const Aluno = ({ navigation }) => {
         try {
             const result = await removeAlunoDisciplinaById(aluno_disciplina_id);
             if (result.success) {
-                Alert.alert('Aluno(a) removido(a) da disciplina com sucesso!');
+                Alert.alert('Concluído', 'Aluno(a) removido(a) da disciplina!');
                 await listaAlunos();
                 await listaAlunosOpcoes();
             } else {
@@ -134,15 +134,28 @@ const Aluno = ({ navigation }) => {
                 <Loading visible={visible} />
                 {filteredAlunos.map((item) => (
                     <View key={item.id} style={styles.bookItem}>
-                        <Button mode="contained" labelStyle={{ fontSize: 18 }} style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary, alignItems: 'flex-start', width: '100%' }]}
-                        icon={() => <Icon name={'account-minus'} size={30} color="#ffffff" />} onPress={() => removerAlunoADisciplina(item.id, item.nome)}>
+                        <Button 
+                            mode="contained" 
+                            labelStyle={{ fontSize: 18 }} 
+                            style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary, alignItems: 'flex-start', width: '100%' }]}                    
+                            icon={() => <Icon name={'account-minus'} 
+                            size={30} 
+                            color="#ffffff" />} 
+                            onPress={() => removerAlunoADisciplina(item.id, item.nome)}>
                             {item.nome}
                         </Button>
                     </View>
                 ))}
             </ScrollView>
 
-            <AdicionaAluno nome_disciplina={nome_disciplina} options={opcoesAlunos} onSelect={adicionarAlunoADisciplina} placeholder="Adicionar Aluno" /> 
+            <AdicionaAluno 
+                    nome_disciplina={nome_disciplina} 
+                    fontSize={20} 
+                    icon={'account-plus'}
+                    options={opcoesAlunos} 
+                    onSelect={adicionarAlunoADisciplina}
+                    contentStyle={{ paddingTop: 10, paddingBottom: 10 }} 
+                    placeholder="Adicionar Aluno" /> 
         </View>
     );
 };

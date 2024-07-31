@@ -52,7 +52,7 @@ const Disciplina = ( {navigation} ) => {
                 <View key={item.id} style={styles.bookItem}>
                     <View>
 
-                    <Button mode="contained" labelStyle={{ fontSize: 20 }}
+                    <Button mode="contained" labelStyle={{ fontSize: 18 }}
                     onPress={() => {navigation.navigate('DisciplinaDetalhe', { 
                     isEdit: true, id: item.id, professor_fk: item.professor_fk, nome: item.nome, codigo: item.codigo, 
                     curso: item.curso, complemento: item.complemento });}}

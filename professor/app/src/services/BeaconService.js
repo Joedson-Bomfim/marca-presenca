@@ -43,7 +43,7 @@ const useBeaconService = () => {
           return;
         }
 
-        await startBeaconRanging();
+        //await startBeaconRanging();
 
       } catch (error) {
         console.log('Erro ao solicitar permissão de localização:', error);

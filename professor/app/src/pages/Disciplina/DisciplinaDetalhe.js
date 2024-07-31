@@ -68,10 +68,10 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                             quantidade_aulas: item.quantidade_aulas, 
                             nome_disciplina: nome 
                         }); }}
-                            style={[styles.buttonTouchable, { backgroundColor: colors.secondary }]}>
+                            style={[styles.buttonTouchable, { backgroundColor: colors.secundary }]}>
                             <View style={styles.buttonTouchableSegundo}>
-                                <Text style={styles.fonteTextoTouchable}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula+'-'+item.horario_fim_aula}</Text>
-                                <Text style={styles.fonteTextoTouchable}>{item.total_alunos_presentes+'/'+item.total_alunos} <Icon name="account-group" color={colors.icone} size={25} /></Text>
+                                <Text style={[styles.fonteTextoTouchable, {color: colors.text}]}>{converteDataAmericanaParaBrasileira(item.data)+' '+item.horario_inicio_aula+'-'+item.horario_fim_aula}</Text>
+                                <Text style={[styles.fonteTextoTouchable, {color: colors.text}]}>{item.total_alunos_presentes+'/'+item.total_alunos} <Icon name="account-group" color={colors.icone} size={25} /></Text>
                             </View>
                         </TouchableOpacity>
                     </View>

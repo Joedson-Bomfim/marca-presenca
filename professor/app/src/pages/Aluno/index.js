@@ -50,7 +50,7 @@ const Aluno = ( {navigation} ) => {
                 <Loading visible={visible}/>
                 {filteredAlunos.map((item) => (
                 <View key={item.id} style={styles.bookItem}>
-                    <Button mode="contained" labelStyle={{ fontSize: 20 }}
+                    <Button mode="contained" labelStyle={{ fontSize: 18 }}
                     onPress={() => {navigation.navigate('AlunoForm', { 
                     isEdit: true, id: item.id, professor_fk: professorId, nome: item.nome, matricula: item.matricula, beacon_id: item.beacon_id });}}
                     style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>

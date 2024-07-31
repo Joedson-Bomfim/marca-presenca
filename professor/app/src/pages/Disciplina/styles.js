@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     },
     fonteTextoTouchable: {
         fontSize: 18,
-        color: '#fff',
     },
     dataIcone: {
         flexDirection: 'row',

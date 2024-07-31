@@ -14,11 +14,11 @@ const addAluno = async (professor_fk, nome, matricula, beacon_id) => {
         const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
         if (errorMessage.includes('UNIQUE constraint failed')) {
             if (errorMessage.includes('matricula')) {
-                return { success: false, message: 'Matrícula já existente.' };
+                return { success: false, message: 'Esta matrícula já pertence a outro aluno' };
             } else if (errorMessage.includes('beacon_id')) {
-                return { success: false, message: 'Beacon ID já existente.' };
+                return { success: false, message: 'Este Beacon ID já foi cadastrado' };
             } else {
-                return { success: false, message: 'Matrícula ou Beacon ID já existem.' };
+                return { success: false, message: 'Houve um erro ao tentar adicionar o aluno' };
             }
         }
         return { success: false, message: errorMessage };
@@ -37,11 +37,11 @@ const editAluno = async (id, nome, matricula, beacon_id) => {
         const errorMessage = error && error.message ? error.message : 'Erro desconhecido.';
         if (errorMessage.includes('UNIQUE constraint failed')) {
             if (errorMessage.includes('matricula')) {
-                return { success: false, message: 'Matrícula já existente.' };
+                return { success: false, message: 'Esta matrícula já pertence a outro aluno' };
             } else if (errorMessage.includes('beacon_id')) {
-                return { success: false, message: 'Beacon ID já existente.' };
+                return { success: false, message: 'Este Beacon ID já foi cadastrado' };
             } else {
-                return { success: false, message: 'Matrícula ou Beacon ID já existem.' };
+                return { success: false, message: 'Houve um erro ao tentar atualizar o aluno' };
             }
         }
         return { success: false, message: errorMessage };

@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, Alert } from "react-native";
 import { useTheme, Button } from "react-native-paper";
-import useBeaconService from "../../services/BeaconService";
-import { fetchAlunoDisciplinaMarcaPresenca } from "../../Controller/AlunoDisciplinaController";
 import { useRoute } from '@react-navigation/native';
+import useBeaconService from "../../services/BeaconService";
 import AlunoPresenca from '../../components/alunoPresenca';
+import { fetchAlunoDisciplinaMarcaPresenca } from "../../Controller/AlunoDisciplinaController";
 import { addMultiplePresenca } from '../../Controller/PresencaController';
 import { converteDataBrasileiraParaAmericana } from '../../services/formatacao';
-import Loading from '../../components/LoadingScreenDots';
 
+import Loading from '../../components/LoadingScreenDots';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../../assets/styles";
 import styles from "./styles";
@@ -30,6 +30,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     
 
     useEffect(() => {
+        startBeaconRanging();
         listaAlunos();
     }, []);
 
@@ -114,6 +115,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
 
     function procurar() {
         startBeaconRanging();
+        setProcuraPrimeiraVez(true);
     }
 
     function pararProcura() {
@@ -127,7 +129,16 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         <Loading/>
         <Icon name="lighthouse-on" color={colors.icone} size={40} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon>  
     </View> :
-    <Text style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>Editar presença <Icon name="lighthouse-on" color={colors.icone} size={20} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon></Text>
+    <Text 
+        style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>
+        Editar presença 
+        <Icon name="lighthouse-on" 
+            color={colors.icone} 
+            size={20} 
+            style={{ alignSelf: 'flex-end' }}>
+            {alunosPresente}/{totalAlunos}
+        </Icon>
+    </Text>
 
     let quantidadeAulas = quantidade_aulas == 1 ? '1 aula' : quantidade_aulas+' aulas';
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View, FlatList } from 'react-native';
 import { TextInput, Button, useTheme } from "react-native-paper";
 import useBeaconService from "../../services/BeaconTeste";
@@ -9,7 +9,11 @@ import styles from "./styles";
 
 const Teste = ( {navigation} ) => {
     const { colors } = useTheme();
-    const { data, beaconIdentificado } = useBeaconService();
+    const { data, startBeaconRanging, beaconIdentificado } = useBeaconService();
+    
+    useEffect(() => {
+        startBeaconRanging();
+    }, []);
 
     return(
         //<Icon name="clipboard-text-clock-outline" color={ colors.icone } size={40}/>       

@@ -1,29 +1,34 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, Modal, Alert } from 'react-native';
 import { IconButton, Button, useTheme } from 'react-native-paper';
+
+import { formatUUID } from '../services/formatacao';
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../assets/styles";
 import styles from "./styles";
 
-const DropdownSelect = ({ nome_disciplina, options, onSelect, placeholder, modalBorderColor = '#8C8C8C', 
-                          modalBorderWidth = 2,  disabled = false,
-}) => {
+const DropdownSelect = ({ nome_disciplina, options, onSelect, tipo, fontSize, icon, placeholder, modalBorderColor = '#8C8C8C', 
+                          backgroundColor, modalBorderWidth = 2,  disabled = false, ...props}) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [search, setSearch] = useState('');
     const { colors } = useTheme();
     const inputRef = useRef(null);
 
     const handleSelect = async (item) => {
+        let id = tipo == 'beacon' ?  formatUUID(item.id) : '';
+        let frase = tipo != 'beacon' ? 
+        "Tem certeza que deseja adicionar " + item.name + " a disciplina " + nome_disciplina + "?" : 
+        "Tem certeza que deseja vincular o ID "+id+" ao aluno?";
         Alert.alert(
             "Confirmação",
-            "Tem certeza que deseja adicionar " + item.name + " a disciplina " + nome_disciplina + "?",
+            frase,
             [
                 {
                     text: "Cancelar",
                     style: "cancel"
                 },
                 {
-                    text: "Apagar",
+                    text: "Adicionar",
                     onPress: async () => {
                         await onSelect(item.id);
                         setModalVisible(false);
@@ -37,11 +42,20 @@ const DropdownSelect = ({ nome_disciplina, options, onSelect, placeholder, modal
         option.name.toLowerCase().includes(search.toLowerCase())
     );
 
+    let resposta = tipo == 'beacon' ? 
+    <Text style={{ padding: 10, color: colors.text, textAlign: 'center' }}>Procurando por beacons...por favor, aguarde</Text> :
+    <Text style={{ padding: 10, color: colors.text, textAlign: 'center' }}>Não há dados a serem listados</Text>;
+
     return (
         <View>
-            <Button mode="contained" labelStyle={{ fontSize: 20 }} onPress={() => !disabled && setModalVisible(true)}
-                contentStyle={{ paddingTop: 10, paddingBottom: 10 }} icon={() => <Icon name={'account-plus'} size={30} color="#ffffff" />}>
-                {placeholder}
+            <Button 
+                mode="contained" 
+                labelStyle={{ fontSize: fontSize }} 
+                onPress={() => !disabled && setModalVisible(true)}
+                icon={() => <Icon name={icon} size={30} color="#ffffff" />}
+                style={[{ backgroundColor: backgroundColor ? colors.secondary : colors.primary }]}
+                {...props}>
+                {placeholder} 
             </Button>
 
             <Modal
@@ -56,9 +70,8 @@ const DropdownSelect = ({ nome_disciplina, options, onSelect, placeholder, modal
                             style={[styles.input, { borderBottomColor: colors.text, color: colors.text }]}/>
                             <Icon name={'magnify'} size={24} color="#ffffff" onPress={() => inputRef.current.focus()} style={styles.icon}/>
                         </View>
-                        {filteredOptions.length === 0 ? (
-                            <Text style={{ padding: 10, color: colors.text, textAlign: 'center' }}>Não há dados a serem listados</Text>
-                        ) : (
+                        {filteredOptions.length === 0 ? 
+                        resposta : (
                             <FlatList
                                 data={filteredOptions}
                                 renderItem={({ item }) => (

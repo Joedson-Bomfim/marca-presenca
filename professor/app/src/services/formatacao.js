@@ -42,6 +42,16 @@ export function obterDataHoraAtualParaNomeArquivo() {
     return `${formatarComDoisDigitos(dataAtual.getDate())}-${formatarComDoisDigitos(dataAtual.getMonth() + 1)}-${dataAtual.getFullYear()}_${formatarComDoisDigitos(dataAtual.getHours())}-${formatarComDoisDigitos(dataAtual.getMinutes())}-${formatarComDoisDigitos(dataAtual.getSeconds())}`;
 };
 
+export function formatUUID(uuid, visibleLength = 8, fillerLength = 10, fillerChar = '*'){
+    if (uuid.length <= (visibleLength * 2 + fillerLength)) return uuid; // Handle short UUIDs
+
+    const firstPart = uuid.slice(0, visibleLength); // Primeiro grupo de caracteres
+    const lastPart = uuid.slice(-visibleLength); // Últimos caracteres
+    const maskedPart = fillerChar.repeat(fillerLength); // Filler para o meio
+
+    return `${firstPart}${maskedPart}${lastPart}`;
+};
+
 function varDump(variavel) {
     return JSON.stringify(variavel, null, 2);
 }
