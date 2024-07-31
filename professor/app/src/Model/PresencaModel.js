@@ -10,6 +10,7 @@ const createPresenca = () => {
                     aula_fk INTEGER,
                     data TEXT,
                     quantidade_aulas_assistidas INTEGER,
+                    quantidade_aulas_total INTEGER,
                     observacao TEXT,
                     situacao TEXT,
                     criado_em TEXT,
@@ -25,13 +26,13 @@ const createPresenca = () => {
     });
 };
 
-const insertPresenca = (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) => {
+const insertPresenca = (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em) => {
     return openDatabase().then((db) => {
         return db.transaction((tx) => {
             return tx.executeSql(
-                'INSERT INTO Presencas (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                [aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em],
-                () => console.log('Aula cadastrado com sucesso'),
+                'INSERT INTO Presencas (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                [aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em],
+                () => console.log('Presença cadastrada com sucesso'),
                 (error) => console.error('Erro ao cadastrar Aula:', error)
             );
         });
@@ -61,10 +62,11 @@ const updateGrupoPresenca = (aula_fk, data, dataForm, quantidade_aulas, atualiza
                     quantidade_aulas_assistidas = CASE 
                         WHEN situacao = 'Presente' THEN ? 
                         ELSE 0 
-                    END,
+                    END, 
+                    quantidade_aulas_total = ?,
                     atualizado_em = ?
                 WHERE aula_fk = ? AND data = ?`,
-                [dataForm, quantidade_aulas, atualizado_em, aula_fk, data],
+                [dataForm, quantidade_aulas, quantidade_aulas, atualizado_em, aula_fk, data],
                 () => console.log('Aluno atualizado com sucesso'),
                 (error) => console.error('Erro ao atualizar Aluno:', error)
             );
@@ -72,11 +74,11 @@ const updateGrupoPresenca = (aula_fk, data, dataForm, quantidade_aulas, atualiza
     });
 };
 
-const insertPresencaLote = (tx, aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) => {
-    console.log('Inserindo presença:', aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em);
+const insertPresencaLote = (tx, aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em) => {
+    console.log('Inserindo presença:', aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em);
     tx.executeSql(
-        'INSERT INTO Presencas (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?)',
-        [aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em],
+        'INSERT INTO Presencas (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+        [aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em],
         () => console.log('Presença cadastrada com sucesso'),
         (error) => console.error('Erro ao cadastrar Presença:', error)
     );
@@ -95,6 +97,7 @@ const insertMultiplePresencas = async (aula_fk, data, criado_em, presencas) => {
                         aula_fk,
                         data,
                         presenca.quantidade_aulas_assistidas,
+                        presenca.quantidade_aulas_total,
                         presenca.observacao,
                         presenca.situacao,
                         criado_em
@@ -143,10 +146,10 @@ const getPresencaByAula = (aula_id, data_presenca) => {
                             A.nome, 
                             A.matricula, 
                             P.data, 
-                            Aula.quantidade_aulas, 
                             D.nome as nome_disciplina, 
                             D.codigo as codigo_disciplina,
-                            P.quantidade_aulas_assistidas, 
+                            P.quantidade_aulas_assistidas,
+                            P.quantidade_aulas_total, 
                             Aula.local, 
                             P.observacao, 
                             P.Situacao
@@ -181,7 +184,7 @@ const getGrupoPresenca = (disciplinaId) => {
                         p.data, 
                         a.horario_inicio_aula, 
                         a.horario_fim_aula, 
-                        a.quantidade_aulas,
+                        p.quantidade_aulas_total as quantidade_aulas,
                         COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
                         COUNT(p.aluno_fk) AS total_alunos
                     FROM Presencas p
@@ -214,8 +217,8 @@ const getTodosGrupoPresenca = () => {
                         a.dia_semana, 
                         p.data, 
                         a.horario_inicio_aula, 
-                        a.horario_fim_aula, 
-                        a.quantidade_aulas,
+                        a.horario_fim_aula,  
+                        p.quantidade_aulas_total as quantidade_aulas,
                         COUNT(CASE WHEN p.situacao != 'Ausente' THEN 1 END) AS total_alunos_presentes,
                         COUNT(p.aluno_fk) AS total_alunos
                     FROM Presencas p

@@ -48,6 +48,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
                 aluno_fk: option.alunoId,
                 dataPresenca: dataPresenca,
                 quantidade_aulas_assistidas: uuidList.includes(option.beacon_id) ? quantidade_aulas : '0',
+                quantidade_aulas_total: quantidade_aulas,
                 observacao: '',
                 situacao: uuidList.includes(option.beacon_id) ? 'Presente' : 'Ausente',
                 beaconInicial: uuidList.includes(option.beacon_id)  // Armazena se o beacon estava presente inicialmente
@@ -65,6 +66,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
             aluno_fk: option.alunoId,
             dataPresenca: dataPresenca,
             quantidade_aulas_assistidas: uuidList.includes(option.beacon_id) ? quantidade_aulas : '0',
+            quantidade_aulas_total: quantidade_aulas,
             observacao: '',
             situacao: uuidList.includes(option.beacon_id) ? 'Presente' : 'Ausente',
             beaconInicial: uuidList.includes(option.beacon_id)  // Armazena se o beacon estava presente inicialmente

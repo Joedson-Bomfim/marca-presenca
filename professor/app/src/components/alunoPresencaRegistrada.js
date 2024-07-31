@@ -14,7 +14,7 @@ const AlunoPresenca = ({ id, nome, situacao, data, aulas_assistidas, observacao,
                          icon, modalBorderColor = '#8C8C8C', modalBorderWidth = 2 }) => {
     const { colors } = useTheme();
     const [modalVisible, setModalVisible] = useState(false);
-    const [aulas_assistidasForm, setAulasAssistidas] = useState(aulas_assistidas);
+    const [aulas_assistidasForm, setAulasAssistidas] = useState(aulas_assistidas.toString());
     const [ErrorAulasAssistidas, setErrorAulasAssistidas] = useState('');
     const [observacaoForm, setObservacaoForm] = useState(observacao);
 

@@ -65,7 +65,7 @@ const DisciplinaTeste = () => {
     const handleAddBook = async () => {
         if (aluno_fk && aula_fk && aula_fk && data && quantidade_aulas_assistidas && situacao) {
             setVisible(true);
-            await addPresenca(aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao);
+            await addPresenca(aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_assistidas, observacao, situacao);
             listaAlunos();
         }else{
             Alert.alert('Atenção','Por favor preencha todos os campos');
@@ -152,6 +152,7 @@ const DisciplinaTeste = () => {
                             <Text style={styles.complemento}>Aula FK: {item.aula_fk}</Text>
                             <Text style={styles.complemento}>{item.data}</Text>
                             <Text style={styles.complemento}>Q. Aulas Assis: {item.quantidade_aulas_assistidas}</Text>
+                            <Text style={styles.complemento}>Q. Total Aulas: {item.quantidade_aulas_total}</Text>
                             <Text style={styles.complemento}>{item.situacao}</Text>
                             <Text style={styles.complemento}>Obser: {item.observacao}</Text>
                             <Text style={styles.complemento}>{item.criado_em}</Text>

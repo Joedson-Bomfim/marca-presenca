@@ -2,13 +2,13 @@ import { insertPresenca, updatePresencaAluno, updateGrupoPresenca, insertMultipl
         getGrupoPresenca, getTodosGrupoPresenca, getProfessorById, truncatePresenca, deletePresencaById, deleteGrupoPresenca } from '../Model/PresencaModel';
 import { dataHora, formataDataHoraPadraoAmericano } from '../services/formatacao';
 
-const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao) => {
+const addPresenca = async (aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao) => {
     let now = dataHora();
     let formattedDate = formataDataHoraPadraoAmericano(now);
     let criado_em = formattedDate;
 
     try {
-        await insertPresenca(aluno_fk, aula_fk, data, quantidade_aulas_assistidas, observacao, situacao, criado_em);
+        await insertPresenca(aluno_fk, aula_fk, data, quantidade_aulas_assistidas, quantidade_aulas_total, observacao, situacao, criado_em);
         console.log('Presença adicionado');
     } catch (error) {
         console.error('Erro ao adicionar presença:', error);

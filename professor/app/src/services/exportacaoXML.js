@@ -15,7 +15,7 @@ const generateXMLContent = (alunos) => {
     xmlContent += `    <nome_disciplina>${aluno.nome_disciplina}</nome_disciplina>\n`;
     xmlContent += `    <codigo_disciplina>${aluno.codigo_disciplina}</codigo_disciplina>\n`;
     xmlContent += `    <data>${aluno.data}</data>\n`;
-    xmlContent += `    <total_aulas>${aluno.quantidade_aulas}</total_aulas>\n`;
+    xmlContent += `    <total_aulas>${aluno.quantidade_aulas_total}</total_aulas>\n`;
     xmlContent += `    <total_aulas_assistidas>${aluno.quantidade_aulas_assistidas}</total_aulas_assistidas>\n`;
     xmlContent += `    <situacao>${aluno.situacao}</situacao>\n`;
     xmlContent += `    <observacao>${aluno.observacao}</observacao>\n`;
@@ -37,6 +37,7 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
     //Criei nomes únicos para os arquivos utilizando data e hora para não resultar em erros caso os arquivos sejam apagados
     const filePath = `${customDir}/${nome_disciplinaFormatada} Lista de chamada do dia ${dataPresencaFormatada} das ${horario_inicio_aulaFormata} as ${horario_fim_aulaFormata}--Data hora exportacao ${obterDataHoraAtualParaNomeArquivo()}.xml`;
 
+    /* Caso eu precise formatar os dados
     const presencaFormatada = alunosPresenca.map(option => ({
         id: option.id,
         nome: option.nome,
@@ -44,11 +45,12 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
         nome_disciplina: option.nome_disciplina,
         codigo_disciplina: option.codigo_disciplina,
         data: converteDataAmericanaParaBrasileira(option.data),
-        quantidade_aulas: option.quantidade_aulas,
+        quantidade_aulas_total: option.quantidade_aulas_total,
         quantidade_aulas_assistidas: option.quantidade_aulas_assistidas,
         situacao: option.situacao,
         observacao: option.observacao,
     }));
+    */
 
     try {
         // Cria a pasta personalizada na raiz do armazenamento externo, se ela não existir

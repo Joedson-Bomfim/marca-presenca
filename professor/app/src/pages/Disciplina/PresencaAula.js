@@ -30,7 +30,7 @@ const PresencaAula = ({ navigation }) => {
             nome_disciplina 
         } = route.params;
 
-    const [alunosPresenca, setDisciplina] = useState([]);
+    const [alunosPresenca, setAlunosPresenca] = useState([]);
     const [quantidadeAlunosPresentes, setQuantidadeAlunosPresentes] = useState(0);
     const [visible, setVisible] = useState(false);
 
@@ -42,7 +42,7 @@ const PresencaAula = ({ navigation }) => {
         setVisible(true);
         try {
             const listaAluno = await fetchPresencaByAula(aula_id, data_presenca);
-            setDisciplina(listaAluno);
+            setAlunosPresenca(listaAluno);
             
             const quantidade_presentes = listaAluno.reduce((count, item) => 
                 item.situacao !== 'Ausente' ? count + 1 : count, 0
@@ -94,8 +94,6 @@ const PresencaAula = ({ navigation }) => {
         );
     }
 
-    let quantidade_aulas_edita = 0;
-
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>{nome_disciplina}</Text>
@@ -108,7 +106,7 @@ const PresencaAula = ({ navigation }) => {
                 </View>
             </View>
             
-            <Text>Dia da Semana: {dia_semana}</Text>
+            <Text>Dia da aula: {dia_semana}</Text>
             <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
             <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
 
@@ -124,7 +122,6 @@ const PresencaAula = ({ navigation }) => {
                     let iconeLista = '';
                     if(item.situacao == 'Presente') {
                         iconeLista = 'check-bold';
-                        quantidade_aulas_edita = item.quantidade_aulas_assistidas;
                     }else if(item.situacao != 'Ausente'){
                         iconeLista = 'information';
                     }else {
@@ -153,7 +150,7 @@ const PresencaAula = ({ navigation }) => {
                 <Button 
                     mode="contained" 
                     style={{width: 150}}
-                    onPress={() => {navigation.navigate('PresencaForm', { aula_fk: aula_id, data_antiga: data_presenca, quantidade_aulas: quantidade_aulas_edita });}}>
+                    onPress={() => {navigation.navigate('PresencaForm', { aula_fk: aula_id, data_antiga: data_presenca, quantidade_aulas: quantidade_aulas });}}>
                     Editar Grupo
                 </Button>
             
