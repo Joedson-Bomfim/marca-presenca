@@ -164,7 +164,12 @@ const DisciplinaForm = ( {navigation} ) => {
                 }}]
             );
         } else {
-            Alert.alert('Não foi possível apagar essa aula, tente novamente mais tarde');
+            if(result.message.includes('FOREIGN KEY')) {
+                Alert.alert('Não foi possível apagar','Esta aula possui pelo menos um registro de presença');
+                return    
+            }
+
+            Alert.alert('Houve um erro','Não foi possível apagar esta aula, tente novamente mais tarde');
         }
     }; 
 

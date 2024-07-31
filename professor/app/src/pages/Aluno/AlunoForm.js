@@ -134,7 +134,12 @@ const AlunoForm = ( {navigation} ) => {
                 }}]
             );
         } else {
-            Alert.alert('Não foi possível apagar esse(a) aluno(a), tente novamente mais tarde');
+            if(result.message.includes('FOREIGN KEY')) {
+                Alert.alert('Não foi possível apagar','Este(a) aluno(a) está registrado em pelo menos uma disciplina, aula e/ou registro de presença');
+                return    
+            }
+
+            Alert.alert('Houve um erro','Não foi possível apagar este(a) aluno(a), tente novamente mais tarde');
         }
     }; 
 
