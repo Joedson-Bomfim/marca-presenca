@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Text, ScrollView, View, Alert } from "react-native";
+import { Text, ScrollView, View, Alert, Platform, PermissionsAndroid } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { fetchPresencaByAula } from '../../Controller/PresencaController';
 import AlunoPresenca from '../../components/alunoPresencaRegistrada';
@@ -60,6 +60,25 @@ const PresencaAula = ({ navigation }) => {
     };
 
     function abrirPasta() {
+        const permissoes = async () => {
+            if (Platform.Version <= 28) {
+                const granted = await PermissionsAndroid.requestMultiple([
+                    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+                  ]);
+        
+                  permissionsGranted = Object.values(granted).every(
+                    (permission) => permission === PermissionsAndroid.RESULTS.GRANTED
+                  );
+                  
+                  if (!permissionsGranted) {
+                      Alert.alert('Atenção','A permissão necessária não foi concedida');
+                      return;
+                  }
+            }
+        }
+
+        permissoes();
+
         const downloadDir = RNFS.DownloadDirectoryPath;
         const customDir = `${downloadDir}/Lista Presenca CheckMate`;
 
@@ -80,14 +99,18 @@ const PresencaAula = ({ navigation }) => {
             'Você deseja abrir a pasta de destino dos registros de presença?',
             [
                 { text: 'Não', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
-                { text: 'Sim', onPress: () => {
-                    FileViewer.open(customDir)
-                        .then(() => {
-                            console.log('Pasta aberta com sucesso!');
-                        })
-                        .catch(error => {
-                            Alert.alert('Erro', 'Não foi possível abrir a pasta: ' + error.message);
-                        });
+                { text: 'Sim', onPress: async () => {
+                    try {
+                        await FileViewer.open(customDir);
+                        console.log('Pasta aberta com sucesso!');
+                    } catch (error) {
+                        console.log('Erro ao abrir a pasta:', error.message);
+                        Alert.alert(
+                            'Atenção',
+                            'Não foi possível abrir a pasta. Por favor, utilize um gerenciador de arquivos alternativo.',
+                            [{ text: 'OK' }]
+                        );
+                    }
                 }},
             ],
             { cancelable: false }

@@ -1,4 +1,4 @@
-import { Alert } from "react-native";
+import { Alert, Platform, PermissionsAndroid } from "react-native";
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
 import { closeDatabase } from '../database/database';
@@ -53,6 +53,22 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
     */
 
     try {
+        //Android 9 e inferior
+        if (Platform.Version <= 28) {
+            const granted = await PermissionsAndroid.requestMultiple([
+                PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              ]);
+    
+              permissionsGranted = Object.values(granted).every(
+                (permission) => permission === PermissionsAndroid.RESULTS.GRANTED
+              );
+              
+              if (!permissionsGranted) {
+                  Alert.alert('Atenção','A permissão necessária não foi concedida');
+                  return;
+              }
+        }
+        
         // Cria a pasta personalizada na raiz do armazenamento externo, se ela não existir
         const exists = await RNFS.exists(customDir);
         if (!exists) {
@@ -73,7 +89,12 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
                         await FileViewer.open(customDir);
                         console.log('Pasta aberta com sucesso!');
                     } catch (error) {
-                        Alert.alert('Erro', 'Não foi possível abrir a pasta: ' + error.message);
+                        console.log('Erro ao abrir a pasta:', error.message);
+                        Alert.alert(
+                            'Erro',
+                            'Não foi possível abrir a pasta. Por favor, utilize um gerenciador de arquivos alternativo.',
+                            [{ text: 'OK' }]
+                        );
                     }
                 }},
             ],
