@@ -133,7 +133,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         <Icon name="lighthouse-on" color={colors.icone} size={40} style={{ alignSelf: 'flex-end' }}>{alunosPresente}/{totalAlunos}</Icon>  
     </View> :
     <Text 
-        style={{ alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>
+        style={{ color: colors.text, alignSelf: 'center', fontSize: 20, fontWeight: "bold" }}>
         Editar presença 
         <Icon name="lighthouse-on" 
             color={colors.icone} 
@@ -147,7 +147,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
-            <Text style={{alignSelf: 'center'}}>{quantidadeAulas}</Text>
+            <Text style={{color: colors.text, alignSelf: 'center'}}>{quantidadeAulas}</Text>
             {situacaoBeacon}
             <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
                 {alunosDisciplinas.map((item, index) => {

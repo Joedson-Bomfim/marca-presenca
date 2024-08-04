@@ -122,16 +122,16 @@ const PresencaAula = ({ navigation }) => {
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>{nome_disciplina}</Text>
 
             <View style={styles.dataIcone}>
-                <Text style={styles.detalhes}>{converteDataAmericanaParaBrasileira(data_presenca)}</Text>
+                <Text style={[styles.detalhes, { color: colors.text }]}>{converteDataAmericanaParaBrasileira(data_presenca)}</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
                     <Icon name="account-group" color={colors.icone} size={25} />
-                    <Text>{quantidadeAlunosPresentes}/{total_alunos}</Text>
+                    <Text style={[{ color: colors.text }]}>{quantidadeAlunosPresentes}/{total_alunos}</Text>
                 </View>
             </View>
             
-            <Text>Dia da aula: {dia_semana}</Text>
-            <Text>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
-            <Text style={[{marginBottom: 30}]}>Quantidade de altas: {quantidade_aulas} </Text>
+            <Text style={[{ color: colors.text }]}>Dia da aula: {dia_semana}</Text>
+            <Text style={[{ color: colors.text }]}>Horário: {horario_inicio_aula}-{horario_fim_aula} </Text>
+            <Text style={[{color: colors.text, marginBottom: 15}]}>Quantidade de altas: {quantidade_aulas} </Text>
 
             <Button 
                     mode="contained" onPress={() => exportarEmXML(alunosPresenca, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula)} 

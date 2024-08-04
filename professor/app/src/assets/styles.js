@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         padding: 4,
     },
     inputModal: {
-        marginBottom: 30
+        marginBottom: 20
     },
     listaTabela: {
         marginBottom: 25,
@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     marginBottomPadrao: {
-        marginBottom: 30
+        marginBottom: 15
     },
     buttonCadastraEdita: {
-        marginBottom: 40
+        marginBottom: 20
     },
     botaoCadastro:{
        width: 250, 
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     titulo: {
         textAlign: 'center',
         fontSize: 30,
-        marginBottom: 20,
+        marginBottom: 12,
         fontWeight: "bold"
     },
     informativo: {
