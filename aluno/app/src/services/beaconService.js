@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { PermissionsAndroid, Platform, Alert } from 'react-native';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
-import BeaconBroadcast from '@lovemh9395/react-native-ibeacon-simulator';
+import BeaconBroadcast from '@rodrigo7/react-native-ibeacon-simulator';
 import { Context } from '../contexts/Context';
 
 const identifier = 'MyBeacon';

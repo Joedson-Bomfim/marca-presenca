@@ -18,3 +18,16 @@ buildscript {ext {
         classpath("com.facebook.react:react-native-gradle-plugin")
     }
 }
+
+
+
+plugins {
+    id 'org.jetbrains.kotlin.android' version '1.8.0' apply false
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

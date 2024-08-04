@@ -25,10 +25,6 @@ import Presenca from '../pages/Presenca';
 
 import PresencaAula from '../pages/Disciplina/PresencaAula';
 
-import Teste from '../pages/Teste';
-import TesteMelhorado from '../pages/Teste/testeMelhorado';
-import ExportaXML from '../pages/Teste/exportaXML';
-
 import { useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -42,9 +38,6 @@ function HomeStack() {
         <Stack.Screen options={{ headerShown: false }} name="Home" component={Home} />
         <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP1" component={MarcaPresencaP1} />
         <Stack.Screen options={{ headerShown: false }} name="MarcaPresencaP2" component={MarcaPresencaP2} />
-        <Stack.Screen options={{ headerShown: false }} name="Teste" component={Teste} />
-        <Stack.Screen options={{ headerShown: false }} name="TesteMelhorado" component={TesteMelhorado} />
-        <Stack.Screen options={{ headerShown: false }} name="ExportaXML" component={ExportaXML} />
       </Stack.Navigator>
     );
 }

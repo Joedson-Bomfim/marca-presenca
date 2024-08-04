@@ -5,8 +5,8 @@
     <!--Permissão para exibir janela flutante, porém alguns fontes dizem que não é uma boa prática-->
     <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>-->
 
-    <!--Permissão necessário para dispositivos a partir do android 12-->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
+    <!--Permissão necessária para dispositivos a partir do android 12-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 
     <application
       android:name=".MainApplication"
