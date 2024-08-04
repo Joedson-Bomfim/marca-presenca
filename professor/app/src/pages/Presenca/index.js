@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, View, Text, TouchableOpacity } from "react-native";
-import { Button, useTheme } from "react-native-paper";
+import { useTheme } from "react-native-paper";
 import { useIsFocused } from '@react-navigation/native';
 import { fetchTodosGrupoPresenca } from '../../Controller/PresencaController';
 import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
@@ -48,7 +48,6 @@ const Presenca = ( {navigation} ) => {
     });
 
     return(
-        //<Icon name="clipboard-text-clock-outline" color={ colors.icone } size={40}/>       
         <View style={[styles.fundoTela, {backgroundColor: colors.background}]}>
             <Text style={[styles.titulo, {color: colors.text }]}>Presenças</Text>
 
@@ -64,7 +63,7 @@ const Presenca = ( {navigation} ) => {
                             navigation.reset({
                                 index: 0,
                                 routes: [{ name: 'DisciplinaStack' }], 
-                            }); //Limpar a pilha caso alguma disciplina esteja aberta
+                            });
                         
                             setTimeout(() => {
                                 navigation.navigate('DisciplinaStack', {
@@ -81,7 +80,7 @@ const Presenca = ( {navigation} ) => {
                                         nome_disciplina: item.disciplina
                                     }
                                 });
-                            }, 1); // Tempo de atraso (em milissegundos) para garantir a navegação seja empilhada
+                            }, 1); 
                         }}
                             style={[styles.buttonTouchable, { backgroundColor: colors.secundary }]}>
                             <View style={styles.buttonTouchableSegundo}>
@@ -92,7 +91,7 @@ const Presenca = ( {navigation} ) => {
                     </View>
                 ))}
             </ScrollView> :
-            <Text style={styles.aviso}>Ainda não há registros de presença</Text>}
+            <Text  style={[TemaPrincipal.aviso, { color: colors.text }]}>Ainda não há registros de presença</Text>}
         </View>
     )
 }

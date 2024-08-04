@@ -27,17 +27,10 @@ const styles = StyleSheet.create({
     alinhaBotoes: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center',  // Alinha verticalmente os botões ao centro
-        paddingHorizontal: 20, // Adiciona espaçamento horizontal ao contêiner
+        alignItems: 'center',
+        paddingHorizontal: 20, 
         marginBottom: 20,
         padding: 10,
-    },
-    aviso: {
-        marginBottom: 20,
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: 'bold'
-        
     },
     marginBottom: {
         marginBottom: 30

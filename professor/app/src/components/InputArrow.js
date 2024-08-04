@@ -5,7 +5,7 @@ import styles from "./styles";
 const Input = ({ titulo, conteudoForm, fontSizeTitulo, fontSizeConteudo, setaAnterior, setSeguinte, color }) => {
     return (
         <View>
-            <Text style={{alignSelf: 'center', color: {color}, fontSize: fontSizeTitulo, fontWeight: 'bold'}}>{titulo}</Text>
+            <Text style={{alignSelf: 'center', color: color, fontSize: fontSizeTitulo, fontWeight: 'bold'}}>{titulo}</Text>
             <View style={styles.containerInputSetas}>
                 <TouchableOpacity style={[styles.botaoSeta]} onPress={setaAnterior} >
                     <Text style={styles.buttonTextSeta}>{"<"}</Text>

@@ -29,15 +29,6 @@ import Teste from '../pages/Teste';
 import TesteMelhorado from '../pages/Teste/testeMelhorado';
 import ExportaXML from '../pages/Teste/exportaXML';
 
-import TesteBanco from '../pages/Test';
-import ProfessorTeste from '../pages/Test/professorTeste';
-import DisciplinaTeste from '../pages/Test/disciplinaTeste';
-import AlunoTeste from '../pages/Test/alunoTeste';
-import AlunoDisciplinaTeste from '../pages/Test/alunoDisciplinaTeste';
-import AulaTeste from '../pages/Test/aulaTeste';
-import PresencaTeste from '../pages/Test/presencaTeste';
-import Tabela from '../pages/Test/tabelas';
-
 import { useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -97,21 +88,6 @@ function PresencaStack() {
       </Stack.Navigator>
     );
 }
-
-function TesteBancoStack() {
-    return (
-      <Stack.Navigator>
-        <Stack.Screen options={{ headerShown: false }} name="Teste" component={TesteBanco} />
-        <Stack.Screen options={{ headerShown: false }} name="ProfessorTeste" component={ProfessorTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="DisciplinaTeste" component={DisciplinaTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="AlunoTeste" component={AlunoTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="AlunoDisciplinaTeste" component={AlunoDisciplinaTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="AulaTeste" component={AulaTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="PresencaTeste" component={PresencaTeste} />
-        <Stack.Screen options={{ headerShown: false }} name="Tabela" component={Tabela} />
-      </Stack.Navigator>
-    );
-}
   
 export default function DrawerRoutes() {
     const { colors } = useTheme();
@@ -167,14 +143,6 @@ export default function DrawerRoutes() {
           options={{
             drawerIcon: () => <Icon name="clipboard-multiple" color={colors.icone} size={40} />,
             drawerLabel: "Presença",
-          }}
-        />
-        <Drawer.Screen
-          name="TesteBancoStack"
-          component={TesteBancoStack}
-          options={{
-            drawerIcon: () => <Icon name="database-search" color={colors.icone} size={40} />,
-            drawerLabel: "BD Teste",
           }}
         />
       </Drawer.Navigator>

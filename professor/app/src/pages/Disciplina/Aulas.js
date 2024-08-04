@@ -50,27 +50,23 @@ const DisciplinaDetalhe = ({ navigation }) => {
 
             <InputSearch searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
 
-            {isExist ? (
-                <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
-                    <Loading visible={visible} />
-                    {filteredAulas.map((item) => (
-                        <View key={item.id} style={styles.bookItem}>
-                            <View>
-                                <Button mode="contained" labelStyle={{ fontSize: 20 }} 
-                                onPress={() => { navigation.navigate('AulaForm', 
-                                { isEdit: true, id: item.id, disciplina_fk: item.disciplina_fk, nome_disciplina: nome_disciplina, 
-                                dia_semana: item.dia_semana, local: item.local, quantidade_aulas: item.quantidade_aulas, 
-                                horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula, }); }}
-                                style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
-                                    {item.dia_semana} {item.horario_inicio_aula}-{item.horario_fim_aula}
-                                </Button>
-                            </View>
+            <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
+                <Loading visible={visible} />
+                {filteredAulas.map((item) => (
+                    <View key={item.id} style={styles.bookItem}>
+                        <View>
+                            <Button mode="contained" labelStyle={{ fontSize: 20 }} 
+                            onPress={() => { navigation.navigate('AulaForm', 
+                            { isEdit: true, id: item.id, disciplina_fk: item.disciplina_fk, nome_disciplina: nome_disciplina, 
+                            dia_semana: item.dia_semana, local: item.local, quantidade_aulas: item.quantidade_aulas, 
+                            horario_inicio_aula: item.horario_inicio_aula, horario_fim_aula: item.horario_fim_aula, }); }}
+                            style={[TemaPrincipal.listaTabela, { backgroundColor: colors.secundary }]}>
+                                {item.dia_semana} {item.horario_inicio_aula}-{item.horario_fim_aula}
+                            </Button>
                         </View>
-                    ))}
-                </ScrollView>
-            ) : (
-                <Text style={styles.aviso}>Ainda não há aulas cadastradas nesta disciplina</Text>
-            )}
+                    </View>
+                ))}
+            </ScrollView>
 
             <Button mode="contained" labelStyle={{ fontSize: 20 }}
             onPress={() => { navigation.navigate('AulaForm', { isEdit: false, disciplina_fk: disciplina_id, nome_disciplina: nome_disciplina }); }}>

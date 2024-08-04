@@ -50,18 +50,26 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginBottom: 10,
         fontWeight: "bold"
-    },
+    }
+    ,
+    aviso: {
+        marginBottom: 20,
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: 'bold'
+        
+    } ,
     tituloModal: {
         textAlign: 'center',
         fontSize: 20,
-        marginBottom: 30,
+        marginBottom: 10,
         fontWeight: "bold"
     },
     modalOverlay: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Cor de fundo do modal, com transparência
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     modalContent: {
         width: '80%',
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
     botoesEditRegistro: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginBottom: 30,
+        marginBottom: 20,
     },
     searchSection: {
         flexDirection: 'row',

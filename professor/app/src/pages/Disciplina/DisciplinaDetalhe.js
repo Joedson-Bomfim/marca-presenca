@@ -77,7 +77,7 @@ const DisciplinaDetalhe = ( {navigation} ) => {
                     </View>
                 ))}
             </ScrollView> :
-            <Text style={[styles.aviso, { color: colors.text }]}>Ainda não há registros de presença</Text>}
+            <Text style={[TemaPrincipal.aviso, { color: colors.text }]}>Ainda não há registros de presença</Text>}
 
             <View style={[TemaPrincipal.botoesEditRegistro, TemaPrincipal.marginBottomPadrao]}>
                 <Button mode="contained" labelStyle={{ fontSize: 20 }} 
