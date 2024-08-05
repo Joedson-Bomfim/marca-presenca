@@ -200,7 +200,8 @@ const AlunoForm = ( {navigation} ) => {
                 onChangeText={(text) => { setMatriculaForm(text); if (ErrorMatriculaForm) { setErrorMatriculaForm(''); }}} 
                 containerStyle={TemaPrincipal.marginBottomPadrao} 
                 style={TemaPrincipal.inputPadrao}/>
-            
+
+            <Text style={[{ color: colors.text }]}>Antes de procurar pelo ID, por favor verifique se o bluetooth e localização estão ligados</Text>    
             {estadoBeacon ?
             <View>
                 <Button 

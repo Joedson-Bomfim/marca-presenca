@@ -143,10 +143,12 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         </Icon>
     </Text>
 
+    let informativo = estadoBeacon ? <Text style={[{ color: colors.text, fontSize: 10 }]}>Por favor verifique se o bluetooth e localização estão ligados</Text> : '';
     let quantidadeAulas = quantidade_aulas == 1 ? '1 aula' : quantidade_aulas+' aulas';
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
+            {informativo}
             <Text style={{color: colors.text, alignSelf: 'center'}}>{quantidadeAulas}</Text>
             {situacaoBeacon}
             <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>
