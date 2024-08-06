@@ -11,7 +11,7 @@ const Input = ({ searchTerm, setSearchTerm, ...props }) => {
     return (
         <View style={TemaPrincipal.searchSection}>
             <Icon style={TemaPrincipal.searchIcon} name="magnify" size={20} color="#FFF"/>
-            <TextInput placeholder="Pesquisar aula..." value={searchTerm} onChangeText={text => setSearchTerm(text)}
+            <TextInput placeholder="Pesquisar..." value={searchTerm} onChangeText={text => setSearchTerm(text)}
             style={[TemaPrincipal.inputSearch, { color: colors.text }]} placeholderTextColor="#FFF"
             {...props}/>
         </View>

@@ -25,6 +25,8 @@ import Presenca from '../pages/Presenca';
 
 import PresencaAula from '../pages/Disciplina/PresencaAula';
 
+import Sobre from '../pages/Sobre';
+
 import { useTheme } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -78,6 +80,14 @@ function PresencaStack() {
     return (
       <Stack.Navigator>
         <Stack.Screen options={{ headerShown: false }} name="Presenca" component={Presenca} />
+      </Stack.Navigator>
+    );
+}
+
+function SobreStack() {
+    return (
+      <Stack.Navigator initialRouteName="Sobre">
+        <Stack.Screen options={{ headerShown: false }} name="Sobre" component={Sobre} />
       </Stack.Navigator>
     );
 }
@@ -136,6 +146,14 @@ export default function DrawerRoutes() {
           options={{
             drawerIcon: () => <Icon name="clipboard-multiple" color={colors.icone} size={40} />,
             drawerLabel: "Presença",
+          }}
+        />
+        <Drawer.Screen
+          name="SobreStack"
+          component={SobreStack}
+          options={{
+            drawerIcon: () => <Icon name="file-search" color={colors.icone} size={40} />,
+            drawerLabel: "Sobre",
           }}
         />
       </Drawer.Navigator>
