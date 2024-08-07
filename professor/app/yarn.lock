@@ -1216,11 +1216,6 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
-"@hkpuits/react-native-beacons-manager@^1.2.8":
-  version "1.2.8"
-  resolved "https://registry.npmjs.org/@hkpuits/react-native-beacons-manager/-/react-native-beacons-manager-1.2.8.tgz"
-  integrity sha512-OhBmnRto9LkUzli0p41nEHX3G1ofZuQtQqhCGwnL3YeacgHhk9iGOIPx9xXUP/7pzw6BtuEB7mcw3wTlrUrMIg==
-
 "@humanwhocodes/config-array@^0.11.8":
   version "0.11.8"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.8.tgz"
@@ -1836,6 +1831,11 @@
   integrity sha512-CEge+ZLhb1HBrSvv4RwOol7EKLW1QoqVIQlE9TN5MpxS/+VoQvP+cLbuz0Op53/iJfYhtXRFd1ZAd3RTRqto9w==
   dependencies:
     nanoid "^3.1.23"
+
+"@rodrigo7/react-native-beacons-manager@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/@rodrigo7/react-native-beacons-manager/-/react-native-beacons-manager-1.0.0.tgz"
+  integrity sha512-4t1KJjFozZUfi+RNdR3W7SEmxKtOcLOEdObix+GjhqJeSAeBPfFHYpJjQxXNc5q6kt/mEOGJthtXgMW8S4BrvQ==
 
 "@sideway/address@^4.1.3":
   version "4.1.4"

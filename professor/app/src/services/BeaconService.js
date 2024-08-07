@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { PermissionsAndroid, Alert, Platform } from 'react-native';
-import Beacons from '@hkpuits/react-native-beacons-manager';
+import Beacons from '@rodrigo7/react-native-beacons-manager';
 
 const useBeaconService = () => {
   const [uuidList, setUuidList] = useState(new Set()); // Usar um Set para armazenar UUIDs únicos
@@ -63,7 +63,7 @@ const useBeaconService = () => {
   }, []); // O segundo argumento vazio garante que o useEffect seja executado apenas uma vez (equivalente ao componentDidMount)
 
   const startBeaconRanging = async () => {
-    Beacons.init(); // para definir o NotificationChannel e habilitar a varredura em segundo plano
+    // Tells the library to detect iBeacons
     Beacons.detectIBeacons();
     setEstadoBeacon(true);
 
