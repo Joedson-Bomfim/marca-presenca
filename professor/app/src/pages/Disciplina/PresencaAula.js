@@ -6,7 +6,7 @@ import AlunoPresenca from '../../components/alunoPresencaRegistrada';
 import { useRoute } from '@react-navigation/native';
 import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
-import exportarEmXML from '../../services/exportacaoXML';
+import exportarEmXML from '../../services/ExportacaoXML';
 import { closeDatabase } from '../../database/database';
 import { converteDataAmericanaParaBrasileira } from '../../services/formatacao';
 
@@ -107,7 +107,7 @@ const PresencaAula = ({ navigation }) => {
                         console.log('Erro ao abrir a pasta:', error.message);
                         Alert.alert(
                             'Atenção',
-                            'Não foi possível abrir a pasta. Por favor, utilize um gerenciador de arquivos alternativo.',
+                            'Não foi possível abrir a pasta pelo app CheckMate. Caso queira acessar a pasta por aqui, utilize um gerenciador de arquivos alternativo ou vá para a pasta Download/Lista Presenca CheckMate.',
                             [{ text: 'OK' }]
                         );
                     }

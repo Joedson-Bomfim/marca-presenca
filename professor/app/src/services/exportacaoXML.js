@@ -79,7 +79,7 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
         await RNFS.writeFile(filePath, xmlContent, 'utf8');
         Alert.alert(
             'Sucesso',
-            'Arquivo XML salvo no diretório de Downloads! Deseja abrir a pasta de destino?',
+            'Arquivo XML salvo na pasta de Download/Lista Presenca CheckMate! Deseja abrir a pasta de destino?',
             [
                 { text: 'Não', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 { text: 'Sim', onPress: async () => {
@@ -91,8 +91,8 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
                     } catch (error) {
                         console.log('Erro ao abrir a pasta:', error.message);
                         Alert.alert(
-                            'Erro',
-                            'Não foi possível abrir a pasta. Por favor, utilize um gerenciador de arquivos alternativo.',
+                            'Atenção',
+                            'Não foi possível abrir a pasta pelo app CheckMate. Caso queira acessar a pasta por aqui, utilize um gerenciador de arquivos alternativo ou vá para a pasta Download/Lista Presenca CheckMate.',
                             [{ text: 'OK' }]
                         );
                     }

@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Alert } from "react-native";
 import { useTheme, Button } from "react-native-paper";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 import useBeaconService from "../../services/BeaconService";
-import AlunoPresenca from '../../components/alunoPresenca';
+import AlunoPresenca from "../../components/alunoPresenca";
+import { CheckBluetoothAndLocation } from "../../services/CheckBluetoothAndLocation";
 import { fetchAlunoDisciplinaMarcaPresenca } from "../../Controller/AlunoDisciplinaController";
-import { addMultiplePresenca } from '../../Controller/PresencaController';
-import { converteDataBrasileiraParaAmericana } from '../../services/formatacao';
+import { addMultiplePresenca } from "../../Controller/PresencaController";
+import { converteDataBrasileiraParaAmericana } from "../../services/formatacao";
 
-import Loading from '../../components/LoadingScreenDots';
+import Loading from "../../components/LoadingScreenDots";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import TemaPrincipal from "../../assets/styles";
 import styles from "./styles";
@@ -30,7 +31,7 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
     
 
     useEffect(() => {
-        startBeaconRanging();
+        procuarBeacons();
         listaAlunos();
     }, []);
 
@@ -38,6 +39,14 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         const presentes = alunosDisciplinas.filter(item => uuidList.includes(item.beacon_id)).length;
         setAlunoPresente(presentes); // Atualiza a quantidade de alunos presentes
     }, [uuidList, alunosDisciplinas]);
+
+    async function procuarBeacons() {
+        const isBluetoothAndLocationEnabled = await CheckBluetoothAndLocation();
+
+        if (isBluetoothAndLocationEnabled) {
+            startBeaconRanging();
+        }
+    }
 
     const listaAlunos = async () => {
         try {
@@ -116,7 +125,13 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         }
     };
 
-    function procurar() {
+    async function procurar() {
+        const isBluetoothAndLocationEnabled = await CheckBluetoothAndLocation();
+
+        if (!isBluetoothAndLocationEnabled) {
+            return;
+        }
+
         startBeaconRanging();
         setProcuraPrimeiraVez(true);
     }
@@ -143,12 +158,11 @@ const SelecionaDisciplinaAula = ({ navigation }) => {
         </Icon>
     </Text>
 
-    let informativo = estadoBeacon ? <Text style={[{ color: colors.text, fontSize: 10 }]}>Por favor verifique se o bluetooth e localização estão ligados</Text> : '';
     let quantidadeAulas = quantidade_aulas == 1 ? '1 aula' : quantidade_aulas+' aulas';
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>Marcar Presença</Text>
-            {informativo}
+            
             <Text style={{color: colors.text, alignSelf: 'center'}}>{quantidadeAulas}</Text>
             {situacaoBeacon}
             <ScrollView style={[TemaPrincipal.lista, {backgroundColor: colors.tertiary}]}>

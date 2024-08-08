@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useRoute } from '@react-navigation/native';
+import { useRoute } from "@react-navigation/native";
 import { ScrollView, View, Text, Alert } from "react-native";
-import { TextInput, Button, useTheme } from "react-native-paper";
-import { addAluno, editAluno, removeAlunoById } from '../../Controller/AlunoController';
+import { Button, useTheme } from "react-native-paper";
+import { addAluno, editAluno, removeAlunoById } from "../../Controller/AlunoController";
+import { CheckBluetoothAndLocation } from "../../services/CheckBluetoothAndLocation";
 import useBeaconService from "../../services/BeaconService";
-import AdicionaAluno from '../../components/AdicionaAluno';
+import AdicionaAluno from "../../components/AdicionaAluno";
 import Input from "../../components/Input";
 
 import { formatUUID } from '../../services/formatacao';
@@ -171,7 +172,13 @@ const AlunoForm = ( {navigation} ) => {
         );
     }
 
-    function procurar() {
+    async function procurar() {
+        const isBluetoothAndLocationEnabled = await CheckBluetoothAndLocation();
+
+        if (!isBluetoothAndLocationEnabled) {
+            return;
+        }
+        
         startBeaconRanging();
     }
 
@@ -201,7 +208,6 @@ const AlunoForm = ( {navigation} ) => {
                 containerStyle={TemaPrincipal.marginBottomPadrao} 
                 style={TemaPrincipal.inputPadrao}/>
 
-            <Text style={[{ color: colors.text }]}>Antes de procurar pelo ID, por favor verifique se o bluetooth e localização estão ligados</Text>    
             {estadoBeacon ?
             <View>
                 <Button 
