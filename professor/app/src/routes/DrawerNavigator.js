@@ -153,7 +153,7 @@ export default function DrawerRoutes() {
           component={SobreStack}
           options={{
             drawerIcon: () => <Icon name="file-search" color={colors.icone} size={40} />,
-            drawerLabel: "Sobre",
+            drawerLabel: "Sobre o Projeto",
           }}
         />
       </Drawer.Navigator>

@@ -4,8 +4,25 @@ import FileViewer from 'react-native-file-viewer';
 import { closeDatabase } from '../database/database';
 import {converteDataAmericanaParaBrasileira, obterDataHoraAtualParaNomeArquivo, formataNomeArquivo, fornataDataParaNomeArquivo } from './formatacao';
 
-const generateXMLContent = (alunos) => {
+const escapeXML = (str) => {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&apos;');
+};
+
+const generateXMLContent = (alunos, professor) => {
     let xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n';
+
+    xmlContent += '<registros>\n';
+
+    xmlContent += `  <professor>\n`;
+    xmlContent += `    <nome>${professor.nome}</nome>\n`;
+    xmlContent += `    <resgistro>${professor.numero_registro}</resgistro>\n`;
+    xmlContent += `  </professor>\n`;
+
     xmlContent += '<alunos>\n';
 
     alunos.forEach((aluno) => {
@@ -18,15 +35,17 @@ const generateXMLContent = (alunos) => {
     xmlContent += `    <total_aulas>${aluno.quantidade_aulas_total}</total_aulas>\n`;
     xmlContent += `    <total_aulas_assistidas>${aluno.quantidade_aulas_assistidas}</total_aulas_assistidas>\n`;
     xmlContent += `    <situacao>${aluno.situacao}</situacao>\n`;
-    xmlContent += `    <observacao>${aluno.observacao}</observacao>\n`;
+    aluno.observacao ? xmlContent += `    <observacao>${aluno.observacao}</observacao>\n` : '';
     xmlContent += `  </aluno>\n`;
     });
 
     xmlContent += '</alunos>\n';
+
+    xmlContent += '</registros>\n';
     return xmlContent;
 };
 
-const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula) => {
+const exportarEmXML = async (alunosPresenca, professor, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula) => {
     nome_disciplinaFormatada = formataNomeArquivo(nome_disciplina);
     dataPresencaFormatada = fornataDataParaNomeArquivo(data_presenca);
     horario_inicio_aulaFormata = horario_inicio_aula.replace(':', '_')
@@ -75,7 +94,7 @@ const exportarEmXML = async (alunosPresenca, nome_disciplina, data_presenca, hor
             await RNFS.mkdir(customDir);
         }
 
-        const xmlContent = generateXMLContent(alunosPresenca);
+        const xmlContent = generateXMLContent(alunosPresenca, professor);
         await RNFS.writeFile(filePath, xmlContent, 'utf8');
         Alert.alert(
             'Sucesso',

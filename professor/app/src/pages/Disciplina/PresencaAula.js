@@ -2,9 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import { Text, ScrollView, View, Alert, Platform, PermissionsAndroid } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import { fetchPresencaByAula } from '../../Controller/PresencaController';
-import AlunoPresenca from '../../components/alunoPresencaRegistrada';
 import { useRoute } from '@react-navigation/native';
+import { Context } from '../../contexts/Context';
 import RNFS from 'react-native-fs';
+import AlunoPresenca from '../../components/alunoPresencaRegistrada';
 import FileViewer from 'react-native-file-viewer';
 import exportarEmXML from '../../services/ExportacaoXML';
 import { closeDatabase } from '../../database/database';
@@ -18,6 +19,7 @@ import TemaPrincipal from "../../assets/styles";
 const PresencaAula = ({ navigation }) => {
     const { colors } = useTheme();
     const route = useRoute();
+    const { nomeCompleto, numero_registro } = useContext(Context);
 
     const { 
             aula_id, 
@@ -32,7 +34,13 @@ const PresencaAula = ({ navigation }) => {
 
     const [alunosPresenca, setAlunosPresenca] = useState([]);
     const [quantidadeAlunosPresentes, setQuantidadeAlunosPresentes] = useState(0);
+    const [alunoSemMatricula, setAlunoSemMatricula] = useState([]);
     const [visible, setVisible] = useState(false);
+
+    const professor = ({
+        nome: nomeCompleto,
+        numero_registro: numero_registro,
+    });
 
     useEffect(() => {
         listaDisciplinas();
@@ -48,6 +56,9 @@ const PresencaAula = ({ navigation }) => {
                 item.situacao !== 'Ausente' ? count + 1 : count, 0
             );
             setQuantidadeAlunosPresentes(quantidade_presentes);
+
+            const alunosSemMatricula = listaAluno.filter(item => item.matricula == null).map(item => item.nome);
+            setAlunoSemMatricula(alunosSemMatricula);
         } catch (error) {
             console.log('Não foi possível carregar os alunosPresenca. Verifique se a tabela existe.');
         } finally {
@@ -117,6 +128,24 @@ const PresencaAula = ({ navigation }) => {
         );
     }
 
+    async function exportarListaPresenca() {
+        if(alunoSemMatricula.length > 0) {
+            const maxNomes = 5; 
+            let nomesSelecionados = '';
+            if(alunoSemMatricula.length > maxNomes) {
+                nomesSelecionados = alunoSemMatricula.slice(0, maxNomes).join(', ')+'...dentre outros(as) estão';
+            }else {
+                nomesSelecionados = alunoSemMatricula.length > 1 ? alunoSemMatricula.slice(0, -1).join(', ') + ' e ' + alunoSemMatricula[alunoSemMatricula.length - 1] + ' estão':
+                nomesSelecionados = alunoSemMatricula.slice(0, maxNomes) + ' está';
+            }
+            
+            Alert.alert(`Não é possível exportar`, `${nomesSelecionados} sem matricula`);
+
+            return;
+        }
+        exportarEmXML(alunosPresenca, professor, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula)
+    }
+
     return (
         <View style={[styles.fundoTela, { backgroundColor: colors.background }]}>
             <Text style={[TemaPrincipal.titulo, { color: colors.text }]}>{nome_disciplina}</Text>
@@ -134,7 +163,7 @@ const PresencaAula = ({ navigation }) => {
             <Text style={[{color: colors.text, marginBottom: 15}]}>Quantidade de altas: {quantidade_aulas} </Text>
 
             <Button 
-                    mode="contained" onPress={() => exportarEmXML(alunosPresenca, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula)} 
+                    mode="contained" onPress={exportarListaPresenca} 
                     style={[TemaPrincipal.botaoPrincipal, TemaPrincipal.marginBottomPadrao]}
                     icon={() => <Icon name={'file-export'} size={30} color="#ffffff" />}>
                     Exportar Lista de Presenças

@@ -58,6 +58,10 @@ const Home = ({ navigation }) => {
           </Button>
         )}
       </View>
+
+      <Button mode="contained" labelStyle={{ fontSize: 15 }} onPress={() => { navigation.navigate('Sobre') }} style={{alignSelf: 'center', width: 160}}>
+          Sobre o projeto
+      </Button>
     </View>
   );
 };
