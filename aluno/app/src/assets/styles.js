@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     titulo: {
         textAlign: 'center',
         fontSize: 30,
-        marginBottom: 30,
+        marginBottom: 12,
         fontWeight: "bold"
     },
     informativo: {

@@ -58,10 +58,6 @@ const Home = ({ navigation }) => {
           </Button>
         )}
       </View>
-
-      <Button onPress={() => { navigation.navigate('Teste'); }} theme={{ colors: { primary: "#fff" } }}>
-        Página de testes
-      </Button>
     </View>
   );
 };

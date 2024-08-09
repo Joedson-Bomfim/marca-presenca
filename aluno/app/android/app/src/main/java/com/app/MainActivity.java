@@ -1,4 +1,4 @@
-package com.app;
+package com.beaconcheck;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

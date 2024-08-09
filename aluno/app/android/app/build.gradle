@@ -94,9 +94,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.app"
+    namespace "com.beaconcheck"
     defaultConfig {
-        applicationId "com.app"
+        applicationId "com.beaconcheck"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
