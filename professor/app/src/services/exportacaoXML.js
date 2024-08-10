@@ -5,12 +5,16 @@ import { closeDatabase } from '../database/database';
 import {converteDataAmericanaParaBrasileira, obterDataHoraAtualParaNomeArquivo, formataNomeArquivo, fornataDataParaNomeArquivo } from './formatacao';
 
 const escapeXML = (str) => {
+    if (typeof str !== 'string') {
+        return str; 
+    }
+
     return str
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&apos;');
+    .replace(/&/g, '&amp;')    
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 };
 
 const generateXMLContent = (alunos, professor) => {
@@ -19,23 +23,23 @@ const generateXMLContent = (alunos, professor) => {
     xmlContent += '<registros>\n';
 
     xmlContent += `  <professor>\n`;
-    xmlContent += `    <nome>${professor.nome}</nome>\n`;
-    xmlContent += `    <resgistro>${professor.numero_registro}</resgistro>\n`;
+    xmlContent += `    <nome>${escapeXML(professor.nome)}</nome>\n`;
+    xmlContent += `    <resgistro>${escapeXML(professor.numero_registro)}</resgistro>\n`;
     xmlContent += `  </professor>\n`;
 
     xmlContent += '<alunos>\n';
 
     alunos.forEach((aluno) => {
     xmlContent += `  <aluno>\n`;
-    xmlContent += `    <nome>${aluno.nome}</nome>\n`;
-    xmlContent += `    <matricula>${aluno.matricula}</matricula>\n`;
-    xmlContent += `    <nome_disciplina>${aluno.nome_disciplina}</nome_disciplina>\n`;
+    xmlContent += `    <nome>${escapeXML(aluno.nome)}</nome>\n`;
+    xmlContent += `    <matricula>${escapeXML(aluno.matricula)}</matricula>\n`;
+    xmlContent += `    <nome_disciplina>${escapeXML(aluno.nome_disciplina)}</nome_disciplina>\n`;
     xmlContent += `    <codigo_disciplina>${aluno.codigo_disciplina}</codigo_disciplina>\n`;
-    xmlContent += `    <data>${aluno.data}</data>\n`;
+    xmlContent += `    <data>${escapeXML(aluno.data)}</data>\n`;
     xmlContent += `    <total_aulas>${aluno.quantidade_aulas_total}</total_aulas>\n`;
     xmlContent += `    <total_aulas_assistidas>${aluno.quantidade_aulas_assistidas}</total_aulas_assistidas>\n`;
-    xmlContent += `    <situacao>${aluno.situacao}</situacao>\n`;
-    aluno.observacao ? xmlContent += `    <observacao>${aluno.observacao}</observacao>\n` : '';
+    xmlContent += `    <situacao>${escapeXML(aluno.situacao)}</situacao>\n`;
+    aluno.observacao ? xmlContent += `    <observacao>${escapeXML(aluno.observacao)}</observacao>\n` : '';
     xmlContent += `  </aluno>\n`;
     });
 
@@ -46,10 +50,10 @@ const generateXMLContent = (alunos, professor) => {
 };
 
 const exportarEmXML = async (alunosPresenca, professor, nome_disciplina, data_presenca, horario_inicio_aula, horario_fim_aula) => {
-    nome_disciplinaFormatada = formataNomeArquivo(nome_disciplina);
-    dataPresencaFormatada = fornataDataParaNomeArquivo(data_presenca);
-    horario_inicio_aulaFormata = horario_inicio_aula.replace(':', '_')
-    horario_fim_aulaFormata = horario_fim_aula.replace(':', '_')
+    let nome_disciplinaFormatada = formataNomeArquivo(nome_disciplina);
+    let dataPresencaFormatada = fornataDataParaNomeArquivo(data_presenca);
+    let horario_inicio_aulaFormata = horario_inicio_aula.replace(':', '_')
+    let horario_fim_aulaFormata = horario_fim_aula.replace(':', '_')
 
     const downloadDir = RNFS.DownloadDirectoryPath;
     const customDir = `${downloadDir}/Lista Presenca CheckMate`;
@@ -120,6 +124,7 @@ const exportarEmXML = async (alunosPresenca, professor, nome_disciplina, data_pr
             { cancelable: false }
         );
     } catch (err) {
+        console.log(err.message);
         Alert.alert('Erro', err.message);
     }
 };
