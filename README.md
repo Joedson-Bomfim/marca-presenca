@@ -81,8 +81,6 @@ export const stopBeaconBroadcasting = (setIsBroadcasting) => {
 
 - Dependência: [react-native-beacons-manager](https://github.com/rodrigo-nexudus/react-native-beacons-manager)
 
-Observação: Possui uma lógica para identificar um determinado beacon apenas uma vez, isso é devido ao fluxo proposto na aplicação
-
 ```javascript
 const startBeaconRanging = async () => {
     Beacons.detectIBeacons();
