@@ -4,7 +4,7 @@
 
 ### Composto por dois aplicativos mobile, um destinado ao aluno (nomeado BeaconCheck), que simula beacons (especificamente o iBeacon) e o outro destinado ao professor (nomeado CheckMate), que identifica beacons no ambiente. 
 
-### Foi desenvolvido para o Trabalho de Conclusão de Curso (TCC) do ensino superior de Tecnologia em Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia - Campus Guanambi. O trabalho foi realizado por <a href="https://github.com/Joedson-Bomfim"><b>Joedson Bomfim</a>, tendo como orientador e idealizador do projeto <a href="https://github.com/fabiomicromais"><b>Fabio Lima</a>.
+### Foi desenvolvido para o Trabalho de Conclusão de Curso (TCC) de Tecnólogo em Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia - Campus Guanambi. O trabalho foi realizado por <a href="https://github.com/Joedson-Bomfim"><b>Joedson Bomfim</a>, tendo como orientador e idealizador do projeto <a href="https://github.com/fabiomicromais"><b>Fabio Lima</a>.
 
 ## Tecnologias
 
