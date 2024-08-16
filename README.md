@@ -13,7 +13,7 @@
 
 Foi desenvolvido especificamente com o React Native CLI
 
-## Telas
+## Telas (Demonstração de algumas delas)
 
 - ### Tela Aluno que simula Beacon
 
