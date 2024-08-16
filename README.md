@@ -13,7 +13,7 @@
 
 Foi desenvolvido especificamente com o React Native CLI
 
-## Telas (Demonstração de algumas delas)
+## Telas (Demonstração de algumas delas com dados hipotéticos)
 
 - ### Tela Aluno que simula Beacon
 
@@ -27,13 +27,13 @@ Foi desenvolvido especificamente com o React Native CLI
     <img src="Imagens/tela_home_professor.jpg" style="height: 300px;"/>
 </div>
 
-- ### Tela Professor para marcar presença (Identificação de beacons e dados ilustrativos)
+- ### Tela Professor para marcar presença (Identificação de beacons)
 
 <div align="center">
     <img src="Imagens/tela_marca_ppresenca.jpg" style="height: 300px;"/>
 </div>
 
-- ### Exemplo de dados hipotéticos exportados pelo professor (formato XML)
+- ### Exemplo de dados exportados pelo professor (formato XML)
 
 <div align="center">
     <img src="Imagens/exportacao_xml.jpg" style="height: 300px;"/>
