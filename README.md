@@ -4,7 +4,7 @@
 
 ### Composto por dois aplicativos mobile, um destinado ao aluno (nomeado BeaconCheck), que simula beacons (especificamente o iBeacon) e o outro destinado ao professor (nomeado CheckMate), que identifica beacons no ambiente. 
 
-### Foi desenvolvido para o Trabalho de Conclusão de Curso (TCC) do ensino superior de Tecnologia em Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia - Campus Guanambi. O trabalho foi realizado por <a href="https://github.com/Joedson-Bomfim"><b>Joedson Bomfim</a>, tendo como orientador e idealizador do projeto <a href="https://github.com/fabiomicromais"><b>Fabio Lima</a>.
+### Foi desenvolvido para o Trabalho de Conclusão de Curso (TCC) de Tecnólogo em Análise e Desenvolvimento de Sistemas do Instituto Federal da Bahia - Campus Guanambi. O trabalho foi realizado por <a href="https://github.com/Joedson-Bomfim"><b>Joedson Bomfim</a>, tendo como orientador e idealizador do projeto <a href="https://github.com/fabiomicromais"><b>Fabio Lima</a>.
 
 ## Tecnologias
 
@@ -13,7 +13,7 @@
 
 Foi desenvolvido especificamente com o React Native CLI
 
-## Telas
+## Telas (Demonstração de algumas delas com dados hipotéticos)
 
 - ### Tela Aluno que simula Beacon
 
@@ -27,13 +27,13 @@ Foi desenvolvido especificamente com o React Native CLI
     <img src="Imagens/tela_home_professor.jpg" style="height: 300px;"/>
 </div>
 
-- ### Tela Professor para marcar presença (Identificação de beacons e dados ilustrativos)
+- ### Tela Professor para marcar presença (Identificação de beacons)
 
 <div align="center">
     <img src="Imagens/tela_marca_ppresenca.jpg" style="height: 300px;"/>
 </div>
 
-- ### Exemplo de dados hipotéticos exportados pelo professor (formato XML)
+- ### Exemplo de dados exportados pelo professor (formato XML)
 
 <div align="center">
     <img src="Imagens/exportacao_xml.jpg" style="height: 300px;"/>
